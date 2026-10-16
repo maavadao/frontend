@@ -1,15 +1,15 @@
 import { Reveal } from "@/components/Reveal";
 import {
+  COMMUNITY_AGENTS_REPO,
+  getCommunityAgents,
   getRegistryIndex,
   listingHref,
   pricingSummary,
   type RegistryListing,
 } from "@/lib/registry";
 
-const COMMUNITY_AGENTS_REPO = "https://github.com/maavadao/community-agents";
-
 const isCommunityAgent = (l: RegistryListing) =>
-  l.kind === "agent" && !!l.links.repository?.toLowerCase().startsWith(COMMUNITY_AGENTS_REPO);
+  !!l.links.repository?.toLowerCase().startsWith(COMMUNITY_AGENTS_REPO);
 
 function Card({ listing, label }: { listing: RegistryListing; label: string }) {
   return (
@@ -33,11 +33,10 @@ function Card({ listing, label }: { listing: RegistryListing; label: string }) {
   );
 }
 
-/** Agents built in the community-agents repo, then the latest from the marketplace. Nothing from forked repos. */
+/** Agents from the community-agents index, then the latest from the marketplace. Nothing from forked repos. */
 export async function CommunityProjects() {
-  const index = await getRegistryIndex();
+  const [index, community] = await Promise.all([getRegistryIndex(), getCommunityAgents()]);
   const listings = index?.listings ?? [];
-  const community = listings.filter(isCommunityAgent);
   const others = listings
     .filter((l) => !isCommunityAgent(l))
     .sort((a, b) => b.added.localeCompare(a.added))

@@ -2,6 +2,9 @@
 
 export const REGISTRY_INDEX_URL =
   process.env.REGISTRY_INDEX_URL || "https://maavadao.github.io/marketplace-registry/index.json";
+export const COMMUNITY_AGENTS_INDEX_URL =
+  process.env.COMMUNITY_AGENTS_INDEX_URL || "https://maavadao.github.io/community-agents/index.json";
+export const COMMUNITY_AGENTS_REPO = "https://github.com/maavadao/community-agents";
 export const REGISTRY_REPO = "https://github.com/maavadao/marketplace-registry";
 
 export const AUDIENCES = ["education", "individuals", "business"] as const;
@@ -64,6 +67,17 @@ export async function getRegistryIndex(): Promise<RegistryIndex | null> {
     return (await res.json()) as RegistryIndex;
   } catch {
     return null;
+  }
+}
+
+/** Agents built in the community-agents repo, from its own published index. */
+export async function getCommunityAgents(): Promise<RegistryListing[]> {
+  try {
+    const res = await fetch(COMMUNITY_AGENTS_INDEX_URL, { next: { revalidate: 3600 } });
+    if (!res.ok) return [];
+    return ((await res.json()) as RegistryIndex).listings ?? [];
+  } catch {
+    return [];
   }
 }
 

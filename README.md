@@ -27,7 +27,7 @@ npm run build && npm start
 
 ## Editing content
 
-- **Projects section:** `src/components/CommunityProjects.tsx` (community-agents plus marketplace listings, read from the registry index)
+- **Projects section:** `src/components/CommunityProjects.tsx` (community-agents plus marketplace listings, read from the community-agents and registry indexes)
 - **Marketplace:** `src/app/marketplace/page.tsx` + `src/components/MarketplaceCatalog.tsx`, reading the registry's public `index.json` via `src/lib/registry.ts` (revalidated hourly, no database)
 - **Site name, links, contact email:** `src/lib/site.ts`
 - **Sections, roadmap and copy:** `src/app/page.tsx`
