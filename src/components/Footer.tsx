@@ -63,7 +63,7 @@ export function Footer() {
           maavaDao is a community-owned ecosystem of agentic AI for education, governed as a decentralised autonomous
           organisation. No fees, no commissions: 75% of every monetised product goes to the contributors who built
           it, and 25% funds education for deserving children, orphans and street children. Open source under the
-          Apache 2.0 Licence. Project names and marks in the catalog belong to their respective owners.
+          Apache 2.0 Licence.
         </p>
 
         {/* Phones: each column is an accordion with full-height tap rows. */}

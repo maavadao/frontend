@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { LogoMark } from "@/components/Logo";
 import { Icon, type IconName } from "@/components/Icon";
-import { ProjectCatalog } from "@/components/ProjectCatalog";
+import { CommunityProjects } from "@/components/CommunityProjects";
 import { ContactForm } from "@/components/ContactForm";
 import { hasEmail, site } from "@/lib/site";
 
@@ -329,23 +329,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Project catalog */}
+      {/* Community projects */}
       <section id="projects" className="bg-bg-alt px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-[1100px]">
           <SectionHead
             eyebrow="Projects"
-            title="The catalog."
-            lede="Our platform, and the open-source AI agent and blockchain projects our contributors build with and give back to."
+            title="Built by the community."
+            lede="Agents we write together in the open, and the latest that developers have listed in the marketplace. Free for education."
           />
-          <Reveal>
-            <ProjectCatalog />
-          </Reveal>
-          <Reveal className="mt-10 text-center sm:mt-12">
-            <a href={site.links.github} target="_blank" rel="noreferrer" className="group text-body text-link hover:underline">
-              See everything on GitHub
-              <span className="ml-1 inline-block transition-transform group-hover:translate-x-1">›</span>
-            </a>
-          </Reveal>
+          <CommunityProjects />
         </div>
       </section>
 
