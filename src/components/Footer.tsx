@@ -10,6 +10,9 @@ const columns = [
     links: [
       { label: "How it works", href: "/#how-it-works" },
       { label: "Marketplace", href: "/marketplace" },
+      { label: "Open-source AI repos", href: "/repos" },
+      { label: "Developers", href: "/developers" },
+      { label: "maava agents", href: "/agents" },
       { label: "Projects", href: "/#projects" },
       { label: "Governance", href: "/#governance" },
       { label: "Safeguarding", href: "/#safety" },

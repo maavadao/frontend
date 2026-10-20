@@ -15,7 +15,7 @@ export default async function MarketplacePage() {
   const categories = index?.categories ?? {};
 
   return (
-    <main className="bg-bg px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
+    <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
           <p className="text-callout font-semibold text-fg-2 sm:text-body">Marketplace</p>
@@ -35,7 +35,7 @@ export default async function MarketplacePage() {
           </a>
           <a
             href={`${REGISTRY_REPO}/blob/main/templates/tool.yaml`}
-            className="press rounded-full bg-bg-alt px-6 py-3 text-body font-medium text-fg hover:bg-surface"
+            className="press rounded-full bg-surface px-6 py-3 text-body font-medium text-fg hover:bg-bg"
           >
             List your tool
           </a>
