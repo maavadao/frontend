@@ -20,7 +20,13 @@ export interface DirectoryRepo {
   runs_locally?: boolean;
   added: string;
   stars?: number;
+  forks?: number;
+  open_issues?: number;
+  watchers?: number;
   pushed_at?: string;
+  created_at?: string;
+  /** [tag, published_at] of the latest release. */
+  release?: [string, string];
   archived?: boolean;
 }
 
@@ -61,6 +67,49 @@ export function memoJson<T>(url: string, ttl = 60 * 60 * 1000): () => Promise<T 
 
 /** The published repos index, or null if it can't be fetched. */
 export const getReposIndex = memoJson<ReposIndex>(REPOS_INDEX_URL);
+
+/** One repo and its rank among all repos and within its category (by stars), or null. */
+export async function getRepo(slug: string) {
+  const index = await getReposIndex();
+  const repo = index?.repos.find((r) => r.slug === slug);
+  if (!index || !repo) return null;
+  const rank = index.repos.indexOf(repo) + 1;
+  const inCategory = index.repos.filter((r) => r.category === repo.category);
+  return {
+    repo,
+    category: index.categories[repo.category],
+    rank,
+    total: index.repos.length,
+    categoryRank: inCategory.indexOf(repo) + 1,
+    categoryTotal: inCategory.length,
+  };
+}
+
+/** [day since 1970-01-01, stars] */
+export type HistoryPoint = [number, number];
+type HistoryShard = { generated_at: string; repos: Record<string, { p: HistoryPoint[] }> };
+
+const historyShards = new Map<string, () => Promise<HistoryShard | null>>();
+
+/** Star history for one repo, recorded daily by the directory's build since the repo was first tracked. */
+export async function getStarHistory(slug: string): Promise<HistoryPoint[]> {
+  const shard = /^[a-z]/.test(slug) ? slug[0] : "0-9";
+  if (!historyShards.has(shard)) historyShards.set(shard, memoJson<HistoryShard>(`${REPOS_PAGES}/history/${shard}.json`));
+  const data = await historyShards.get(shard)!();
+  return data?.repos[slug]?.p ?? [];
+}
+
+export type RepoStatus = { label: "Active" | "Maintained" | "Quiet" | "Archived"; detail: string };
+
+/** How alive a repo is, from its archived flag and last push. */
+export function repoStatus(repo: DirectoryRepo, now = Date.now()): RepoStatus | null {
+  if (repo.archived) return { label: "Archived", detail: "Read-only on GitHub" };
+  if (!repo.pushed_at) return null;
+  const days = (now - Date.parse(repo.pushed_at)) / 86_400_000;
+  if (days <= 30) return { label: "Active", detail: `Updated ${timeAgo(repo.pushed_at, now)}` };
+  if (days <= 180) return { label: "Maintained", detail: `Updated ${timeAgo(repo.pushed_at, now)}` };
+  return { label: "Quiet", detail: `No changes since ${timeAgo(repo.pushed_at, now)}` };
+}
 
 export const SORTS = { stars: "Popular", recent: "Recent", name: "A–Z" } as const;
 export type RepoSort = keyof typeof SORTS;

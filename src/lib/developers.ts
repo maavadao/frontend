@@ -37,6 +37,26 @@ export const OPT_OUT_URL = `${REPOS_REPO}/issues/new?template=remove-me.yml`;
 /** Contributors from the published file, or null if it can't be fetched. */
 export const getContributors = memoJson<ContributorsIndex>(`${REPOS_PAGES}/contributors.json`);
 
+let byRepo: { from: ContributorsIndex; map: Map<string, { login: string; id: number; commits: number }[]> } | null = null;
+
+/** Top contributors of one repo, most commits first (only the most-starred repos are covered). */
+export async function getRepoContributors(slug: string) {
+  const index = await getContributors();
+  if (!index) return { covered: false, people: [] };
+  if (byRepo?.from !== index) {
+    const map = new Map<string, { login: string; id: number; commits: number }[]>();
+    for (const d of index.developers)
+      for (const [repo, commits] of d.repos) {
+        if (!map.has(repo)) map.set(repo, []);
+        map.get(repo)!.push({ login: d.login, id: d.id, commits });
+      }
+    for (const list of map.values()) list.sort((a, b) => b.commits - a.commits);
+    byRepo = { from: index, map };
+  }
+  const people = byRepo.map.get(slug) ?? [];
+  return { covered: people.length > 0, people };
+}
+
 const MEMBER_FIELDS = "username, role, country, github_login, display_name, bio, website, joined_at";
 
 /** Members listed in the directory, newest first. Empty if Supabase isn't reachable. */

@@ -45,10 +45,9 @@ function RepoCard({ repo, category }: { repo: DirectoryRepo; category?: string }
   const updated = timeAgo(repo.pushed_at);
   const meta = [repo.language, repo.license && repo.license !== "NOASSERTION" ? repo.license : null].filter(Boolean);
   return (
-    <a
-      href={repo.repository}
-      target="_blank"
-      rel="noreferrer"
+    <Link
+      href={`/repos/${repo.slug}`}
+      scroll={false}
       className="press group flex h-full flex-col rounded-[24px] bg-surface p-5 sm:rounded-[28px] sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
     >
       <div className="flex items-start justify-between gap-4">
@@ -68,11 +67,11 @@ function RepoCard({ repo, category }: { repo: DirectoryRepo; category?: string }
           {repo.archived ? "Archived" : [...meta, updated && `updated ${updated}`].filter(Boolean).join(" · ")}
         </span>
         <span className="shrink-0 text-callout text-link">
-          Open
+          Details
           <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">›</span>
         </span>
       </div>
-    </a>
+    </Link>
   );
 }
 
