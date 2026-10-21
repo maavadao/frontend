@@ -22,7 +22,7 @@ export default async function JoinDirectoryPage({ searchParams }: PageProps<"/de
           <h1 className="text-title sm:text-[2rem]">Join the developer directory</h1>
           <p className="mt-3 text-body text-pretty text-fg-2">
             Sign in with GitHub and your contributions to open-source AI appear on your profile, so others can find you
-            and build maava agents with you.
+            and build maava Community Agents with you.
           </p>
           <Link
             href={`/login?next=${encodeURIComponent(NEXT)}`}

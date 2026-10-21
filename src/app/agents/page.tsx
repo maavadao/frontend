@@ -6,31 +6,39 @@ import { Reveal } from "@/components/Reveal";
 import { MAAVA_AGENTS_REPO, getMaavaAgents } from "@/lib/registry";
 
 export const metadata: Metadata = {
-  title: "maava agents",
+  title: "maava Community Agents",
   description:
-    "Open-source AI agents for education, built together by the maavaDao community. Free for education; 60% of what an agent earns rewards its contributors and 40% helps children in need.",
+    "A fully open-source suite of AI agents for sales, marketing and growth, built on open-source AI libraries that anyone can inspect, fork and improve.",
 };
+
+const pillars: { icon: IconName; title: string; body: string }[] = [
+  {
+    icon: "layers",
+    title: "Built on proven open source",
+    body: "We're not building from scratch. We stand on the shoulders of the most proven, community-validated open-source agent repositories on GitHub: thousands of stars, hundreds of contributors, battle-tested prompts and workflows. We take what the community has already built, refined and stress-tested, and make it work for you.",
+  },
+  {
+    icon: "briefcase",
+    title: "Customised for you",
+    body: "We customise every open-source agent for your specific use case. No generic templates. No one-size-fits-all prompts. Each agent is tailored to your industry, your pipeline, your voice and your revenue targets, so it doesn't just work, it works for you.",
+  },
+];
 
 const steps: { icon: IconName; title: string; body: string }[] = [
   {
-    icon: "flag",
-    title: "Pick or propose an agent",
-    body: "Choose an agent the community wants, or open an issue to propose one that helps people teach, learn, research or inform.",
-  },
-  {
     icon: "code",
-    title: "Build it together",
-    body: "Write it in the open with others, in Python with the maava agent SDK. Every pull request is a recorded contribution.",
+    title: "Developers contribute",
+    body: "Developers contribute new agents, prompts and workflows, in the open, where anyone can inspect, fork and improve them.",
   },
   {
-    icon: "shield",
-    title: "Community safety review",
-    body: "Reviewers check age suitability, the data it collects and fairness before anything reaches learners.",
+    icon: "store",
+    title: "Businesses deploy",
+    body: "Businesses deploy customised agents to run real revenue operations: prospecting, closing, retention and beyond.",
   },
   {
     icon: "gift",
-    title: "Share it, and share the rewards",
-    body: "It's free for schools, teachers and students. When it earns money, 60% rewards its contributors and 40% helps children in need.",
+    title: "Revenue flows back",
+    body: "When a business puts a maava agent to work and it earns, a share of that revenue flows back to the ecosystem.",
   },
 ];
 
@@ -41,11 +49,11 @@ export default async function AgentsPage() {
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">maava agents</p>
-          <h1 className="mt-2 font-display text-display text-balance">Agents we build together.</h1>
+          <p className="text-callout font-semibold text-fg-2 sm:text-body">maava Community Agents</p>
+          <h1 className="mt-2 font-display text-display text-balance">Open-source agents for sales, marketing and growth.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
-            Open-source AI agents for education, written, reviewed and maintained by developers and contributors from
-            around the world. Free for schools, colleges, universities, teachers and students.
+            maava Community Agents is a fully open-source suite of AI agents for sales, marketing and growth, built on
+            top of open-source AI libraries that anyone can inspect, fork and improve.
           </p>
         </Reveal>
 
@@ -64,32 +72,25 @@ export default async function AgentsPage() {
           </a>
         </Reveal>
 
-        <Reveal delay={150} className="mt-14 grid gap-3 sm:mt-20 sm:grid-cols-2 sm:gap-5">
-          <div className="rounded-[28px] bg-surface p-7 sm:p-10">
-            <p className="font-display text-hero leading-none text-accent-text">60%</p>
-            <p className="mt-4 text-headline">to the contributors</p>
-            <p className="mt-2 text-body text-pretty text-fg-2">
-              When an agent earns money, 60% rewards the community who built it, split by their contributions
-              and decided through maavaDao governance.
-            </p>
-          </div>
-          <div className="rounded-[28px] bg-surface p-7 sm:p-10">
-            <p className="font-display text-hero leading-none text-accent-text">40%</p>
-            <p className="mt-4 text-headline">to children&rsquo;s education</p>
-            <p className="mt-2 text-body text-pretty text-fg-2">
-              40% helps children in need: it funds maava&rsquo;s work educating deserving children, orphans and street children. No listing
-              fees, no commissions.
-            </p>
-          </div>
-        </Reveal>
+        <div className="mt-14 grid gap-3 sm:mt-20 sm:grid-cols-2 sm:gap-5">
+          {pillars.map((p, i) => (
+            <Reveal key={p.title} delay={150 + i * 70} className="rounded-[28px] bg-surface p-7 sm:p-10">
+              <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-bg-alt text-cta">
+                <Icon name={p.icon} className="h-6 w-6" />
+              </span>
+              <h2 className="mt-5 text-title">{p.title}</h2>
+              <p className="mt-2 text-body text-pretty text-fg-2">{p.body}</p>
+            </Reveal>
+          ))}
+        </div>
 
         <section aria-labelledby="how" className="mt-16 sm:mt-24">
           <Reveal>
             <h2 id="how" className="text-title">
-              How an agent gets built
+              How it works
             </h2>
           </Reveal>
-          <ol className="gallery mt-6 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+          <ol className="gallery mt-6 sm:grid sm:grid-cols-3 sm:gap-5">
             {steps.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 70} className="flex h-full flex-col rounded-[28px] bg-surface p-6 sm:p-7">
                 <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-bg-alt text-cta">
@@ -101,6 +102,39 @@ export default async function AgentsPage() {
               </Reveal>
             ))}
           </ol>
+        </section>
+
+        <section aria-labelledby="share" className="mt-16 sm:mt-24">
+          <Reveal>
+            <h2 id="share" className="text-title">
+              Where the revenue goes
+            </h2>
+          </Reveal>
+          <Reveal delay={80} className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-5">
+            <div className="rounded-[28px] bg-surface p-7 sm:p-10">
+              <p className="font-display text-hero leading-none text-accent-text">40%</p>
+              <p className="mt-4 text-headline">Maava Charity</p>
+              <p className="mt-2 text-body text-pretty text-fg-2">
+                Funding the mission: educating deserving children, orphans and street children.
+              </p>
+            </div>
+            <div className="rounded-[28px] bg-surface p-7 sm:p-10">
+              <p className="font-display text-hero leading-none text-accent-text">60%</p>
+              <p className="mt-4 text-headline">The developer community</p>
+              <p className="mt-2 text-body text-pretty text-fg-2">
+                Rewarding the people who built it, split by their contributions and decided through maavaDao governance.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={120} className="mx-auto mt-10 max-w-[760px] text-center sm:mt-14">
+            <p className="font-display text-subhead font-semibold text-balance sm:text-title">
+              No middlemen. No SaaS lock-in.
+            </p>
+            <p className="mt-3 text-lede text-pretty text-fg-2">
+              Just open code, real revenue, and a circular economy where the people who build get paid, and the proceeds
+              do good.
+            </p>
+          </Reveal>
         </section>
 
         <section aria-labelledby="agents" className="mt-16 sm:mt-24">
@@ -118,7 +152,7 @@ export default async function AgentsPage() {
           </Reveal>
           {agents.length === 0 ? (
             <Reveal delay={80} className="mt-6 rounded-[28px] bg-surface p-10 text-center sm:p-14">
-              <p className="text-headline">The first maava agents are on their way.</p>
+              <p className="text-headline">The first maava Community Agents are on their way.</p>
               <p className="mt-2 text-body text-fg-2">
                 <a className="text-link hover:underline" href={MAAVA_AGENTS_REPO}>
                   Help build them
@@ -130,7 +164,7 @@ export default async function AgentsPage() {
             <Reveal delay={80} as="ul" className="mt-6 gallery sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
               {agents.map((a) => (
                 <li key={a.slug}>
-                  <ListingCard listing={a} label="maava agent" />
+                  <ListingCard listing={a} label="Community agent" />
                 </li>
               ))}
             </Reveal>

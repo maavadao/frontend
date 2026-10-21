@@ -27,8 +27,8 @@ npm run build && npm start
 
 ## Editing content
 
-- **Projects section:** `src/components/CommunityProjects.tsx` (maava agents plus marketplace listings, read from the maava-agents and registry indexes)
-- **Open-source AI repos, developers and maava agents:** `src/app/{repos,developers,agents}/`, with data helpers in `src/lib/{repos,developers}.ts`
+- **Projects section:** `src/components/CommunityProjects.tsx` (maava Community Agents plus marketplace listings, read from the maava-Community-Agents and registry indexes)
+- **Open-source AI repos, developers and maava Community Agents:** `src/app/{repos,developers,agents}/`, with data helpers in `src/lib/{repos,developers}.ts`
 - **Marketplace:** `src/app/marketplace/page.tsx` + `src/components/MarketplaceCatalog.tsx`, reading the registry's public `index.json` via `src/lib/registry.ts` (revalidated hourly, no database)
 - **Site name, links, contact email:** `src/lib/site.ts`
 - **Sections, roadmap and copy:** `src/app/page.tsx`

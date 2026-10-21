@@ -3,8 +3,8 @@
 export const REGISTRY_INDEX_URL =
   process.env.REGISTRY_INDEX_URL || "https://maavadao.github.io/marketplace-registry/index.json";
 export const MAAVA_AGENTS_INDEX_URL =
-  process.env.MAAVA_AGENTS_INDEX_URL || "https://maavadao.github.io/maava-agents/index.json";
-export const MAAVA_AGENTS_REPO = "https://github.com/maavadao/maava-agents";
+  process.env.MAAVA_AGENTS_INDEX_URL || "https://maavadao.github.io/maava-Community-Agents/index.json";
+export const MAAVA_AGENTS_REPO = "https://github.com/maavadao/maava-Community-Agents";
 export const REGISTRY_REPO = "https://github.com/maavadao/marketplace-registry";
 
 export const AUDIENCES = ["education", "individuals", "business"] as const;
@@ -70,7 +70,7 @@ export async function getRegistryIndex(): Promise<RegistryIndex | null> {
   }
 }
 
-/** maava agents, built together in the maava-agents repo, from its own published index. */
+/** maava Community Agents, built together in the maava-Community-Agents repo, from its own published index. */
 export async function getMaavaAgents(): Promise<RegistryListing[]> {
   try {
     const res = await fetch(MAAVA_AGENTS_INDEX_URL, { next: { revalidate: 3600 } });

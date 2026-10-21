@@ -138,7 +138,7 @@ export default async function DevelopersPage({
             href="/agents"
             className="press rounded-full bg-surface px-6 py-3 text-body font-medium text-fg hover:bg-bg"
           >
-            Build maava agents
+            Build Community Agents
           </Link>
         </Reveal>
 

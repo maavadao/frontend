@@ -2,10 +2,14 @@ import { ListingCard as Card } from "@/components/ListingCard";
 import { Reveal } from "@/components/Reveal";
 import { MAAVA_AGENTS_REPO, getMaavaAgents, getRegistryIndex, type RegistryListing } from "@/lib/registry";
 
-const isMaavaAgent = (l: RegistryListing) =>
-  !!l.links.repository?.toLowerCase().startsWith(MAAVA_AGENTS_REPO);
+// Listings added before the rename still point at the old maava-agents URL.
+const AGENT_REPOS = [MAAVA_AGENTS_REPO, "https://github.com/maavadao/maava-agents"].map((r) => r.toLowerCase());
+const isMaavaAgent = (l: RegistryListing) => {
+  const repo = l.links.repository?.toLowerCase();
+  return !!repo && AGENT_REPOS.some((r) => repo.startsWith(r));
+};
 
-/** maava agents, then the latest from the marketplace. Nothing from forked repos. */
+/** maava Community Agents, then the latest from the marketplace. Nothing from forked repos. */
 export async function CommunityProjects() {
   const [index, community] = await Promise.all([getRegistryIndex(), getMaavaAgents()]);
   const listings = index?.listings ?? [];
@@ -19,19 +23,19 @@ export async function CommunityProjects() {
       <Reveal>
         <h3 className="text-title">Built together</h3>
         <p className="mt-2 text-body text-fg-2">
-          maava agents: open-source agents the community writes, reviews and maintains together.
+          maava Community Agents: open-source agents for sales, marketing and growth, built and improved by the community.
         </p>
         {community.length > 0 ? (
           <ul className="gallery mt-6 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {community.map((l) => (
               <li key={l.slug}>
-                <Card listing={l} label="maava agent" />
+                <Card listing={l} label="Community agent" />
               </li>
             ))}
           </ul>
         ) : (
           <p className="mt-6 rounded-[28px] bg-surface p-8 text-center text-body text-fg-2 sm:p-12">
-            Our first maava agents are on their way. Want to help build them?{" "}
+            Our first maava Community Agents are on their way. Want to help build them?{" "}
             <a className="text-link hover:underline" href="/agents">
               Find out how
             </a>
@@ -60,7 +64,7 @@ export async function CommunityProjects() {
           <span className="ml-1 inline-block transition-transform group-hover:translate-x-1">›</span>
         </a>
         <a href="/agents" className="group text-body text-link hover:underline">
-          Build maava agents
+          Build Community Agents
           <span className="ml-1 inline-block transition-transform group-hover:translate-x-1">›</span>
         </a>
       </Reveal>

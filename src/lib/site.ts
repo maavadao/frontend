@@ -26,7 +26,7 @@ export const nav = [
   { href: "/marketplace", label: "Marketplace" },
   { href: "/repos", label: "AI repos" },
   { href: "/developers", label: "Developers" },
-  { href: "/agents", label: "maava agents" },
+  { href: "/agents", label: "Community Agents" },
   { href: "/#governance", label: "Governance" },
   { href: "/#contact", label: "Get involved" },
 ];

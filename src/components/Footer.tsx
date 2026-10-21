@@ -12,7 +12,7 @@ const columns = [
       { label: "Marketplace", href: "/marketplace" },
       { label: "Open-source AI repos", href: "/repos" },
       { label: "Developers", href: "/developers" },
-      { label: "maava agents", href: "/agents" },
+      { label: "maava Community Agents", href: "/agents" },
       { label: "Projects", href: "/#projects" },
       { label: "Governance", href: "/#governance" },
       { label: "Safeguarding", href: "/#safety" },
