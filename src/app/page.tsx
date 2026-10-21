@@ -138,6 +138,7 @@ const audiences: { icon: IconName; who: string; body: string }[] = [
 const phases = [
   ["Foundation", "Open-source repository, contributor guidelines and safeguarding standards."],
   ["maava Marketplace", "Free agent listing and discovery for educators, students and content creators."],
+  ["maava Studio", "Coming soon: a drag-and-drop workflow editor for building AI agents visually, no code needed."],
   ["DAO governance", "Project proposals and community voting at local, country and community level."],
   ["Maava School for AI", "AI education for deserving children, building on maava's two existing schools."],
   ["Community token", "Launch of the maavaDao token, with 75% distributed to developers, contributors and the wider community."],
@@ -434,10 +435,10 @@ export default function Home() {
             title="What we're planning."
             lede="maavaDao is in its early stage. Here is the path from first agents to verifiable impact."
           />
-          <ol className="relative grid gap-8 lg:grid-cols-5 lg:gap-6">
+          <ol className="relative grid gap-8 lg:grid-cols-6 lg:gap-6">
             <span
               aria-hidden="true"
-              className="absolute top-7 right-[10%] left-[10%] hidden h-px bg-gradient-to-r from-gold via-ember to-violet lg:block"
+              className="absolute top-7 right-[8.33%] left-[8.33%] hidden h-px bg-gradient-to-r from-gold via-ember to-violet lg:block"
             />
 
             {phases.map(([title, body], i) => (
