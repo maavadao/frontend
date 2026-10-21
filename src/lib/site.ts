@@ -4,8 +4,9 @@ export const site = {
   url: "https://maavadao.com",
   tagline:
     "Build it. Own it. Share it. Free for everyone, with a share of every success going to children who need it most.",
+  subline: "Contribute and get rewarded for your work, while helping children in need.",
   description:
-    "maavaDao brings together agentic AI and blockchain technologies to create an open, community-owned ecosystem for education. Developers build and list AI agents on the maava Marketplace; educators, students and content creators use them for free. When a product earns money, 60% goes to the community who built it and 40% funds education for deserving children, orphans and street children.",
+    "maavaDao brings together agentic AI and blockchain technologies to create an open, community-owned ecosystem for education. Developers build and list AI agents on the maava Marketplace; educators, students and content creators use them for free. When a product earns money, 60% rewards the contributors who built it and 40% helps children in need: deserving children, orphans and street children, through maava's schools.",
   mission:
     "To build a community-owned ecosystem of agentic AI for education, where every contribution is a recorded stake in what the community builds, and a share of every success funds education for the children who need it most.",
   // TODO: confirm the contact inbox and replace the placeholder community links.

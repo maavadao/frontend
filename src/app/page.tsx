@@ -22,7 +22,7 @@ const steps = [
   ["Propose a project", "Any community member can propose a new product: an AI science tutor, a research agent for content creators, a clinical-skills trainer."],
   ["The DAO votes", "The community votes on proposals, and approved projects get the backing of the community."],
   ["Build together", "Developers, educators, designers, translators and subject experts contribute. Every contribution is recorded transparently on the blockchain."],
-  ["Share the rewards", "When a product is monetised, 60% of the revenue goes to the contributors who built it, and 40% funds education for deserving children."],
+  ["Share the rewards", "When a product is monetised, 60% of the revenue rewards the contributors who built it, and 40% helps children in need."],
 ];
 
 const features: { icon: IconName; title: string; body: string; className?: string; feature?: boolean }[] = [
@@ -41,7 +41,7 @@ const features: { icon: IconName; title: string; body: string; className?: strin
   {
     icon: "gift",
     title: "60% to the contributors",
-    body: "When a product is monetised, revenue is split automatically: 60% to the community who built it, enforced in code by the blockchain, not left to promises.",
+    body: "When a product is monetised, revenue is split automatically: 60% rewards the community who built it and 40% helps children in need, enforced in code by the blockchain, not left to promises.",
   },
   {
     icon: "people",
@@ -181,6 +181,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={300}>
             <p className="mx-auto mt-5 max-w-[42rem] text-lede text-pretty text-fg-2 sm:mt-7">{site.tagline}</p>
+            <p className="mx-auto mt-3 max-w-[42rem] text-body text-pretty text-fg">{site.subline}</p>
           </Reveal>
           <Reveal delay={400} className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:mt-10">
             <Link href="/signup" className="press rounded-full bg-cta px-7 py-3.5 text-body font-medium text-white hover:bg-cta-hover">
