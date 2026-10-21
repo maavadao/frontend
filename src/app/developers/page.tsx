@@ -123,7 +123,7 @@ export default async function DevelopersPage({
           <p className="mt-5 text-lede text-pretty text-fg-2">
             maavaDao members who build with us, and{" "}
             {contributors ? `${number.format(contributors.count)} developers` : "the developers"} behind the most-starred
-            open-source AI repositories. Build an agent together, and 75% of what it earns goes to its contributors.
+            open-source AI repositories. Build an agent together, and 60% of what it earns goes to its contributors.
           </p>
         </Reveal>
 

@@ -64,8 +64,8 @@ export function Footer() {
       <div className="mx-auto max-w-[1148px] px-4 pt-10 pb-8 sm:px-6 sm:pt-12">
         <p className="border-b border-line pb-4 leading-relaxed">
           maavaDao is a community-owned ecosystem of agentic AI for education, governed as a decentralised autonomous
-          organisation. No fees, no commissions: 75% of every monetised product goes to the contributors who built
-          it, and 25% funds education for deserving children, orphans and street children. Open source under the
+          organisation. No fees, no commissions: 60% of every monetised product goes to the contributors who built
+          it, and 40% funds education for deserving children, orphans and street children. Open source under the
           Apache 2.0 Licence.
         </p>
 

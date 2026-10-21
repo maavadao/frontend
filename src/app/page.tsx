@@ -22,7 +22,7 @@ const steps = [
   ["Propose a project", "Any community member can propose a new product: an AI science tutor, a research agent for content creators, a clinical-skills trainer."],
   ["The DAO votes", "The community votes on proposals, and approved projects get the backing of the community."],
   ["Build together", "Developers, educators, designers, translators and subject experts contribute. Every contribution is recorded transparently on the blockchain."],
-  ["Share the rewards", "When a product is monetised, 75% of the revenue goes to the contributors who built it, and 25% funds education for deserving children."],
+  ["Share the rewards", "When a product is monetised, 60% of the revenue goes to the contributors who built it, and 40% funds education for deserving children."],
 ];
 
 const features: { icon: IconName; title: string; body: string; className?: string; feature?: boolean }[] = [
@@ -40,8 +40,8 @@ const features: { icon: IconName; title: string; body: string; className?: strin
   },
   {
     icon: "gift",
-    title: "75% to the contributors",
-    body: "When a product is monetised, revenue is split automatically: 75% to the community who built it, enforced in code by the blockchain, not left to promises.",
+    title: "60% to the contributors",
+    body: "When a product is monetised, revenue is split automatically: 60% to the community who built it, enforced in code by the blockchain, not left to promises.",
   },
   {
     icon: "people",
@@ -228,8 +228,8 @@ export default function Home() {
         <dl className="mx-auto mt-12 grid max-w-[900px] grid-cols-2 gap-x-4 gap-y-8 text-center sm:mt-20 sm:grid-cols-4 sm:gap-y-10">
           {[
             ["Free", "to create, list and use"],
-            ["75%", "to contributors"],
-            ["25%", "to children's education"],
+            ["60%", "to contributors"],
+            ["40%", "to children's education"],
             ["0%", "commission, ever"],
           ].map(([value, label], i) => (
             <Reveal key={label} delay={i * 80}>

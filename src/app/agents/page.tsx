@@ -8,7 +8,7 @@ import { MAAVA_AGENTS_REPO, getMaavaAgents } from "@/lib/registry";
 export const metadata: Metadata = {
   title: "maava agents",
   description:
-    "Open-source AI agents for education, built together by the maavaDao community. Free for education; 75% of what an agent earns goes to its contributors and 25% educates children who need it most.",
+    "Open-source AI agents for education, built together by the maavaDao community. Free for education; 60% of what an agent earns goes to its contributors and 40% educates children who need it most.",
 };
 
 const steps: { icon: IconName; title: string; body: string }[] = [
@@ -30,7 +30,7 @@ const steps: { icon: IconName; title: string; body: string }[] = [
   {
     icon: "gift",
     title: "Share it, and share the rewards",
-    body: "It's free for schools, teachers and students. When it earns money, the revenue is split 75/25.",
+    body: "It's free for schools, teachers and students. When it earns money, the revenue is split 60/40.",
   },
 ];
 
@@ -66,7 +66,7 @@ export default async function AgentsPage() {
 
         <Reveal delay={150} className="mt-14 grid gap-3 sm:mt-20 sm:grid-cols-2 sm:gap-5">
           <div className="rounded-[28px] bg-surface p-7 sm:p-10">
-            <p className="font-display text-hero leading-none text-accent-text">75%</p>
+            <p className="font-display text-hero leading-none text-accent-text">60%</p>
             <p className="mt-4 text-headline">to the contributors</p>
             <p className="mt-2 text-body text-pretty text-fg-2">
               When an agent earns money, three quarters goes to the community who built it, split by their contributions
@@ -74,7 +74,7 @@ export default async function AgentsPage() {
             </p>
           </div>
           <div className="rounded-[28px] bg-surface p-7 sm:p-10">
-            <p className="font-display text-hero leading-none text-accent-text">25%</p>
+            <p className="font-display text-hero leading-none text-accent-text">40%</p>
             <p className="mt-4 text-headline">to children&rsquo;s education</p>
             <p className="mt-2 text-body text-pretty text-fg-2">
               A quarter funds maava&rsquo;s work educating deserving children, orphans and street children. No listing

@@ -2,7 +2,7 @@
 
 The website for [maavaDao](https://maavadao.com): **a community-owned ecosystem of agentic AI and blockchain technologies for education.**
 
-Developers build and list AI agents on the maava Marketplace, free. Educators, students and content creators use them to teach, learn, research and inform. There are no listing fees, no creation fees and no commissions; when a product earns money, 75% goes to the community who built it and 25% funds education for deserving children, orphans and street children, through a decentralised autonomous organisation (DAO).
+Developers build and list AI agents on the maava Marketplace, free. Educators, students and content creators use them to teach, learn, research and inform. There are no listing fees, no creation fees and no commissions; when a product earns money, 60% goes to the community who built it and 40% funds education for deserving children, orphans and street children, through a decentralised autonomous organisation (DAO).
 
 Built with Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS v4. The design follows Apple's principles of clarity, deference and depth: system typography, generous whitespace, neutral surfaces, a single accent, frosted navigation, scroll reveals, and automatic light and dark mode.
 

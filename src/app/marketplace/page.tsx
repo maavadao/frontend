@@ -22,7 +22,7 @@ export default async function MarketplacePage() {
           <h1 className="mt-2 font-display text-display text-balance">AI agents and tools, built by the community.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             Free for schools, colleges, universities, teachers and students, to teach, learn, research and inform.
-            When a listing is monetised, 75% of the revenue goes back to the people who built it.
+            When a listing is monetised, 60% of the revenue goes back to the people who built it.
           </p>
         </Reveal>
 
