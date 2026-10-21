@@ -27,6 +27,7 @@ export const nav = [
   { href: "/repos", label: "AI repos" },
   { href: "/developers", label: "Developers" },
   { href: "/agents", label: "Community Agents" },
+  { href: "/vote", label: "Vote" },
   { href: "/#governance", label: "Governance" },
   { href: "/#contact", label: "Get involved" },
 ];

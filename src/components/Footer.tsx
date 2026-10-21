@@ -13,6 +13,7 @@ const columns = [
       { label: "Open-source AI repos", href: "/repos" },
       { label: "Developers", href: "/developers" },
       { label: "maava Community Agents", href: "/agents" },
+      { label: "Vote on ideas", href: "/vote" },
       { label: "Projects", href: "/#projects" },
       { label: "Governance", href: "/#governance" },
       { label: "Safeguarding", href: "/#safety" },
