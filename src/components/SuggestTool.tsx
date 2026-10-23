@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { suggestTool, type SuggestState } from "@/app/ai-tools/actions";
+import { suggestTool, type SuggestState } from "@/app/directory/actions";
 import { Field } from "./Field";
 
 /** "Suggest a tool": members send a web address and an optional note; the team adds it to the directory. */

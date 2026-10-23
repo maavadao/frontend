@@ -21,7 +21,7 @@ import {
 } from "@/lib/tools";
 
 export const metadata: Metadata = {
-  title: "AI tools",
+  title: "Directory",
   description:
     "A directory of AI tools, sites and suites, open source or not: what they do, what they cost, and what maavaDao members think of them.",
 };
@@ -35,7 +35,7 @@ function first(v: string | string[] | undefined): string {
   return (Array.isArray(v) ? v[0] : v) ?? "";
 }
 
-/** /ai-tools URL for a set of filters, leaving out defaults so links stay short. */
+/** /directory URL for a set of filters, leaving out defaults so links stay short. */
 function href({ q, category, price, sort, page }: Params): string {
   const p = new URLSearchParams();
   if (q) p.set("q", q);
@@ -44,7 +44,7 @@ function href({ q, category, price, sort, page }: Params): string {
   if (sort !== "rated") p.set("sort", sort);
   if (page > 1) p.set("page", String(page));
   const s = p.toString();
-  return s ? `/ai-tools?${s}` : "/ai-tools";
+  return s ? `/directory?${s}` : "/directory";
 }
 
 function Preview({ tool }: { tool: Tool }) {
@@ -74,7 +74,7 @@ function ToolCard({ tool, category, rating }: { tool: Tool; category?: string; r
   const price = priceLabel(tool);
   return (
     <Link
-      href={`/ai-tools/${tool.slug}`}
+      href={`/directory/${tool.slug}`}
       className="press group flex h-full flex-col rounded-[24px] bg-surface p-3 sm:rounded-[28px] sm:p-4 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
     >
       <Preview tool={tool} />
@@ -141,7 +141,7 @@ export default async function AiToolsPage({
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">AI tools</p>
+          <p className="text-callout font-semibold text-fg-2 sm:text-body">Directory</p>
           <h1 className="mt-2 font-display text-display text-balance">Find the right AI tool.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             {index ? `${number.format(index.count)} AI tools` : "AI tools"}, sites and suites: what they do, what they
@@ -199,7 +199,7 @@ export default async function AiToolsPage({
 
             <div className="mt-8 mb-8 flex flex-col gap-4 sm:mt-10 sm:mb-10 lg:flex-row lg:items-center lg:justify-between">
               <SearchField
-                action="/ai-tools"
+                action="/directory"
                 q={params.q}
                 keep={{ category: params.category, price: params.price, sort: params.sort === "rated" ? "" : params.sort }}
                 label="Search tools, companies or tags"

@@ -22,11 +22,11 @@ async function member(slug: string | null, next: string) {
 /** Rate 1–5 stars; rating the same score again removes the rating. */
 export async function rateTool(slug: string, score: number) {
   if (!Number.isInteger(score) || score < 1 || score > 5) return;
-  const { supabase, userId } = await member(slug, `/ai-tools/${slug}`);
+  const { supabase, userId } = await member(slug, `/directory/${slug}`);
   const { data: current } = await supabase.from("tool_ratings").select("score").eq("tool_slug", slug).eq("user_id", userId).maybeSingle();
   if (current?.score === score) await supabase.from("tool_ratings").delete().eq("tool_slug", slug).eq("user_id", userId);
   else await supabase.from("tool_ratings").upsert({ tool_slug: slug, user_id: userId, score });
-  revalidatePath(`/ai-tools/${slug}`);
+  revalidatePath(`/directory/${slug}`);
 }
 
 export type SuggestState = { error?: string; sent?: boolean };
@@ -36,7 +36,7 @@ export async function suggestTool(_prev: SuggestState, form: FormData): Promise<
   const website = String(form.get("website") ?? "").trim();
   const note = String(form.get("note") ?? "").trim().slice(0, 500);
   if (!/^https:\/\/\S+$/.test(website) || website.length > 300) return { error: "Enter the tool's web address, starting with https://" };
-  const { supabase, userId } = await member(null, "/ai-tools#suggest");
+  const { supabase, userId } = await member(null, "/directory#suggest");
   const { error } = await supabase.from("tool_suggestions").insert({ user_id: userId, website, note: note || null });
   if (error) return { error: error.message.includes("suggested a lot") ? error.message : "We couldn't send that. Please try again." };
   return { sent: true };

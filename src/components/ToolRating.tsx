@@ -2,7 +2,7 @@
 
 import { useOptimistic, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { rateTool } from "@/app/ai-tools/actions";
+import { rateTool } from "@/app/directory/actions";
 import { Icon } from "./Icon";
 
 const LABELS = ["", "Poor", "Fair", "Good", "Great", "Outstanding"];
@@ -33,7 +33,7 @@ export function ToolRating({ slug, mine, signedIn }: { slug: string; mine: numbe
             aria-checked={score === n}
             aria-label={`${n} star${n === 1 ? "" : "s"}: ${LABELS[n]}`}
             onPointerEnter={() => setPreview(n)}
-            onClick={() => (signedIn ? rate(n) : router.push(`/login?next=${encodeURIComponent(`/ai-tools/${slug}`)}`))}
+            onClick={() => (signedIn ? rate(n) : router.push(`/login?next=${encodeURIComponent(`/directory/${slug}`)}`))}
             className={`press flex h-11 w-11 items-center justify-center rounded-full ${n <= shown ? "text-[#ff9f0a]" : "text-fg-2/40"} hover:bg-bg-alt`}
           >
             <Icon name="star" className={`h-7 w-7 ${n <= shown ? "[&_path]:fill-current" : ""}`} />

@@ -10,7 +10,7 @@ const columns = [
     links: [
       { label: "How it works", href: "/#how-it-works" },
       { label: "Marketplace", href: "/marketplace" },
-      { label: "AI tools", href: "/ai-tools" },
+      { label: "Directory", href: "/directory" },
       { label: "Open-source AI repos", href: "/repos" },
       { label: "Developers", href: "/developers" },
       { label: "maava Community Agents", href: "/agents" },

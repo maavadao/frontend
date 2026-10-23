@@ -19,7 +19,7 @@ const PLATFORMS: Record<string, string> = {
   discord: "Discord",
 };
 
-export async function generateMetadata({ params }: PageProps<"/ai-tools/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/directory/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const found = await getTool(slug);
   if (!found) return { title: "Tool not found" };
@@ -50,7 +50,7 @@ function Fact({ label, children }: { label: string; children: React.ReactNode })
   );
 }
 
-export default async function ToolPage({ params }: PageProps<"/ai-tools/[slug]">) {
+export default async function ToolPage({ params }: PageProps<"/directory/[slug]">) {
   const { slug } = await params;
   const found = await getTool(slug);
   if (!found) notFound();
@@ -67,8 +67,8 @@ export default async function ToolPage({ params }: PageProps<"/ai-tools/[slug]">
   return (
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28">
       <div className="mx-auto max-w-[880px]">
-        <Link href="/ai-tools" className="inline-flex min-h-11 items-center text-callout text-link hover:underline">
-          <span aria-hidden="true" className="mr-1">‹</span> AI tools
+        <Link href="/directory" className="inline-flex min-h-11 items-center text-callout text-link hover:underline">
+          <span aria-hidden="true" className="mr-1">‹</span> Directory
         </Link>
 
         <article className="-mx-4 mt-4 bg-surface px-4 py-6 sm:mx-0 sm:rounded-[28px] sm:p-10">
@@ -87,7 +87,7 @@ export default async function ToolPage({ params }: PageProps<"/ai-tools/[slug]">
             <ul className="mt-4 flex flex-wrap gap-2">
               {tool.tags.map((t) => (
                 <li key={t}>
-                  <Link href={`/ai-tools?q=${encodeURIComponent(t)}`} className="rounded-full bg-bg-alt px-3 py-1 text-footnote text-fg-2 hover:text-fg">
+                  <Link href={`/directory?q=${encodeURIComponent(t)}`} className="rounded-full bg-bg-alt px-3 py-1 text-footnote text-fg-2 hover:text-fg">
                     {t}
                   </Link>
                 </li>
