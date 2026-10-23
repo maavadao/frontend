@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { Reveal } from "./Reveal";
 import { countries } from "@/lib/countries";
 import { getCommunityWall } from "@/lib/community-wall";
@@ -18,6 +19,9 @@ const flag = (code: string) => String.fromCodePoint(...[...code.toUpperCase()].m
 
 /** Volunteers, students, teachers and other supporters who chose to appear on the home page. */
 export async function CommunityWall() {
+  // Render per request, not at build: Supabase's settings exist only at runtime, so a build-time
+  // render was always empty. The data itself stays cached (src/lib/community-wall.ts).
+  await connection();
   const wall = await getCommunityWall();
   const people = wall?.people ?? [];
 
