@@ -1,5 +1,5 @@
 // The developer community: maavaDao members who opted in to the directory (Supabase table
-// developer_directory), and contributors to the most-starred open-source AI repos (contributors.json,
+// developer_directory), and contributors to the open-source AI repos in the directory (contributors.json,
 // published by github.com/maavadao/open-source-ai-repos from public GitHub data, with an opt-out).
 
 import { createClient } from "@/lib/supabase/server";
@@ -37,9 +37,21 @@ export const OPT_OUT_URL = `${REPOS_REPO}/issues/new?template=remove-me.yml`;
 /** Contributors from the published file, or null if it can't be fetched. */
 export const getContributors = memoJson<ContributorsIndex>(`${REPOS_PAGES}/contributors.json`);
 
+let byLoginCache: { from: ContributorsIndex; map: Map<string, Contributor> } | null = null;
+
+/** One contributor by GitHub login (case-insensitive), without scanning the whole list each time. */
+export async function getContributor(login: string): Promise<Contributor | null> {
+  const index = await getContributors();
+  if (!index) return null;
+  if (byLoginCache?.from !== index) {
+    byLoginCache = { from: index, map: new Map(index.developers.map((d) => [d.login.toLowerCase(), d])) };
+  }
+  return byLoginCache.map.get(login.toLowerCase()) ?? null;
+}
+
 let byRepo: { from: ContributorsIndex; map: Map<string, { login: string; id: number; commits: number }[]> } | null = null;
 
-/** Top contributors of one repo, most commits first (only the most-starred repos are covered). */
+/** Top contributors of one repo, most commits first (repos GitHub can't list, or archived ones, are missing). */
 export async function getRepoContributors(slug: string) {
   const index = await getContributors();
   if (!index) return { covered: false, people: [] };
@@ -129,7 +141,10 @@ export function findContributors(
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
   const hits = words.length
     ? people.filter((p) => {
-        const hay = `${p.login} ${p.repos.map(([slug]) => `${slug} ${repoNames.get(slug) ?? ""}`).join(" ")}`.toLowerCase();
+        // Logins first: most searches are a name, and building the repo text for ~90k people is slow.
+        const login = p.login.toLowerCase();
+        if (words.every((w) => login.includes(w))) return true;
+        const hay = `${login} ${p.repos.map(([slug]) => `${slug} ${repoNames.get(slug) ?? ""}`).join(" ")}`.toLowerCase();
         return words.every((w) => hay.includes(w));
       })
     : [...people];

@@ -8,7 +8,7 @@ import { countries } from "@/lib/countries";
 import {
   HANDLE_RE,
   OPT_OUT_URL,
-  getContributors,
+  getContributor,
   getMember,
   roleLabel,
   type Contributor,
@@ -21,9 +21,8 @@ const number = new Intl.NumberFormat("en-GB");
 
 async function find(login: string): Promise<{ member: Member | null; contributor: Contributor | null }> {
   if (!HANDLE_RE.test(login)) return { member: null, contributor: null };
-  const [member, contributors] = await Promise.all([getMember(login), getContributors()]);
-  const key = (member?.github_login ?? login).toLowerCase();
-  const contributor = contributors?.developers.find((d) => d.login.toLowerCase() === key) ?? null;
+  const member = await getMember(login);
+  const contributor = await getContributor(member?.github_login ?? login);
   return { member, contributor };
 }
 
@@ -112,7 +111,7 @@ export default async function DeveloperPage({ params }: PageProps<"/developers/[
               <h2 id="contributes" className="text-title">
                 Contributes to
               </h2>
-              <p className="mt-2 text-body text-fg-2">Among the most-starred open-source AI repos, by commits.</p>
+              <p className="mt-2 text-body text-fg-2">Across open-source AI repos, by commits.</p>
             </Reveal>
             <Reveal delay={80} as="ul" className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 [&>li]:min-w-0">
               {contributor.repos.map(([slug, commits]) => {

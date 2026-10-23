@@ -222,7 +222,7 @@ export async function RepoDetail({ slug }: { slug: string }) {
           </ul>
         ) : (
           <p className="rounded-[20px] bg-bg-alt p-5 text-body text-fg-2">
-            We list contributors for the 500 most-starred repos. See this repo&rsquo;s contributors on GitHub.
+            We don&rsquo;t have contributors for this repo yet. See this repo&rsquo;s contributors on GitHub.
           </p>
         )}
       </Section>

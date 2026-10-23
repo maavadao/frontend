@@ -21,7 +21,7 @@ import { REPOS_REPO, getReposIndex } from "@/lib/repos";
 export const metadata: Metadata = {
   title: "Developers",
   description:
-    "The people building open-source AI: maavaDao members, and the contributors behind the most-starred open-source AI repositories.",
+    "The people building open-source AI: maavaDao members, and the contributors behind open-source AI repositories.",
 };
 
 const PAGE_SIZE = 40;
@@ -101,7 +101,10 @@ export default async function DevelopersPage({
   const sp = await searchParams;
   const [contributors, members, repos] = await Promise.all([getContributors(), getMembers(), getReposIndex()]);
   const repoNames = new Map((repos?.repos ?? []).map((r) => [r.slug, r.name]));
-  const byLogin = new Map((contributors?.developers ?? []).map((d) => [d.login.toLowerCase(), d]));
+  const memberLogins = new Set(members.flatMap((m) => (m.github_login ? [m.github_login.toLowerCase()] : [])));
+  const byLogin = new Map(
+    (contributors?.developers ?? []).filter((d) => memberLogins.has(d.login.toLowerCase())).map((d) => [d.login.toLowerCase(), d]),
+  );
 
   const rawSort = first(sp.sort);
   const params: Params = {
@@ -122,8 +125,8 @@ export default async function DevelopersPage({
           <h1 className="mt-2 font-display text-display text-balance">The people building open-source AI.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             maavaDao members who build with us, and{" "}
-            {contributors ? `${number.format(contributors.count)} developers` : "the developers"} behind the most-starred
-            open-source AI repositories. Build an agent together, get rewarded for your work, and help children in need: 60% of what it earns goes to its contributors and 40% to children&rsquo;s education.
+            {contributors ? `${number.format(contributors.count)} developers` : "the developers"} behind open-source AI
+            repositories. Build an agent together, get rewarded for your work, and help children in need: 60% of what it earns goes to its contributors and 40% to children&rsquo;s education.
           </p>
         </Reveal>
 
@@ -180,7 +183,7 @@ export default async function DevelopersPage({
               Contributors to open-source AI
             </h2>
             <p className="mt-2 text-body text-pretty text-fg-2">
-              The top contributors to the {contributors ? number.format(contributors.repos_covered) : "500"} most-starred
+              The top contributors to {contributors ? number.format(contributors.repos_covered) : "thousands of"}
               repos in our{" "}
               <Link className="text-link hover:underline" href="/repos">
                 open-source AI directory
