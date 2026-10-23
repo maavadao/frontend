@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useOptimistic, useState, useTransition } from "react";
+import { startTransition, useActionState, useOptimistic, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteIdea, postIdea, reportIdea, toggleVote } from "@/app/vote/actions";
 
@@ -49,7 +49,15 @@ export function IdeaForm() {
   const field =
     "w-full rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20";
   return (
-    <form action={action} className="grid gap-3">
+    <form
+      // Not action={action}: React's automatic reset would blank these controlled fields when posting fails.
+      onSubmit={(e) => {
+        e.preventDefault();
+        const form = new FormData(e.currentTarget);
+        startTransition(() => action(form));
+      }}
+      className="grid gap-3"
+    >
       <label className="grid gap-1.5">
         <span className="text-callout font-medium">Your idea</span>
         <input

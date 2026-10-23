@@ -10,6 +10,7 @@ export const roles = [
   { id: "developer", label: "An AI developer", hint: "Build and list agents for education" },
   { id: "contributor", label: "An open-source contributor", hint: "Review code, translate, report safety issues" },
   { id: "educator", label: "A school, orphanage or educator", hint: "Use agents free of charge with your learners" },
+  { id: "volunteer", label: "A volunteer or supporter", hint: "Refer schools and orphanages, give your time, spread the word" },
   { id: "organisation", label: "A small business or community organisation", hint: "Use practical agents without commercial costs" },
   { id: "funder", label: "A funder, NGO or partner", hint: "Support the mission and see verifiable impact" },
 ] as const;
@@ -31,3 +32,6 @@ export function validateProfile(d: Input): ProfileErrors {
   if (d.terms !== "on") e.terms = "Please agree to continue.";
   return e;
 }
+
+/** Roles that help in ways other than code. After onboarding they go to the get-involved form. */
+export const supporterRoles: readonly Role[] = ["student", "educator", "volunteer", "organisation", "funder"];

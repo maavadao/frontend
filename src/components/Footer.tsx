@@ -38,7 +38,8 @@ const columns = [
   {
     title: "Get in touch",
     links: [
-      { label: "Get involved", href: "/#contact" },
+      { label: "Get involved", href: "/get-involved" },
+      { label: "Refer a school or orphanage", href: "/get-involved#refer" },
       { label: site.email, href: hasEmail ? `mailto:${site.email}` : "/#contact" },
     ],
   },

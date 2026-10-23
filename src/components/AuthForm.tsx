@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useActionState, useEffect, useState, type ReactNode } from "react";
+import { Field } from "./Field";
 import { LogoMark } from "./Logo";
+import { sendEmailCode, verifyEmailCode } from "@/app/auth/email/actions";
 import type { Provider } from "@/lib/auth";
 
 type Mode = "login" | "signup";
@@ -61,7 +63,9 @@ export function AuthForm({ mode, next = "/", error }: Props) {
           {isSignup ? "Join maavaDao" : "Sign in to maavaDao"}
         </h1>
         <p className="mt-2 text-body text-fg-2">
-          {isSignup ? "One account to build, review, govern and support." : "Welcome back. Pick up where you left off."}
+          {isSignup
+            ? "Everyone is welcome: developers, volunteers, students, teachers and anyone who wants to help."
+            : "Welcome back. Pick up where you left off."}
         </p>
       </div>
 
@@ -93,10 +97,33 @@ export function AuthForm({ mode, next = "/", error }: Props) {
         ))}
       </form>
 
+      <div className="my-6 flex items-center gap-3 text-footnote text-fg-2" aria-hidden="true">
+        <span className="h-px flex-1 bg-line" />
+        or with your email
+        <span className="h-px flex-1 bg-line" />
+      </div>
+      <EmailSignIn next={next} />
+
       {isSignup && (
         <p className="mt-5 px-1 text-center text-footnote text-fg-2">
           Next, you&apos;ll choose a username, your country and how you&apos;re joining.
         </p>
+      )}
+
+      {isSignup && (
+        <div className="mt-8 rounded-2xl bg-surface p-5 text-center">
+          <p className="text-headline">Not a developer? You belong here too.</p>
+          <p className="mt-1.5 text-callout text-pretty text-fg-2">
+            Volunteer, refer a school or orphanage, teach, translate or spread the word. Every bit of help reaches
+            children in need.
+          </p>
+          <Link
+            href="/get-involved"
+            className="press mt-4 inline-flex min-h-11 items-center rounded-full border border-line bg-field px-5 text-callout font-medium hover:border-cta"
+          >
+            Open the get-involved form
+          </Link>
+        </div>
       )}
 
       <div aria-live="polite">
@@ -110,5 +137,78 @@ export function AuthForm({ mode, next = "/", error }: Props) {
         </Link>
       </p>
     </div>
+  );
+}
+
+/** Sign in with a 6-digit code sent by email. The email's link works too, in the same browser. */
+function EmailSignIn({ next }: { next: string }) {
+  const [sent, send, sending] = useActionState(sendEmailCode, {});
+  // Back to the email field after "Use a different email"; each send starts a fresh code form.
+  const [changing, setChanging] = useState(false);
+  const [round, setRound] = useState(0);
+  if (sent.email && !changing && !sending)
+    return <CodeForm key={round} email={sent.email} next={next} onRestart={() => setChanging(true)} />;
+  return (
+    <form
+      action={(f) => {
+        setChanging(false);
+        setRound((r) => r + 1);
+        send(f);
+      }}
+      className="grid gap-3"
+    >
+      <input type="hidden" name="next" value={next} />
+      <Field
+        label="Email"
+        name="email"
+        type="email"
+        autoComplete="email"
+        inputMode="email"
+        required
+        defaultValue={sent.email ?? sent.typed}
+        error={sent.error}
+      />
+      <button
+        type="submit"
+        disabled={sending}
+        className="press h-12 rounded-xl border border-line bg-field text-body font-medium hover:bg-bg-alt disabled:opacity-60"
+      >
+        {sending ? "Sending…" : "Email me a sign-in code"}
+      </button>
+    </form>
+  );
+}
+
+function CodeForm({ email, next, onRestart }: { email: string; next: string; onRestart: () => void }) {
+  const [state, verify, verifying] = useActionState(verifyEmailCode, { email });
+  return (
+    <form action={verify} className="grid gap-3">
+      <input type="hidden" name="next" value={next} />
+      <p className="px-1 text-callout text-pretty text-fg-2" aria-live="polite">
+        We&apos;ve sent a code to <span className="font-medium text-fg">{email}</span>. Enter it here, or open the link in
+        the email.
+      </p>
+      <Field
+        label="6-digit code"
+        name="code"
+        inputMode="numeric"
+        autoComplete="one-time-code"
+        pattern="[0-9 ]*"
+        maxLength={7}
+        required
+        autoFocus
+        error={state.error}
+      />
+      <button
+        type="submit"
+        disabled={verifying}
+        className="press h-12 rounded-xl bg-cta text-body font-medium text-white hover:bg-cta-hover disabled:opacity-60"
+      >
+        {verifying ? "Checking…" : "Sign in"}
+      </button>
+      <button type="button" onClick={onRestart} className="min-h-11 text-callout text-link hover:underline">
+        Use a different email, or send a new code
+      </button>
+    </form>
   );
 }

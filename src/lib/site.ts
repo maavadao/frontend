@@ -29,5 +29,5 @@ export const nav = [
   { href: "/agents", label: "Community Agents" },
   { href: "/vote", label: "Vote" },
   { href: "/#governance", label: "Governance" },
-  { href: "/#contact", label: "Get involved" },
+  { href: "/get-involved", label: "Get involved" },
 ];

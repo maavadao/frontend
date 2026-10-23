@@ -7,9 +7,11 @@ export function safeNext(value: string | null | undefined) {
 
 /** The public origin. Behind Cloud Run or another proxy, prefer the forwarded host. */
 export function siteOrigin(request: NextRequest) {
-  const host = request.headers.get("x-forwarded-host");
-  if (host && process.env.NODE_ENV !== "development") {
-    return `${request.headers.get("x-forwarded-proto") ?? "https"}://${host}`;
-  }
-  return request.nextUrl.origin;
+  return originFromHeaders(request.headers) ?? request.nextUrl.origin;
+}
+
+/** The forwarded public origin behind a proxy, if any. Server Actions fall back to the request's Origin header. */
+export function originFromHeaders(headers: Headers) {
+  const host = process.env.NODE_ENV !== "development" && headers.get("x-forwarded-host");
+  return host ? `${headers.get("x-forwarded-proto") ?? "https"}://${host}` : null;
 }

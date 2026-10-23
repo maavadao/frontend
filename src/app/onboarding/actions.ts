@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { getClaims } from "@/lib/supabase/server";
-import { validateProfile, type ProfileErrors } from "@/lib/profile";
+import { supporterRoles, validateProfile, type ProfileErrors, type Role } from "@/lib/profile";
 import { safeNext } from "@/lib/urls";
 
 export type OnboardingState = { errors: ProfileErrors; values?: { username: string; country: string; role: string; terms: boolean } };
@@ -29,5 +29,8 @@ export async function completeOnboarding(_prev: OnboardingState, form: FormData)
     return { errors: { form: "We couldn't save your profile. Please try again." }, values };
   }
 
-  redirect(safeNext(String(form.get("next") ?? "")));
+  // Volunteers, students, educators and other supporters carry on to the get-involved form,
+  // unless they were already on their way somewhere.
+  const next = safeNext(String(form.get("next") ?? ""));
+  redirect(next === "/" && supporterRoles.includes(role as Role) ? "/get-involved?welcome=1" : next);
 }

@@ -4,8 +4,10 @@ import { Reveal } from "@/components/Reveal";
 import { LogoMark } from "@/components/Logo";
 import { Icon, type IconName } from "@/components/Icon";
 import { CommunityProjects } from "@/components/CommunityProjects";
+import { CommunityWall } from "@/components/CommunityWall";
 import { ContactForm } from "@/components/ContactForm";
 import { hasEmail, site } from "@/lib/site";
+import { helpWays } from "@/lib/supporters";
 
 function SectionHead({ eyebrow, title, lede }: { eyebrow: string; title: ReactNode; lede?: string }) {
   return (
@@ -141,15 +143,6 @@ const phases = [
   ["DAO governance", "Project proposals and community voting at local, country and community level."],
   ["Maava School for AI", "AI education for deserving children, building on maava's two existing schools."],
   ["Community token", "Launch of the maavaDao token, with 75% distributed to developers, contributors and the wider community."],
-];
-
-const ways = [
-  "Build or improve AI agents for education and content creation, or propose your own project",
-  "Use maava agents to research and create, and share what works",
-  "Tell us what your learners need and help review agents",
-  "Review agents for safety, quality and bias",
-  "Translate agents and learning content into local languages",
-  "Take part in governance and help shape policy",
 ];
 
 export default function Home() {
@@ -477,8 +470,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our community: supporters who chose to appear */}
+      <CommunityWall />
+
       {/* Get involved */}
-      <section id="contact" className="bg-bg px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
+      <section id="contact" className="bg-bg-alt px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
         <div className="mx-auto grid max-w-[1100px] gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal>
             <p className="text-callout font-semibold text-fg-2 sm:text-body">Get involved</p>
@@ -488,17 +484,13 @@ export default function Home() {
               <span className="text-brand">every child.</span>
             </h2>
             <p className="mt-5 max-w-[28rem] text-lede text-pretty text-fg-2">
-              We are looking for founding contributors, education partners and pilot communities. Not every way to help
-              involves code.
+              maavaDao is an ever-welcoming community. You don&apos;t need to write code to belong here: volunteers,
+              students, teachers, parents and supporters are as much a part of it as developers.
             </p>
-            <ul className="mt-8 space-y-3">
-              {ways.map((w) => (
-                <li key={w} className="flex gap-3 text-body">
-                  <span aria-hidden="true" className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-gold to-ember" />
-                  {w}
-                </li>
-              ))}
-            </ul>
+            <p className="mt-4 max-w-[28rem] text-body text-pretty text-fg-2">
+              Give some time, refer a school or orphanage, teach, translate or spread the word. Every bit of help
+              reaches children in need.
+            </p>
             <ul className="mt-8 space-y-1 text-body sm:mt-10">
               {[
                 ["GitHub", site.links.github, "github.com/maavadao"],
@@ -518,8 +510,49 @@ export default function Home() {
               ))}
             </ul>
           </Reveal>
-          <Reveal delay={120} className="-mx-4 self-start bg-bg-alt px-4 py-8 sm:mx-0 sm:rounded-[28px] sm:p-10">
-            <ContactForm />
+          <Reveal delay={120} className="-mx-4 self-start bg-surface px-4 py-8 sm:mx-0 sm:rounded-[28px] sm:p-10">
+            {/* A plain GET form: the chosen ways arrive pre-ticked on /get-involved, before or after joining. */}
+            <form action="/get-involved" method="get">
+              <fieldset>
+                <legend className="text-title">How would you like to help?</legend>
+                <p className="mt-1.5 text-callout text-fg-2">Choose any. You can change them later.</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {helpWays.map((w) => (
+                    <label
+                      key={w.id}
+                      className="press flex min-h-11 cursor-pointer items-center rounded-full border border-line bg-field px-4 text-callout has-checked:border-cta has-checked:bg-cta has-checked:text-white has-focus-visible:ring-4 has-focus-visible:ring-cta/20"
+                    >
+                      <input type="checkbox" name="way" value={w.id} className="sr-only" />
+                      {w.label}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              <button
+                type="submit"
+                className="press mt-6 min-h-12 rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover"
+              >
+                Open the get-involved form
+              </button>
+              <p className="mt-4 text-callout text-fg-2">
+                A developer?{" "}
+                <Link href="/agents" className="text-link hover:underline">
+                  Build maava Community Agents
+                </Link>
+                .
+              </p>
+            </form>
+            <details className="group mt-8 border-t border-line pt-4">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-callout text-link [&::-webkit-details-marker]:hidden">
+                Have a question, or a business enquiry? Send us a message
+                <span aria-hidden="true" className="text-fg-2 transition-transform group-open:rotate-180">
+                  ⌄
+                </span>
+              </summary>
+              <div className="mt-4">
+                <ContactForm />
+              </div>
+            </details>
           </Reveal>
         </div>
       </section>

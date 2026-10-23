@@ -56,7 +56,10 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
       <div className="text-center">
         <LogoMark className="mx-auto h-16 w-16 drop-shadow-[0_12px_30px_rgb(127_90_240/0.35)]" />
         <h1 className="mt-6 text-title sm:text-[2rem]">Set up your account</h1>
-        <p className="mt-2 text-body text-fg-2">Tell us who you are, where you are, and how you&apos;d like to take part.</p>
+        <p className="mt-2 text-body text-pretty text-fg-2">
+          Welcome! Everyone has a place here, whether you write code or not. Tell us who you are, where you are, and how
+          you&apos;d like to take part.
+        </p>
       </div>
 
       <form noValidate action={action} onSubmit={onSubmit} onBlur={onBlur} onChange={onChange} className="mt-8 grid gap-3">
