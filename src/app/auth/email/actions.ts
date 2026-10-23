@@ -1,8 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { NEXT_COOKIE } from "@/lib/auth";
 import { originFromHeaders, safeNext } from "@/lib/urls";
 
 /** `email` is set once a code is on its way; `typed` keeps what was entered when sending failed. */
@@ -10,7 +11,7 @@ export type EmailState = { email?: string; typed?: string; error?: string };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** Email a 6-digit code and a one-tap link. New and returning members get the same email. */
+/** Email a sign-in code and a one-tap link. New and returning members get the same email. */
 export async function sendEmailCode(_prev: EmailState, form: FormData): Promise<EmailState> {
   const email = String(form.get("email") ?? "").trim().toLowerCase();
   const next = safeNext(String(form.get("next") ?? ""));
@@ -32,15 +33,17 @@ export async function sendEmailCode(_prev: EmailState, form: FormData): Promise<
           : "We couldn't send the email. Please check the address and try again.";
     return { typed: email, error: message };
   }
+  (await cookies()).set(NEXT_COOKIE, next, { httpOnly: true, sameSite: "lax", secure: origin.startsWith("https"), maxAge: 3600, path: "/" });
   return { email };
 }
 
 /** Check the code from the email, then carry on like any other sign-in. */
 export async function verifyEmailCode(prev: EmailState, form: FormData): Promise<EmailState> {
   const email = prev.email ?? "";
+  // Supabase's code length is a project setting (6 to 10 digits), so accept any of them.
   const token = String(form.get("code") ?? "").replace(/\D/g, "");
   const next = safeNext(String(form.get("next") ?? ""));
-  if (token.length !== 6) return { email, error: "Enter the 6-digit code from the email." };
+  if (token.length < 6 || token.length > 10) return { email, error: "Enter the code from the email." };
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.verifyOtp({ email, token, type: "email" });

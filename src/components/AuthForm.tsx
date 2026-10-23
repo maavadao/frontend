@@ -38,6 +38,7 @@ const providers: { id: Provider; label: string; className: string; icon: ReactNo
 const failures = {
   callback: "That sign-in didn't complete. Please try again.",
   signin: "We couldn't reach the sign-in service. Please try again.",
+  expired: "That sign-in link has expired or was already used. Ask for a new code below, and type the code if the link fails again.",
 };
 
 type Props = { mode: Mode; next?: string; error?: keyof typeof failures };
@@ -140,7 +141,7 @@ export function AuthForm({ mode, next = "/", error }: Props) {
   );
 }
 
-/** Sign in with a 6-digit code sent by email. The email's link works too, in the same browser. */
+/** Sign in with a code sent by email. The email's link works too. */
 function EmailSignIn({ next }: { next: string }) {
   const [sent, send, sending] = useActionState(sendEmailCode, {});
   // Back to the email field after "Use a different email"; each send starts a fresh code form.
@@ -189,12 +190,12 @@ function CodeForm({ email, next, onRestart }: { email: string; next: string; onR
         the email.
       </p>
       <Field
-        label="6-digit code"
+        label="Code from the email"
         name="code"
         inputMode="numeric"
         autoComplete="one-time-code"
         pattern="[0-9 ]*"
-        maxLength={7}
+        maxLength={11}
         required
         autoFocus
         error={state.error}

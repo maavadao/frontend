@@ -19,5 +19,8 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?error=callback`);
+  // Supabase sends people back with error_code=otp_expired when an email link was already used,
+  // opened in another browser, or opened by a mail scanner first.
+  const expired = searchParams.get("error_code") === "otp_expired" || searchParams.get("error") === "access_denied";
+  return NextResponse.redirect(`${origin}/login?error=${expired ? "expired" : "callback"}&next=${encodeURIComponent(next)}`);
 }

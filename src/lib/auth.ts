@@ -1,11 +1,15 @@
 /**
  * Sign-in with Supabase Auth, with no passwords. Google and GitHub: the form posts
  * to /auth/signin and the provider returns to /auth/callback. Email: a Server Action
- * (src/app/auth/email/actions.ts) emails a 6-digit code and a link; the member types
- * the code, or opens the link, which also lands on /auth/callback. First-timers go
- * on to /onboarding to choose a username, country and role.
+ * (src/app/auth/email/actions.ts) emails a code and a link; the member types the code,
+ * or opens the link, which lands on /auth/confirm (any browser) or, with Supabase's
+ * default email, /auth/callback (same browser only). First-timers go on to /onboarding
+ * to choose a username, country and role.
  */
 export type Provider = "google" | "github";
+
+/** Where to go after an email sign-in, kept for /auth/confirm since the email's link can't carry it. */
+export const NEXT_COOKIE = "maava_next";
 
 /** Display-only check for the nav: is a Supabase session cookie present? Pages verify on the server. */
 export function hasSessionCookie() {

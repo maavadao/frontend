@@ -14,7 +14,7 @@ export default async function SignupPage({ searchParams }: PageProps<"/signup">)
 
   return (
     <main className="flex min-h-svh items-center justify-center bg-bg-alt px-4 pt-24 pb-16">
-      <AuthForm mode="signup" next={to} error={error === "callback" || error === "signin" ? error : undefined} />
+      <AuthForm mode="signup" next={to} error={error === "callback" || error === "signin" || error === "expired" ? error : undefined} />
     </main>
   );
 }

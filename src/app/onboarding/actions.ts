@@ -32,5 +32,8 @@ export async function completeOnboarding(_prev: OnboardingState, form: FormData)
   // Volunteers, students, educators and other supporters carry on to the get-involved form,
   // unless they were already on their way somewhere.
   const next = safeNext(String(form.get("next") ?? ""));
-  redirect(next === "/" && supporterRoles.includes(role as Role) ? "/get-involved?welcome=1" : next);
+  const supporter = supporterRoles.includes(role as Role);
+  if (supporter && next === "/") redirect("/get-involved?welcome=1");
+  if (next.startsWith("/get-involved")) redirect(`${next}${next.includes("?") ? "&" : "?"}welcome=1`);
+  redirect(next);
 }
