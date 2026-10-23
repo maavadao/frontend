@@ -2,8 +2,12 @@ import { ListingCard as Card } from "@/components/ListingCard";
 import { Reveal } from "@/components/Reveal";
 import { MAAVA_AGENTS_REPO, getMaavaAgents, getRegistryIndex, type RegistryListing } from "@/lib/registry";
 
-// Listings added before the rename still point at the old maava-agents URL.
-const AGENT_REPOS = [MAAVA_AGENTS_REPO, "https://github.com/maavadao/maava-agents"].map((r) => r.toLowerCase());
+// Each agent has its own community-agent-<name> repo; older listings point at the index (or its old name).
+const AGENT_REPOS = [
+  MAAVA_AGENTS_REPO,
+  "https://github.com/maavadao/community-agent-",
+  "https://github.com/maavadao/maava-agents",
+].map((r) => r.toLowerCase());
 const isMaavaAgent = (l: RegistryListing) => {
   const repo = l.links.repository?.toLowerCase();
   return !!repo && AGENT_REPOS.some((r) => repo.startsWith(r));
