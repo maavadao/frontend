@@ -142,6 +142,19 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
           )}
         </fieldset>
 
+        <label className="flex items-start gap-3 px-1 pt-1 text-callout text-fg-2">
+          <input
+            type="checkbox"
+            name="wall"
+            defaultChecked={state.values?.wall ?? true}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--cta)]"
+          />
+          <span>
+            Show me on the community wall on maavadao.com (username, country, how I&apos;m joining and my GitHub picture,
+            never my email).
+          </span>
+        </label>
+
         <div>
           <label className="flex items-start gap-3 px-1 pt-1 text-callout text-fg-2">
             <input type="checkbox" name="terms" defaultChecked={state.values?.terms} className="mt-0.5 h-4 w-4 accent-[var(--cta)]" />

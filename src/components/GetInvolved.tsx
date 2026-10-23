@@ -125,8 +125,8 @@ export function SupporterForm({ initial, isNew }: { initial: Supporter; isNew: b
           className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--cta)]"
         />
         <span>
-          Show me on the community wall on maavadao.com: your username, country and how you&apos;re joining, never your
-          email. You can change this any time.
+          Show me on the community wall on maavadao.com: your username, country, how you&apos;re joining and your GitHub
+          picture if you signed in with GitHub, never your email. You can change this any time.
         </span>
       </label>
 

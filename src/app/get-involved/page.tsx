@@ -36,10 +36,10 @@ type Referral = { id: number; kind: string; name: string; place: string; country
 async function member() {
   const { supabase, claims } = await getClaims();
   if (!claims) return null;
-  const { data: profile } = await supabase.from("profiles").select("username, country").eq("id", claims.sub).maybeSingle();
+  const { data: profile } = await supabase.from("profiles").select("username, country, show_on_wall").eq("id", claims.sub).maybeSingle();
   if (!profile) return { profile: null } as const;
   const [supporter, referrals] = await Promise.all([
-    supabase.from("supporters").select("ways, availability, skills, message, show_on_wall").eq("user_id", claims.sub).maybeSingle(),
+    supabase.from("supporters").select("ways, availability, skills, message").eq("user_id", claims.sub).maybeSingle(),
     supabase
       .from("referrals")
       .select("id, kind, name, place, country, status, created_at")
@@ -47,13 +47,12 @@ async function member() {
       .order("created_at", { ascending: false }),
   ]);
   return {
-    profile: profile as { username: string; country: string },
+    profile: profile as { username: string; country: string; show_on_wall: boolean },
     supporter: supporter.data as {
       ways: string[];
       availability: string | null;
       skills: string | null;
       message: string | null;
-      show_on_wall: boolean;
     } | null,
     referrals: (referrals.data as Referral[] | null) ?? [],
   };
@@ -159,7 +158,7 @@ export default async function GetInvolvedPage({ searchParams }: PageProps<"/get-
                     availability: me.supporter?.availability ?? "",
                     skills: me.supporter?.skills ?? "",
                     message: me.supporter?.message ?? "",
-                    showOnWall: me.supporter?.show_on_wall ?? true,
+                    showOnWall: me.profile.show_on_wall,
                   }}
                 />
               </Reveal>

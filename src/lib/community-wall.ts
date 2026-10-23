@@ -3,9 +3,17 @@ import { supabaseEnv } from "./supabase/env";
 /** Saving the get-involved form refreshes the wall straight away with this tag. */
 export const COMMUNITY_WALL_TAG = "community-wall";
 
-export type WallPerson = { username: string; country: string; role: string; ways: string[]; joined: string; total: number };
+export type WallPerson = {
+  username: string;
+  country: string;
+  role: string;
+  ways: string[];
+  github_login: string | null;
+  joined: string;
+  total: number;
+};
 
-/** Supporters who chose to appear on the home page (newest 48), and how many there are in all. */
+/** Members who chose to appear on the home page (newest 100), and how many there are in all. */
 export async function getCommunityWall(): Promise<{ people: WallPerson[]; total: number } | null> {
   try {
     const { url, key } = supabaseEnv();

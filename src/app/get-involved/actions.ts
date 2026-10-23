@@ -37,9 +37,9 @@ export async function saveSupporter(_prev: SupporterState, form: FormData): Prom
     availability: d.availability || null,
     skills: d.skills || null,
     message: d.message || null,
-    show_on_wall: showOnWall,
   });
   if (error) return { errors: { form: "We couldn't save that. Please try again." } };
+  await supabase.from("profiles").update({ show_on_wall: showOnWall }).eq("id", userId);
   updateTag(COMMUNITY_WALL_TAG);
   revalidatePath(PATH);
   return { errors: {}, saved: Date.now() };
