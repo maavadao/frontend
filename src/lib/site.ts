@@ -24,9 +24,10 @@ export const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(site.email);
 export const nav = [
   { href: "/#how-it-works", label: "How it works" },
   { href: "/marketplace", label: "Marketplace" },
+  { href: "/ai-tools", label: "AI tools" },
   { href: "/repos", label: "AI repos" },
   { href: "/developers", label: "Developers" },
-  { href: "/agents", label: "Community Agents" },
+  { href: "/agents", label: "Agents" },
   { href: "/vote", label: "Vote" },
   { href: "/#governance", label: "Governance" },
   { href: "/get-involved", label: "Get involved" },
