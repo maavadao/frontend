@@ -2,9 +2,10 @@ import { ListingCard as Card } from "@/components/ListingCard";
 import { Reveal } from "@/components/Reveal";
 import { MAAVA_AGENTS_REPO, getMaavaAgents, getRegistryIndex, type RegistryListing } from "@/lib/registry";
 
-// Each agent has its own community-agent-<name> repo; older listings point at the index (or its old name).
+// Each agent has its own community-agent-<name> repo; older listings point at the index (or its old name), or at the old maavadao location.
 const AGENT_REPOS = [
   MAAVA_AGENTS_REPO,
+  "https://github.com/Maava-Community-Agents/community-agent-",
   "https://github.com/maavadao/community-agent-",
   "https://github.com/maavadao/maava-agents",
 ].map((r) => r.toLowerCase());

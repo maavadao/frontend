@@ -3,8 +3,8 @@
 export const REGISTRY_INDEX_URL =
   process.env.REGISTRY_INDEX_URL || "https://maavadao.github.io/marketplace-registry/index.json";
 export const MAAVA_AGENTS_INDEX_URL =
-  process.env.MAAVA_AGENTS_INDEX_URL || "https://maavadao.github.io/maava-Community-Agents/index.json";
-export const MAAVA_AGENTS_REPO = "https://github.com/maavadao/maava-Community-Agents";
+  process.env.MAAVA_AGENTS_INDEX_URL || "https://maava-community-agents.github.io/maava-Community-Agents/index.json";
+export const MAAVA_AGENTS_REPO = "https://github.com/Maava-Community-Agents/maava-Community-Agents";
 export const REGISTRY_REPO = "https://github.com/maavadao/marketplace-registry";
 
 export const AUDIENCES = ["education", "individuals", "business"] as const;
