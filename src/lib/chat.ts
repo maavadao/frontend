@@ -1,19 +1,31 @@
 /**
- * maavaDao Chat: free access to Claude for the community and students, served by
- * POST /api/chat. The Anthropic key and limits are read on the server at runtime
- * (Secret Manager on Cloud Run, .env.local locally); the browser never sees the key.
+ * maava AI: free access to open LLMs for the community and students, served by
+ * POST /api/chat through maavaDao's llm-router (github.com/maavadao/llm-router),
+ * which picks a free-tier provider and fails over between them. The router URL
+ * and token are read on the server at runtime; the browser never sees them.
  */
 
 /** One turn of a conversation, as the browser sends it. Kept in the browser only. */
 export type ChatTurn = { role: "user" | "assistant"; content: string };
 
-/** Model, overridable with CHAT_MODEL. */
-export const chatModel = () => process.env.CHAT_MODEL || "claude-opus-5-5";
+/**
+ * What POST /api/chat streams back: one JSON object per line. `model` names who
+ * is answering ("Groq · openai/gpt-oss-120b"), `thinking` is the model's
+ * reasoning when it shares it, `text` is the reply, and `error` is a problem
+ * to show under it.
+ */
+export type ChatEvent = { type: "model" | "thinking" | "text" | "error"; text: string };
+
+/** A model the member can pick, as the router lists it. */
+export type ChatModel = { id: string; label: string; description: string; available: boolean; mayTrain: boolean };
+
+/** Model names are the router's aliases: short lowercase words. */
+export const isModelId = (v: unknown): v is string => typeof v === "string" && /^[a-z0-9][a-z0-9._-]{0,40}$/.test(v);
 
 /** Messages a member can send in a day, overridable with CHAT_DAILY_LIMIT. */
 export const chatDailyLimit = () => Number(process.env.CHAT_DAILY_LIMIT) || 50;
 
-/** Limits on what one request may carry, so a single request can't run up a large bill. */
+/** Limits on what one request may carry, so one member can't use up the shared free quotas. */
 export const CHAT_LIMITS = {
   /** Longest single message, in characters. */
   message: 8_000,
@@ -23,9 +35,9 @@ export const CHAT_LIMITS = {
   total: 60_000,
 } as const;
 
-export const CHAT_SYSTEM = `You are maavaDao Chat, a free assistant that maavaDao (maavadao.com) offers to its community: students, teachers, educators, developers and volunteers. maavaDao is a community-governed ecosystem of agentic AI and blockchain technologies for education; a share of every success funds education for deserving children, orphans and street children.
+export const CHAT_SYSTEM = `You are maava AI, a free assistant that maavaDao (maavadao.com) offers to its community: students, teachers, educators, developers and volunteers. You run on open models served through free providers. maavaDao is a community-governed ecosystem of agentic AI and blockchain technologies for education; a share of every success funds education for deserving children, orphans and street children.
 
-Help people learn, teach, research, write and build. Explain clearly and patiently, and adapt to the person's level: many are students, some are young, and English may not be their first language. When someone is learning, help them understand rather than just handing over answers to homework, unless they ask for the answer directly. Be honest when you're unsure, and say so rather than guessing. Use British spelling. Keep answers focused; use Markdown (headings, lists, code blocks) where it helps readability.`;
+Help people learn, teach, research, write and build. Explain clearly and patiently, and adapt to the person's level: many are students, some are young, and English may not be their first language. When someone is learning, help them understand rather than just handing over answers to homework, unless they ask for the answer directly. Be honest when you're unsure, and say so rather than guessing. Never ask for personal information such as full names, addresses, phone numbers or passwords, and suggest leaving it out if someone shares it. Use British spelling. Keep answers focused; use Markdown (headings, lists, code blocks) where it helps readability.`;
 
 /** Checks a conversation from the browser. Returns the cleaned turns, or an error to show. */
 export function parseTurns(input: unknown): { turns: ChatTurn[] } | { error: string } {

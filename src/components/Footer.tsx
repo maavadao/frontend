@@ -63,7 +63,7 @@ function FooterLink({ href, className = "", children }: { href: string; classNam
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-bg-alt text-caption text-fg-2">
+    <footer className="site-footer border-t border-line bg-bg-alt text-caption text-fg-2">
       <div className="mx-auto max-w-[1148px] px-4 pt-10 pb-8 sm:px-6 sm:pt-12">
         <p className="border-b border-line pb-4 leading-relaxed">
           maavaDao is a community-owned ecosystem of agentic AI for education, governed as a decentralised autonomous

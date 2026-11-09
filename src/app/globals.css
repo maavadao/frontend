@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Streamdown (chat replies) ships its own utility classes; let Tailwind see them. */
+@source "../../node_modules/streamdown/dist/*.js";
+@source "../../node_modules/@streamdown/code/dist/*.js";
+
 /*
  * Appearance. `color-scheme` decides the theme: it follows the system by
  * default, and <html data-theme="light|dark"> pins it (set before first paint
@@ -69,6 +73,16 @@
   --color-gold: #f7b733;
   --color-ember: #fc4a1a;
   --color-violet: #7f5af0;
+
+  /* Aliases for the shadcn-style class names Streamdown uses in chat replies. Use our own tokens elsewhere. */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-muted: var(--bg-alt);
+  --color-muted-foreground: var(--fg-2);
+  --color-border: var(--line);
+  --color-primary: var(--cta);
+  --color-primary-foreground: #ffffff;
+  --color-sidebar: var(--bg-alt);
   --font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), system-ui, sans-serif;
   --font-display: -apple-system, BlinkMacSystemFont, var(--font-inter), system-ui, sans-serif;
 
@@ -328,4 +342,9 @@ label {
 ::view-transition-new(root) {
   animation-duration: 0.35s;
   animation-timing-function: ease;
+}
+
+/* The chat page is a full-height app, so the site footer steps aside there. */
+body:has(main[data-app]) .site-footer {
+  display: none;
 }
