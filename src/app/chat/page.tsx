@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChatApp } from "@/components/chat/ChatApp";
-import { listModels } from "@/lib/llm-router";
+import { listModels } from "@/lib/free-llm-router";
 import { getClaims } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import type { ChatModel } from "./chat";
 
 /**
- * maavaDao's llm-router (github.com/maavadao/llm-router): one OpenAI-compatible
+ * maavaDao's free-llm-router (github.com/maavadao/free-llm-router): one OpenAI-compatible
  * endpoint over free-tier LLM providers. LLM_ROUTER_URL and LLM_ROUTER_TOKEN are
  * read on the server at runtime (Secret Manager on Cloud Run, .env.local locally).
  */

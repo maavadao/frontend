@@ -1,5 +1,5 @@
 import { CHAT_SYSTEM, isModelId, parseTurns, takeChatAllowance, type ChatEvent } from "@/lib/chat";
-import { routerEnv, routerHeaders } from "@/lib/llm-router";
+import { routerEnv, routerHeaders } from "@/lib/free-llm-router";
 import { thinkTagSplitter } from "@/lib/think-tags";
 import { getClaims } from "@/lib/supabase/server";
 
@@ -9,7 +9,7 @@ type Chunk = { choices?: { delta?: Delta; finish_reason?: string | null }[]; err
 /**
  * Streams a maava AI reply as newline-delimited JSON (`ChatEvent`s). Members
  * only (any signed-in member), with a daily allowance. The reply comes from
- * maavaDao's llm-router, which picks a free provider; this route turns its
+ * maavaDao's free-llm-router, which picks a free provider; this route turns its
  * OpenAI-style stream into our events. Nothing is stored on our side.
  */
 export async function POST(request: Request) {

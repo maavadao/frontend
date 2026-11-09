@@ -1,6 +1,6 @@
 /**
  * maava AI: free access to open LLMs for the community and students, served by
- * POST /api/chat through maavaDao's llm-router (github.com/maavadao/llm-router),
+ * POST /api/chat through maavaDao's free-llm-router (github.com/maavadao/free-llm-router),
  * which picks a free-tier provider and fails over between them. The router URL
  * and token are read on the server at runtime; the browser never sees them.
  */
