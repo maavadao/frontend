@@ -12,7 +12,8 @@ export function routerEnv() {
 }
 
 export const routerHeaders = (token?: string): Record<string, string> =>
-  token ? { Authorization: `Bearer ${token}` } : {};
+  // Not Authorization: Cloud Run would check a Bearer token as a Google identity token.
+  token ? { "X-Router-Token": token } : {};
 
 /** The models members can pick, from the router's /v1/models (cached for a minute). */
 export async function listModels(): Promise<ChatModel[]> {
