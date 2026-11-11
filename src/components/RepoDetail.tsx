@@ -15,10 +15,10 @@ const date = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "
 type Comment = { id: number; username: string; github_login: string | null; body: string; created_at: string; edited_at: string | null; user_id: string };
 
 const STATUS_DOT: Record<string, string> = {
-  Active: "bg-[#34c759]",
-  Maintained: "bg-[#0a84ff]",
-  Quiet: "bg-[#8e8e93]",
-  Archived: "bg-[#8e8e93]",
+  Active: "bg-teal",
+  Maintained: "bg-mint",
+  Quiet: "bg-line-strong",
+  Archived: "bg-line-strong",
 };
 
 function Section({ title, children, aside }: { title: string; children: React.ReactNode; aside?: React.ReactNode }) {
@@ -89,10 +89,10 @@ export async function RepoDetail({ slug }: { slug: string }) {
   return (
     <article>
       <header>
-        <p className="text-caption font-medium tracking-[0.06em] text-fg-2 uppercase">
+        <p className="text-caption font-semibold text-accent-text">
           {category?.name ?? repo.category} · #{categoryRank} of {number.format(categoryTotal)}
         </p>
-        <h1 className="mt-1 pr-12 font-display text-display [overflow-wrap:anywhere]">{repo.name}</h1>
+        <h1 className="mt-1 pr-12 text-display [overflow-wrap:anywhere]">{repo.name}</h1>
         <p className="mt-1 text-callout text-fg-2 [overflow-wrap:anywhere]">{ownerRepo}</p>
         {status && (
           <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-bg-alt px-3 py-1 text-footnote">
@@ -118,7 +118,7 @@ export async function RepoDetail({ slug }: { slug: string }) {
             href={repo.repository}
             target="_blank"
             rel="noreferrer"
-            className="press inline-flex min-h-11 items-center rounded-full bg-cta px-5 text-body font-medium text-white hover:bg-cta-hover"
+            className="btn btn-primary min-h-11 px-5 text-body"
           >
             View on GitHub
           </a>
@@ -142,9 +142,9 @@ export async function RepoDetail({ slug }: { slug: string }) {
         </div>
       </header>
 
-      <section aria-label="Community rating" className="mt-8 grid gap-4 rounded-[24px] bg-bg-alt p-4 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-8 sm:p-6">
+      <section aria-label="Community rating" className="mt-8 grid gap-4 panel p-4 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-8 sm:p-6">
         <div className="flex items-center gap-4 sm:flex-col sm:items-start sm:gap-1">
-          <p className="font-display text-figure leading-none tabular-nums">{s?.rating != null ? s.rating.toFixed(1) : "–"}</p>
+          <p className="text-figure leading-none tabular-nums">{s?.rating != null ? s.rating.toFixed(1) : "–"}</p>
           <p className="text-footnote text-fg-2">
             {s?.ratings ? `${number.format(s.ratings)} rating${s.ratings === 1 ? "" : "s"}` : "No ratings yet"}
           </p>
@@ -170,7 +170,7 @@ export async function RepoDetail({ slug }: { slug: string }) {
         <Section title="Awards">
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 [&>li]:min-w-0">
             {awards.map((a) => (
-              <li key={a.title} className="flex items-center gap-3 rounded-[20px] bg-bg-alt p-4">
+              <li key={a.title} className="flex items-center gap-3 panel p-4">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface text-accent-text">
                   <Icon name={a.icon} className="h-6 w-6" />
                 </span>
@@ -187,7 +187,7 @@ export async function RepoDetail({ slug }: { slug: string }) {
       <Section title="Stats">
         <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {stats.map(([label, value, sub]) => (
-            <div key={label} className="min-w-0 rounded-[20px] bg-bg-alt p-4">
+            <div key={label} className="min-w-0 panel p-4">
               <dt className="text-footnote text-fg-2">{label}</dt>
               <dd className="mt-1 truncate text-headline tabular-nums">{value}</dd>
               {sub && <dd className="truncate text-caption text-fg-2">{sub}</dd>}
@@ -221,7 +221,7 @@ export async function RepoDetail({ slug }: { slug: string }) {
             ))}
           </ul>
         ) : (
-          <p className="rounded-[20px] bg-bg-alt p-5 text-body text-fg-2">
+          <p className="panel p-5 text-body text-fg-2">
             We don&rsquo;t have contributors for this repo yet. See this repo&rsquo;s contributors on GitHub.
           </p>
         )}
@@ -231,7 +231,7 @@ export async function RepoDetail({ slug }: { slug: string }) {
         {signedIn ? (
           <CommentForm slug={slug} />
         ) : (
-          <p className="rounded-[20px] bg-bg-alt p-5 text-body text-fg-2">
+          <p className="panel p-5 text-body text-fg-2">
             <Link className="text-link hover:underline" href={`/login?next=${encodeURIComponent(`/repos/${slug}`)}`}>
               Sign in
             </Link>{" "}

@@ -18,7 +18,7 @@ export default async function JoinDirectoryPage({ searchParams }: PageProps<"/de
   if (!claims) {
     return (
       <main className="flex min-h-svh items-center justify-center bg-bg-alt px-4 pt-24 pb-16">
-        <div className="w-full max-w-[460px] rounded-[28px] bg-surface p-8 text-center sm:p-10">
+        <div className="w-full max-w-[460px] card p-8 text-center sm:p-10">
           <h1 className="text-title sm:text-[2rem]">Join the developer directory</h1>
           <p className="mt-3 text-body text-pretty text-fg-2">
             Sign in with GitHub and your contributions to open-source AI appear on your profile, so others can find you
@@ -26,7 +26,7 @@ export default async function JoinDirectoryPage({ searchParams }: PageProps<"/de
           </p>
           <Link
             href={`/login?next=${encodeURIComponent(NEXT)}`}
-            className="press mt-6 inline-flex min-h-12 items-center rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover"
+            className="btn btn-primary mt-6 min-h-12 px-6 text-body"
           >
             Sign in to join
           </Link>
@@ -67,7 +67,7 @@ export default async function JoinDirectoryPage({ searchParams }: PageProps<"/de
           )}
         </div>
 
-        <div className="mt-8 rounded-[28px] bg-surface p-6 sm:p-8">
+        <div className="mt-8 card p-6 sm:p-8">
           <DirectoryForm
             listed={!!entry}
             profilePath={developerPath((hasGithub && githubLogin) || profile.username)}
@@ -82,7 +82,7 @@ export default async function JoinDirectoryPage({ searchParams }: PageProps<"/de
 
         {entry && (
           <form action={leaveDirectory} className="mt-4 text-center">
-            <button type="submit" className="min-h-11 px-4 text-callout text-[#e30000] hover:underline dark:text-[#ff6961]">
+            <button type="submit" className="min-h-11 px-4 text-callout text-danger hover:underline">
               Leave the directory
             </button>
           </form>

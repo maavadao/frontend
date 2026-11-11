@@ -63,7 +63,7 @@ function EditBox({ initial, onSave, onCancel }: { initial: string; onSave: (text
   }, []);
   return (
     <form
-      className="w-full rounded-3xl bg-surface p-3 shadow-[0_1px_8px_rgb(0_0_0/0.08)]"
+      className="w-full card p-3 shadow-[0_1px_8px_rgb(0_0_0/0.08)]"
       onSubmit={(e) => {
         e.preventDefault();
         if (text.trim()) onSave(text);
@@ -98,7 +98,7 @@ function EditBox({ initial, onSave, onCancel }: { initial: string; onSave: (text
         <button
           type="submit"
           disabled={!text.trim()}
-          className="press min-h-11 rounded-full bg-cta px-4 text-callout font-medium text-white hover:bg-cta-hover disabled:opacity-40 sm:min-h-9"
+          className="btn btn-primary min-h-11 px-4 text-callout disabled:opacity-40 sm:min-h-9"
         >
           Send
         </button>

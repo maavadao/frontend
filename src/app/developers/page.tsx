@@ -48,7 +48,7 @@ function MemberCard({ member, repos }: { member: Member; repos: string[] }) {
   return (
     <Link
       href={developerPath(handle)}
-      className="press group flex h-full flex-col rounded-[24px] bg-surface p-5 sm:rounded-[28px] sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
+      className="press group flex h-full flex-col card p-5 sm:rounded-[28px] sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
     >
       <div className="flex items-center gap-4">
         <Avatar login={member.github_login} name={name} size={56} />
@@ -121,8 +121,8 @@ export default async function DevelopersPage({
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">Developers</p>
-          <h1 className="mt-2 font-display text-display text-balance">The people building open-source AI.</h1>
+          <p className="text-callout kicker sm:text-body">Developers</p>
+          <h1 className="mt-2 text-display text-balance">The people building open-source AI.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             maavaDao members who build with us, and{" "}
             {contributors ? `${number.format(contributors.count)} developers` : "the developers"} behind open-source AI
@@ -133,13 +133,13 @@ export default async function DevelopersPage({
         <Reveal delay={100} className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/developers/join"
-            className="press rounded-full bg-cta px-6 py-3 text-body font-medium text-white hover:bg-cta-hover"
+            className="btn btn-primary px-6 py-3 text-body"
           >
             Join the directory
           </Link>
           <Link
             href="/agents"
-            className="press rounded-full bg-surface px-6 py-3 text-body font-medium text-fg hover:bg-bg"
+            className="btn btn-ghost px-6 py-3 text-body"
           >
             Build Community Agents
           </Link>
@@ -153,7 +153,7 @@ export default async function DevelopersPage({
             <p className="mt-2 text-body text-fg-2">Developers who joined maavaDao and chose to be listed.</p>
           </Reveal>
           {members.length === 0 ? (
-            <Reveal delay={80} className="mt-6 rounded-[28px] bg-surface p-10 text-center sm:p-14">
+            <Reveal delay={80} className="mt-6 card p-10 text-center sm:p-14">
               <p className="text-headline">Be the first member listed.</p>
               <p className="mt-2 text-body text-fg-2">
                 Sign in with GitHub and{" "}
@@ -193,7 +193,7 @@ export default async function DevelopersPage({
           </Reveal>
 
           {!contributors ? (
-            <Reveal delay={80} className="mt-6 rounded-[28px] bg-surface p-10 text-center sm:p-14">
+            <Reveal delay={80} className="mt-6 card p-10 text-center sm:p-14">
               <p className="text-headline">This list is being built.</p>
               <p className="mt-2 text-body text-fg-2">It refreshes daily from GitHub. Check back shortly.</p>
             </Reveal>
@@ -230,13 +230,13 @@ export default async function DevelopersPage({
               </p>
 
               {shown.length === 0 ? (
-                <p className="rounded-[28px] bg-surface p-10 text-center text-body text-fg-2 sm:p-14">
+                <p className="card p-10 text-center text-body text-fg-2 sm:p-14">
                   No matches. Try a GitHub login or a repo name.
                 </p>
               ) : (
                 <ul
                   key={`${params.q}-${params.sort}-${page}`}
-                  className="animate-fade divide-y divide-line overflow-hidden rounded-[24px] bg-surface sm:rounded-[28px]"
+                  className="animate-fade divide-y divide-line overflow-hidden card sm:rounded-[28px]"
                 >
                   {shown.map((p) => (
                     <li key={p.login}>

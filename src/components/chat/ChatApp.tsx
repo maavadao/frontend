@@ -230,8 +230,8 @@ export function ChatApp({ models }: { models: ChatModel[] }) {
           {turns.length === 0 ? (
             <div className="mx-auto flex min-h-full max-w-[760px] flex-col justify-center px-4 py-10 sm:px-6">
               <div className="text-center">
-                <p className="text-callout font-semibold text-fg-2 sm:text-body">maava AI</p>
-                <h2 className="mt-2 font-display text-display text-balance">What can I help with?</h2>
+                <p className="text-callout kicker sm:text-body">maava AI</p>
+                <h2 className="mt-2 text-display text-balance">What can I help with?</h2>
                 <p className="mx-auto mt-4 max-w-[520px] text-lede text-pretty text-fg-2">
                   Free open AI models for the community and for students. Learn, teach, research, write and build.
                 </p>

@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Wordmark } from "./Logo";
-import { AppearanceControl } from "./AppearanceControl";
 import { hasEmail, site } from "@/lib/site";
 
 const columns = [
@@ -47,7 +46,7 @@ const columns = [
 ];
 
 function FooterLink({ href, className = "", children }: { href: string; className?: string; children: ReactNode }) {
-  const cls = `break-all hover:text-fg hover:underline ${className}`;
+  const cls = `break-all text-ink-fg-2 hover:text-mint ${className}`;
   if (href.startsWith("/"))
     return (
       <Link href={href} className={cls}>
@@ -63,24 +62,27 @@ function FooterLink({ href, className = "", children }: { href: string; classNam
 
 export function Footer() {
   return (
-    <footer className="site-footer border-t border-line bg-bg-alt text-caption text-fg-2">
-      <div className="mx-auto max-w-[1148px] px-4 pt-10 pb-8 sm:px-6 sm:pt-12">
-        <p className="border-b border-line pb-4 leading-relaxed">
+    <footer className="site-footer bg-ink text-footnote text-ink-fg-2">
+      <div className="mx-auto max-w-[1148px] px-4 pt-12 pb-10 sm:px-6 sm:pt-16">
+        <div className="flex flex-col gap-5 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
+          <Wordmark onDark large />
+          <p className="max-w-[40rem] leading-relaxed">
           maavaDao is a community-owned ecosystem of agentic AI for education, governed as a decentralised autonomous
           organisation. No fees, no commissions: 60% of every monetised product rewards the contributors who built
           it, and 40% helps children in need: deserving children, orphans and street children. Open source under the
           Apache 2.0 Licence.
-        </p>
+          </p>
+        </div>
 
         {/* Phones: each column is an accordion with full-height tap rows. */}
         <div className="py-2 sm:hidden">
           {columns.map((col) => (
-            <details key={col.title} className="group border-b border-line">
-              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between text-callout text-fg [&::-webkit-details-marker]:hidden">
+            <details key={col.title} className="group border-b border-white/10">
+              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between text-callout font-semibold text-white [&::-webkit-details-marker]:hidden">
                 {col.title}
                 <span
                   aria-hidden="true"
-                  className="text-fg-2 transition-transform duration-300 ease-[var(--ease-spring)] group-open:rotate-180"
+                  className="text-ink-fg-2 transition-transform duration-300 ease-[var(--ease-spring)] group-open:rotate-180"
                 >
                   ⌄
                 </span>
@@ -98,10 +100,10 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="hidden grid-cols-4 gap-8 py-8 sm:grid">
+        <div className="hidden grid-cols-4 gap-8 py-10 sm:grid">
           {columns.map((col) => (
             <div key={col.title}>
-              <h3 className="mb-3 font-semibold text-fg">{col.title}</h3>
+              <h3 className="mb-4 font-semibold text-white">{col.title}</h3>
               <ul className="space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
@@ -113,9 +115,11 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-4 pt-5 sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-line">
-          <Wordmark />
-          <AppearanceControl className="self-start sm:self-auto" />
+        <div className="flex flex-col gap-2 pt-6 sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-white/10">
+          <p className="flex items-center gap-2">
+            <span aria-hidden="true" className="dot" />
+            AI education, automation and community
+          </p>
           <p>Copyright © {new Date().getFullYear()} maavaDao. Built in the open.</p>
         </div>
       </div>

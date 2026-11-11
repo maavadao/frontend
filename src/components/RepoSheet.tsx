@@ -43,7 +43,7 @@ export function RepoSheet({ title, children }: { title: string; children: ReactN
       <div
         aria-hidden="true"
         onClick={close}
-        className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none ${open ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-ink/50 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none ${open ? "opacity-100" : "opacity-0"}`}
       />
       <div
         ref={panel}

@@ -28,7 +28,7 @@ export function StarHistory({ points, note }: { points: Point[]; note: string })
 
   if (points.length < 2) {
     return (
-      <div className="rounded-[20px] bg-bg-alt p-6 text-center">
+      <div className="panel p-6 text-center">
         <p className="text-body text-fg-2">
           maavaDao records stars every day
           {points[0] ? `, starting at ${number.format(points[0][1])} on ${longDate(points[0][0])}` : ""}. The chart appears

@@ -26,9 +26,9 @@ type Idea = {
 };
 
 const STATUS: Record<string, { label: string; className: string }> = {
-  planned: { label: "Planned", className: "bg-[#0a84ff]/12 text-[#0a64d6] dark:text-[#64aaff]" },
-  building: { label: "Being built", className: "bg-[#ff9f0a]/15 text-[#b25f00] dark:text-[#ffb340]" },
-  built: { label: "Built", className: "bg-[#34c759]/15 text-[#1d7a35] dark:text-[#4cd964]" },
+  planned: { label: "Planned", className: "bg-mint-wash text-accent-text ring-1 ring-mint-soft" },
+  building: { label: "Being built", className: "bg-sun-wash text-sun-text ring-1 ring-sun-soft" },
+  built: { label: "Built", className: "bg-ink text-mint" },
   declined: { label: "Not taken forward", className: "bg-fg/8 text-fg-2" },
 };
 
@@ -64,15 +64,15 @@ export default async function VotePage({ searchParams }: PageProps<"/vote">) {
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[760px]">
         <Reveal className="text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">Vote</p>
-          <h1 className="mt-2 font-display text-display text-balance">You decide what we build next.</h1>
+          <p className="text-callout kicker sm:text-body">Vote</p>
+          <h1 className="mt-2 text-display text-balance">You decide what we build next.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             Share an idea for a project the community could build, and vote for the ideas you want to see. The ideas
             with the most votes go to the DAO first.
           </p>
         </Reveal>
 
-        <Reveal delay={100} className="mt-10 rounded-[28px] bg-surface p-6 sm:mt-14 sm:p-8">
+        <Reveal delay={100} className="mt-10 card p-6 sm:mt-14 sm:p-8">
           <h2 className="text-title">Post an idea</h2>
           <div className="mt-4">
             {signedIn && data?.hasProfile ? (
@@ -121,11 +121,11 @@ export default async function VotePage({ searchParams }: PageProps<"/vote">) {
           </div>
 
           {!data ? (
-            <p className="mt-6 rounded-[28px] bg-surface p-10 text-center text-body text-fg-2">
+            <p className="mt-6 card p-10 text-center text-body text-fg-2">
               We couldn&rsquo;t load the ideas just now. Please try again in a moment.
             </p>
           ) : ideas.length === 0 ? (
-            <p className="mt-6 rounded-[28px] bg-surface p-10 text-center text-body text-fg-2">
+            <p className="mt-6 card p-10 text-center text-body text-fg-2">
               No ideas yet. Be the first to share one.
             </p>
           ) : (
@@ -133,7 +133,7 @@ export default async function VotePage({ searchParams }: PageProps<"/vote">) {
               {ideas.map((idea) => {
                 const status = STATUS[idea.status];
                 return (
-                  <li key={idea.id} className="flex gap-4 rounded-[28px] bg-surface p-5 sm:gap-5 sm:p-6">
+                  <li key={idea.id} className="flex gap-4 card p-5 sm:gap-5 sm:p-6">
                     <VoteButton id={idea.id} votes={Number(idea.votes)} voted={data.voted.has(idea.id)} signedIn={signedIn} />
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">

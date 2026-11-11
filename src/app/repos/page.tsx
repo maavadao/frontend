@@ -48,10 +48,10 @@ function RepoCard({ repo, category }: { repo: DirectoryRepo; category?: string }
     <Link
       href={`/repos/${repo.slug}`}
       scroll={false}
-      className="press group flex h-full flex-col rounded-[24px] bg-surface p-5 sm:rounded-[28px] sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
+      className="press group flex h-full flex-col card p-5 sm:rounded-[28px] sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
     >
       <div className="flex items-start justify-between gap-4">
-        <p className="text-caption font-medium tracking-[0.06em] text-fg-2 uppercase">{category ?? repo.category}</p>
+        <p className="text-caption font-semibold text-accent-text">{category ?? repo.category}</p>
         {repo.stars != null && (
           <span className="flex shrink-0 items-center gap-1 text-caption text-fg-2">
             <Icon name="star" className="h-3.5 w-3.5" />
@@ -104,8 +104,8 @@ export default async function ReposPage({
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">Open-source AI repos</p>
-          <h1 className="mt-2 font-display text-display text-balance">Open-source AI, all in one place.</h1>
+          <p className="text-callout kicker sm:text-body">Open-source AI repos</p>
+          <h1 className="mt-2 text-display text-balance">Open-source AI, all in one place.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             {index ? `${number.format(index.count)} open-source` : "Open-source"} AI repositories for learning, teaching,
             research and building. Kept up to date by the community: anyone can add a repo with a pull request.
@@ -115,20 +115,20 @@ export default async function ReposPage({
         <Reveal delay={100} className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <a
             href={`${REPOS_REPO}/blob/main/CONTRIBUTING.md`}
-            className="press rounded-full bg-cta px-6 py-3 text-body font-medium text-white hover:bg-cta-hover"
+            className="btn btn-primary px-6 py-3 text-body"
           >
             Add a repo
           </a>
           <a
             href={REPOS_REPO}
-            className="press rounded-full bg-surface px-6 py-3 text-body font-medium text-fg hover:bg-bg"
+            className="btn btn-ghost px-6 py-3 text-body"
           >
             View on GitHub
           </a>
         </Reveal>
 
         {!index ? (
-          <Reveal delay={150} className="mt-14 rounded-[28px] bg-surface p-10 text-center sm:mt-20 sm:p-16">
+          <Reveal delay={150} className="mt-14 card p-10 text-center sm:mt-20 sm:p-16">
             <p className="text-headline">The directory is being built.</p>
             <p className="mt-2 text-body text-fg-2">
               Check back shortly, or browse the repos{" "}
@@ -201,7 +201,7 @@ export default async function ReposPage({
             </div>
 
             {shown.length === 0 ? (
-              <div className="rounded-[28px] bg-surface p-10 text-center sm:p-16">
+              <div className="card p-10 text-center sm:p-16">
                 <p className="text-headline">No matches.</p>
                 <p className="mt-2 text-body text-fg-2">
                   Try a different search, or{" "}

@@ -62,7 +62,7 @@ function Preview({ tool }: { tool: Tool }) {
           className="h-full w-full object-cover"
         />
       ) : (
-        <span aria-hidden="true" className="flex h-full items-center justify-center font-display text-figure text-fg-2/40">
+        <span aria-hidden="true" className="flex h-full items-center justify-center text-figure text-fg-2/40">
           {tool.name.slice(0, 1).toUpperCase()}
         </span>
       )}
@@ -75,15 +75,15 @@ function ToolCard({ tool, category, rating }: { tool: Tool; category?: string; r
   return (
     <Link
       href={`/directory/${tool.slug}`}
-      className="press group flex h-full flex-col rounded-[24px] bg-surface p-3 sm:rounded-[28px] sm:p-4 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
+      className="press group flex h-full flex-col card p-3 sm:rounded-[28px] sm:p-4 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
     >
       <Preview tool={tool} />
       <div className="flex flex-1 flex-col px-2 pt-4 pb-2 sm:px-3">
         <div className="flex items-start justify-between gap-3">
-          <p className="text-caption font-medium tracking-[0.06em] text-fg-2 uppercase">{category ?? tool.category}</p>
+          <p className="text-caption font-semibold text-accent-text">{category ?? tool.category}</p>
           {rating && (
             <span className="flex shrink-0 items-center gap-1 text-caption text-fg-2">
-              <Icon name="star" className="h-3.5 w-3.5 text-[#ff9f0a] [&_path]:fill-current" />
+              <Icon name="star" className="h-3.5 w-3.5 text-sun-strong [&_path]:fill-current" />
               <span className="sr-only">Rating:</span>
               {rating.rating.toFixed(1)}
               <span className="text-fg-2/70">({formatCount(rating.ratings)})</span>
@@ -141,8 +141,8 @@ export default async function AiToolsPage({
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">Directory</p>
-          <h1 className="mt-2 font-display text-display text-balance">Find the right AI tool.</h1>
+          <p className="text-callout kicker sm:text-body">Directory</p>
+          <h1 className="mt-2 text-display text-balance">Find the right AI tool.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             {index ? `${number.format(index.count)} AI tools` : "AI tools"}, sites and suites: what they do, what they
             cost, and what maavaDao members think. Always free to browse, with nothing paid for a place on the list.
@@ -150,16 +150,16 @@ export default async function AiToolsPage({
         </Reveal>
 
         <Reveal delay={100} className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <a href="#suggest" className="press rounded-full bg-cta px-6 py-3 text-body font-medium text-white hover:bg-cta-hover">
+          <a href="#suggest" className="btn btn-primary px-6 py-3 text-body">
             Suggest a tool
           </a>
-          <Link href="/repos" className="press rounded-full bg-surface px-6 py-3 text-body font-medium text-fg hover:bg-bg">
+          <Link href="/repos" className="btn btn-ghost px-6 py-3 text-body">
             Open-source AI repos
           </Link>
         </Reveal>
 
         {!index ? (
-          <Reveal delay={150} className="mt-14 rounded-[28px] bg-surface p-10 text-center sm:mt-20 sm:p-16">
+          <Reveal delay={150} className="mt-14 card p-10 text-center sm:mt-20 sm:p-16">
             <p className="text-headline">The directory is being built.</p>
             <p className="mt-2 text-body text-fg-2">
               Check back shortly, or browse the tools{" "}
@@ -245,7 +245,7 @@ export default async function AiToolsPage({
             </div>
 
             {shown.length === 0 ? (
-              <div className="rounded-[28px] bg-surface p-10 text-center sm:p-16">
+              <div className="card p-10 text-center sm:p-16">
                 <p className="text-headline">No matches.</p>
                 <p className="mt-2 text-body text-fg-2">Try a different search, or suggest the tool below.</p>
               </div>
@@ -265,7 +265,7 @@ export default async function AiToolsPage({
             <Pager page={page} pages={pages} href={(n) => href({ ...params, page: n })} />
 
             <section id="suggest" aria-labelledby="suggest-title" className="mx-auto mt-16 max-w-[620px] scroll-mt-24 sm:mt-24">
-              <div className="rounded-[28px] bg-surface p-6 sm:p-10">
+              <div className="card p-6 sm:p-10">
                 <h2 id="suggest-title" className="text-title">
                   Suggest a tool
                 </h2>

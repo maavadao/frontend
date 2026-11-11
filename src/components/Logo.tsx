@@ -1,47 +1,54 @@
-import { useId } from "react";
+/**
+ * The maavaDao icon: a mint "M" with rounded joints, the orange dot above it
+ * and an open book beneath. Drawn to match public/brand/maavadao-icon.png;
+ * the exported files and when to use each are in public/brand/icons/README.md.
+ */
+export type LogoVariant = "slate" | "navy" | "mint" | "white" | "glyph" | "glyph-light";
 
-/** The MAAVA "M" monogram: a connected network path with joint nodes. */
-export function LogoMark({ className = "h-7 w-7" }: { className?: string }) {
-  const id = useId();
+const palettes: Record<LogoVariant, { tile?: string; edge?: string; m: string; book: string; dot: string }> = {
+  slate: { tile: "#1e293b", m: "#5eead4", book: "#ffffff", dot: "#fdba74" },
+  navy: { tile: "#0f172a", m: "#5eead4", book: "#ffffff", dot: "#fdba74" },
+  mint: { tile: "#5eead4", m: "#0f172a", book: "#0f172a", dot: "#f97316" },
+  white: { tile: "#ffffff", edge: "#dfe5ee", m: "#0d9488", book: "#0f172a", dot: "#f97316" },
+  glyph: { m: "#5eead4", book: "#ffffff", dot: "#fdba74" },
+  "glyph-light": { m: "#0d9488", book: "#0f172a", dot: "#f97316" },
+};
+
+export function LogoMark({ className = "h-7 w-7", variant = "slate" }: { className?: string; variant?: LogoVariant }) {
+  const p = palettes[variant];
   return (
-    <svg viewBox="0 0 512 512" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id={`${id}bg`} x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#0f0c29" />
-          <stop offset="0.55" stopColor="#24243e" />
-          <stop offset="1" stopColor="#302b63" />
-        </linearGradient>
-        <linearGradient id={`${id}m`} x1="130" y1="160" x2="382" y2="352" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#f7b733" />
-          <stop offset="1" stopColor="#fc4a1a" />
-        </linearGradient>
-      </defs>
-      <rect width="512" height="512" rx="112" fill={`url(#${id}bg)`} />
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
+      {p.tile && <rect width="100" height="100" rx="20" fill={p.tile} />}
+      {p.edge && <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="19.25" fill="none" stroke={p.edge} strokeWidth="1.5" />}
       <path
-        d="M130,352 L130,160 L256,280 L382,160 L382,352"
-        stroke={`url(#${id}m)`}
-        strokeWidth="34"
+        d="M28 65 L37 36.5 L50 55 L63 36.5 L72.5 65"
+        stroke={p.m}
+        strokeWidth="7"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
-      <g fill="#f7b733">
-        <circle cx="130" cy="352" r="22" />
-        <circle cx="130" cy="160" r="22" />
-        <circle cx="256" cy="280" r="24" />
-        <circle cx="382" cy="160" r="22" />
-        <circle cx="382" cy="352" r="22" />
-      </g>
+      <circle cx="50" cy="27" r="3.6" fill={p.dot} />
+      <path
+        d="M24.5 73 Q37.25 67.5 50 73 Q62.75 67.5 75.5 73"
+        stroke={p.book}
+        strokeWidth="4.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </svg>
   );
 }
 
-export function Wordmark() {
+/** Mark and name. `onDark` for navy grounds: white "maava", mint "Dao", as in the logo. */
+export function Wordmark({ onDark = false, large = false }: { onDark?: boolean; large?: boolean }) {
   return (
-    <span className="flex items-center gap-2 whitespace-nowrap">
-      <LogoMark className="h-6 w-6 shrink-0" />
-      <span className="text-callout leading-none font-semibold tracking-[-0.01em]">
-        MAAVA <span className="text-brand">DAO</span>
+    <span className={`flex items-center whitespace-nowrap ${large ? "gap-3" : "gap-2"}`}>
+      <LogoMark className={`shrink-0 ${large ? "h-11 w-11" : "h-7 w-7"}`} />
+      <span className={`leading-none font-extrabold tracking-[-0.035em] ${large ? "text-[1.75rem]" : "text-[1.1875rem]"}`}>
+        <span className={onDark ? "text-white" : "text-fg"}>maava</span>
+        <span className={onDark ? "text-mint" : "text-teal"}>Dao</span>
       </span>
     </span>
   );

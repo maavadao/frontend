@@ -45,7 +45,7 @@ export const ChatInput = forwardRef<ChatInputHandle, Props>(
           e.preventDefault();
           send();
         }}
-        className="rounded-[28px] bg-surface p-2 shadow-[0_1px_2px_rgb(0_0_0/0.06),0_4px_20px_rgb(0_0_0/0.08)] ring-1 ring-line"
+        className="card p-2"
       >
         <label htmlFor="chat-input" className="sr-only">
           Message maava AI
@@ -111,7 +111,7 @@ export const ChatInput = forwardRef<ChatInputHandle, Props>(
               type="submit"
               disabled={!draft.trim()}
               aria-label="Send"
-              className="press flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cta text-white hover:bg-cta-hover disabled:bg-fg/15 disabled:text-fg-2 sm:h-9 sm:w-9"
+              className="btn btn-primary h-11 w-11 shrink-0 !rounded-full disabled:bg-fg/15 disabled:text-fg-2 sm:h-9 sm:w-9"
             >
               <Icon name="arrow-up" className="h-4.5 w-4.5" />
             </button>

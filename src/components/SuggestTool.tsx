@@ -25,13 +25,13 @@ export function SuggestTool() {
         rows={3}
         maxLength={500}
         placeholder="What it does and who it helps (optional)"
-        className="w-full resize-none rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+        className="w-full resize-none rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
       />
       <div>
         <button
           type="submit"
           disabled={pending}
-          className="press min-h-11 rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover disabled:opacity-50"
+          className="btn btn-primary min-h-11 px-6 text-body disabled:opacity-50"
         >
           {pending ? "Sending…" : "Suggest this tool"}
         </button>

@@ -34,7 +34,7 @@ export function ToolRating({ slug, mine, signedIn }: { slug: string; mine: numbe
             aria-label={`${n} star${n === 1 ? "" : "s"}: ${LABELS[n]}`}
             onPointerEnter={() => setPreview(n)}
             onClick={() => (signedIn ? rate(n) : router.push(`/login?next=${encodeURIComponent(`/directory/${slug}`)}`))}
-            className={`press flex h-11 w-11 items-center justify-center rounded-full ${n <= shown ? "text-[#ff9f0a]" : "text-fg-2/40"} hover:bg-bg-alt`}
+            className={`press flex h-11 w-11 items-center justify-center rounded-full ${n <= shown ? "text-sun-strong" : "text-fg-2/40"} hover:bg-bg-alt`}
           >
             <Icon name="star" className={`h-7 w-7 ${n <= shown ? "[&_path]:fill-current" : ""}`} />
           </button>

@@ -25,7 +25,7 @@ export function VoteButton({ id, votes, voted, signedIn }: { id: number; votes: 
           : router.push(LOGIN)
       }
       className={`press flex min-h-16 w-14 shrink-0 flex-col self-start items-center justify-center rounded-2xl border sm:w-16 ${
-        state.voted ? "border-cta bg-cta text-white" : "border-line bg-bg-alt text-fg hover:border-cta"
+        state.voted ? "border-mint bg-mint text-cta-fg" : "border-line bg-bg-alt text-fg hover:border-fg"
       }`}
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
@@ -47,7 +47,7 @@ export function IdeaForm() {
     setBody("");
   }
   const field =
-    "w-full rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20";
+    "w-full rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50";
   return (
     <form
       // Not action={action}: React's automatic reset would blank these controlled fields when posting fails.
@@ -88,7 +88,7 @@ export function IdeaForm() {
         <button
           type="submit"
           disabled={pending || title.trim().length < 5 || body.trim().length < 20}
-          className="press min-h-11 shrink-0 rounded-full bg-cta px-6 text-callout font-medium text-white hover:bg-cta-hover disabled:opacity-50"
+          className="btn btn-primary min-h-11 shrink-0 px-6 text-callout disabled:opacity-50"
         >
           {pending ? "Posting…" : "Post idea"}
         </button>
@@ -110,7 +110,7 @@ export function IdeaActions({ id, own, signedIn }: { id: number; own: boolean; s
           type="button"
           disabled={pending}
           onClick={() => start(() => deleteIdea(id))}
-          className="min-h-11 px-2 text-footnote text-[#e30000] hover:underline dark:text-[#ff6961]"
+          className="min-h-11 px-2 text-footnote text-danger hover:underline"
         >
           Delete
         </button>

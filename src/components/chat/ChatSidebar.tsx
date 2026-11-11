@@ -32,7 +32,7 @@ export function ChatSidebar({
       <div
         aria-hidden="true"
         onClick={onClose}
-        className={`fixed inset-0 top-13 z-30 bg-black/30 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 top-13 z-30 bg-ink/40 transition-opacity duration-300 md:hidden ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />

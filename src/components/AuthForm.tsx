@@ -120,7 +120,7 @@ export function AuthForm({ mode, next = "/", error }: Props) {
           </p>
           <Link
             href="/get-involved"
-            className="press mt-4 inline-flex min-h-11 items-center rounded-full border border-line bg-field px-5 text-callout font-medium hover:border-cta"
+            className="btn btn-ghost mt-4 min-h-11 px-5 text-callout"
           >
             Open the get-involved form
           </Link>
@@ -128,7 +128,7 @@ export function AuthForm({ mode, next = "/", error }: Props) {
       )}
 
       <div aria-live="polite">
-        {message && <p className="animate-fade mt-5 rounded-xl bg-[#f7b733]/15 px-4 py-3 text-callout text-fg">{message}</p>}
+        {message && <p className="animate-fade mt-5 rounded-xl border border-mint-soft bg-mint-wash px-4 py-3 text-callout text-fg">{message}</p>}
       </div>
 
       <p className="mt-8 text-center text-callout text-fg-2">
@@ -203,7 +203,7 @@ function CodeForm({ email, next, onRestart }: { email: string; next: string; onR
       <button
         type="submit"
         disabled={verifying}
-        className="press h-12 rounded-xl bg-cta text-body font-medium text-white hover:bg-cta-hover disabled:opacity-60"
+        className="btn btn-primary h-12 text-body disabled:opacity-60"
       >
         {verifying ? "Checking…" : "Sign in"}
       </button>

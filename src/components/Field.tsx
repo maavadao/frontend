@@ -17,7 +17,7 @@ export function Field({
           aria-describedby={error ? `${id}-err` : undefined}
           {...props}
           className={`peer h-14 w-full rounded-xl border bg-field px-4 pt-5 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:ring-4 ${
-            error ? "border-[#e30000] focus:ring-[#e30000]/15" : "border-line focus:border-cta focus:ring-cta/20"
+            error ? "border-danger focus:ring-danger/15" : "border-line focus:border-teal focus:ring-mint/50"
           }`}
         />
         <label
@@ -28,7 +28,7 @@ export function Field({
         </label>
       </div>
       {error && (
-        <p id={`${id}-err`} role="alert" className="animate-fade mt-1.5 px-1 text-footnote text-[#e30000] dark:text-[#ff6961]">
+        <p id={`${id}-err`} role="alert" className="animate-fade mt-1.5 px-1 text-footnote text-danger">
           {error}
         </p>
       )}

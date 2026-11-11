@@ -20,8 +20,8 @@ export default async function ChatPage() {
         <ChatApp models={models} />
       ) : (
         <div className="mx-auto max-w-[620px] px-4 pt-16 pb-24 text-center sm:px-6 sm:pt-24 sm:pb-32">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">maava AI</p>
-          <h1 className="mt-2 font-display text-display text-balance">Free AI for our community.</h1>
+          <p className="text-callout kicker sm:text-body">maava AI</p>
+          <h1 className="mt-2 text-display text-balance">Free AI for our community.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
             maava AI gives students, teachers and community members free access to open AI models to learn, teach,
             research and build.
@@ -30,13 +30,13 @@ export default async function ChatPage() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href={`/signup?next=${encodeURIComponent("/chat")}`}
-              className="press flex min-h-11 items-center rounded-full bg-cta px-5 text-body font-medium text-white hover:bg-cta-hover"
+              className="btn btn-primary min-h-11 px-5 text-body"
             >
               Join maavaDao
             </Link>
             <Link
               href={`/login?next=${encodeURIComponent("/chat")}`}
-              className="press flex min-h-11 items-center rounded-full bg-surface px-5 text-body font-medium"
+              className="btn btn-ghost min-h-11 px-5 text-body"
             >
               Sign in
             </Link>

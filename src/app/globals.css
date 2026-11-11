@@ -5,57 +5,72 @@
 @source "../../node_modules/@streamdown/code/dist/*.js";
 
 /*
- * Appearance. `color-scheme` decides the theme: it follows the system by
- * default, and <html data-theme="light|dark"> pins it (set before first paint
- * by the inline script in layout.tsx). Every colour token is written once with
- * light-dark(), so both themes stay in step.
+ * maava design system. Light only, built from the logo: deep navy ink, the
+ * logo's mint for action and emphasis, its orange dot as the warm second
+ * colour, white pages and full-strength navy bands. Nothing follows the
+ * system's dark setting. The `dark` variant is kept but never matches,
+ * because Streamdown's classes (chat replies) use it.
  */
-@custom-variant dark {
-  &:where([data-theme="dark"], [data-theme="dark"] *) {
-    @slot;
-  }
-  @media (prefers-color-scheme: dark) {
-    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
-      @slot;
-    }
-  }
-}
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  color-scheme: light dark;
-}
-:root[data-theme="light"] {
   color-scheme: light;
 }
-:root[data-theme="dark"] {
-  color-scheme: dark;
+
+/* Brand palette (raw values; use the semantic tokens below in components). */
+:root {
+  --navy-950: #0a1020;
+  --navy-900: #0f172a;
+  --navy-800: #1e293b;
+  --navy-700: #334155;
+  --slate-500: #64748b;
+  --slate-300: #cbd5e1;
+  --mint-50: #effdf9;
+  --mint-100: #ccfbef;
+  --mint-300: #5eead4;
+  --mint-400: #2dd4bf;
+  --teal-600: #0d9488;
+  --teal-700: #0f766e;
+  --sun-50: #fff6ed;
+  --sun-100: #ffe8d1;
+  --sun-300: #fdba74;
+  --sun-500: #f97316;
+  --sun-700: #c2410c;
 }
 
-/*
- * Design tokens. Neutral surfaces and type carry the page (Apple-style
- * deference); the gold→orange brand gradient is used sparingly for emphasis.
- */
+/* Semantic tokens. */
 :root {
-  --bg: light-dark(#ffffff, #000000);
-  --bg-alt: light-dark(#f5f5f7, #101012);
-  --surface: light-dark(#ffffff, #1d1d1f);
-  --fg: light-dark(#1d1d1f, #f5f5f7);
-  --fg-2: light-dark(#6e6e73, #a1a1a6);
-  --line: light-dark(rgb(0 0 0 / 0.1), rgb(255 255 255 / 0.14));
-  --link: light-dark(#0066cc, #2997ff);
-  --cta: #0071e3;
-  --cta-hover: #0077ed;
-  --field: light-dark(#ffffff, #1d1d1f);
-  /* Brand accent for small text: darker in light mode to keep 4.5:1 contrast. */
-  --accent-text: light-dark(#c2410c, #ff8a5b);
-  /* Hero glow is softer on white so it reads as light, not a stain. */
-  --glow-violet: light-dark(rgb(127 90 240 / 0.16), rgb(127 90 240 / 0.45));
-  --glow-ember: light-dark(rgb(252 74 26 / 0.1), rgb(252 74 26 / 0.22));
-  --grid-dot: light-dark(rgb(0 0 0 / 0.07), rgb(255 255 255 / 0.07));
+  --bg: #ffffff;
+  --bg-alt: #f4f7fb;
+  --surface: #ffffff;
+  --fg: var(--navy-900);
+  --fg-2: #435066;
+  --line: #dfe5ee;
+  --line-strong: #c3ccd9;
+  --link: var(--teal-700);
+  /* Primary action: the logo's mint with navy text (11:1). */
+  --cta: var(--mint-300);
+  --cta-hover: var(--mint-400);
+  --cta-fg: var(--navy-900);
+  --field: #ffffff;
+  /* Navy bands and tiles, like the logo's ground. */
+  --ink: var(--navy-900);
+  --ink-2: var(--navy-800);
+  --ink-fg-2: var(--slate-300);
+  /* Brand accent for text on white: 5.5:1. On navy use --mint-300. */
+  --accent-text: var(--teal-700);
+  --glow-violet: rgb(94 234 212 / 0.28);
+  --glow-ember: rgb(253 186 116 / 0.24);
+  --grid-dot: rgb(15 23 42 / 0.08);
 
-  /* Nav material: light glass over light sections, dark glass over dark ones. */
-  --nav-light: light-dark(rgb(251 251 253 / 0.72), rgb(22 22 23 / 0.72));
-  --nav-dark: rgb(22 22 23 / 0.72);
+  --radius-card: 1.25rem;
+  --radius-control: 0.75rem;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.05), 0 12px 32px -16px rgb(15 23 42 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -18px rgb(15 23 42 / 0.28);
+
+  /* Nav material: light glass over light sections, navy glass over navy bands. */
+  --nav-light: rgb(255 255 255 / 0.8);
+  --nav-dark: rgb(15 23 42 / 0.8);
 }
 
 @theme inline {
@@ -65,14 +80,35 @@
   --color-fg: var(--fg);
   --color-fg-2: var(--fg-2);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-link: var(--link);
   --color-cta: var(--cta);
   --color-cta-hover: var(--cta-hover);
+  --color-cta-fg: var(--cta-fg);
   --color-field: var(--field);
   --color-accent-text: var(--accent-text);
-  --color-gold: #f7b733;
-  --color-ember: #fc4a1a;
-  --color-violet: #7f5af0;
+  --color-ink: var(--ink);
+  --color-danger: #c81e1e;
+  --color-ink-2: var(--ink-2);
+  --color-ink-fg-2: var(--ink-fg-2);
+  --color-mint: var(--mint-300);
+  --color-mint-soft: var(--mint-100);
+  --color-mint-wash: var(--mint-50);
+  --color-teal: var(--teal-600);
+  --color-sun: var(--sun-300);
+  --color-sun-strong: var(--sun-500);
+  --color-sun-text: var(--sun-700);
+  --color-sun-soft: var(--sun-100);
+  --color-sun-wash: var(--sun-50);
+  /* Older names, mapped onto the brand: gold is mint (for navy), ember is teal (for white), violet is the sun. */
+  --color-gold: var(--mint-300);
+  --color-ember: var(--teal-600);
+  --color-violet: var(--sun-500);
+
+  --radius-card: var(--radius-card);
+  --radius-control: var(--radius-control);
+  --shadow-card: var(--shadow-card);
+  --shadow-lift: var(--shadow-lift);
 
   /* Aliases for the shadcn-style class names Streamdown uses in chat replies. Use our own tokens elsewhere. */
   --color-background: var(--bg);
@@ -80,11 +116,11 @@
   --color-muted: var(--bg-alt);
   --color-muted-foreground: var(--fg-2);
   --color-border: var(--line);
-  --color-primary: var(--cta);
+  --color-primary: var(--teal-700);
   --color-primary-foreground: #ffffff;
   --color-sidebar: var(--bg-alt);
-  --font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), system-ui, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /*
    * Type scale. Each step sets size, leading, tracking and weight together:
@@ -94,33 +130,33 @@
    */
   --text-hero: clamp(2.5rem, 10.5vw, 6rem);
   --text-hero--line-height: 1.02;
-  --text-hero--letter-spacing: -0.035em;
-  --text-hero--font-weight: 600;
+  --text-hero--letter-spacing: -0.03em;
+  --text-hero--font-weight: 800;
 
   --text-display: clamp(2rem, 7vw, 3.5rem);
   --text-display--line-height: 1.07;
   --text-display--letter-spacing: -0.028em;
-  --text-display--font-weight: 600;
+  --text-display--font-weight: 800;
 
   --text-statement: clamp(1.5rem, 5.6vw, 3rem);
   --text-statement--line-height: 1.12;
   --text-statement--letter-spacing: -0.024em;
-  --text-statement--font-weight: 600;
+  --text-statement--font-weight: 700;
 
   --text-figure: clamp(2.5rem, 8vw, 3.5rem);
   --text-figure--line-height: 1;
   --text-figure--letter-spacing: -0.03em;
-  --text-figure--font-weight: 600;
+  --text-figure--font-weight: 800;
 
   --text-title: clamp(1.375rem, 4.5vw, 1.75rem);
   --text-title--line-height: 1.14;
   --text-title--letter-spacing: -0.02em;
-  --text-title--font-weight: 600;
+  --text-title--font-weight: 700;
 
   --text-headline: clamp(1.25rem, 4vw, 1.5rem);
   --text-headline--line-height: 1.17;
   --text-headline--letter-spacing: -0.018em;
-  --text-headline--font-weight: 600;
+  --text-headline--font-weight: 700;
 
   --text-subhead: 1.1875rem;
   --text-subhead--line-height: 1.32;
@@ -152,12 +188,14 @@
 }
 
 html {
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: 3.25rem;
   font-size: 100%;
 }
 
 body {
+  overflow-x: clip;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
@@ -181,14 +219,133 @@ label {
 }
 
 ::selection {
-  background: rgb(247 183 51 / 0.35);
+  background: var(--mint-100);
+  color: var(--navy-900);
 }
 
 .text-brand {
-  background: linear-gradient(90deg, #f7b733, #fc4a1a);
+  background: linear-gradient(90deg, var(--teal-700), var(--teal-600) 55%, #14b8a6);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/*
+ * Components. Each owns colour, radius and weight; sizing (padding, height,
+ * margin) stays on the element. Buttons include `press`, so don't add
+ * transition-* classes to them.
+ */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-control);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  scale: 1;
+  transition:
+    scale 0.4s var(--ease-spring),
+    box-shadow 0.3s ease,
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+  &:active:not(:disabled) {
+    scale: 0.97;
+    transition-duration: 0.1s;
+  }
+  &:focus-visible {
+    outline: 3px solid var(--teal-600);
+    outline-offset: 2px;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+@utility btn-primary {
+  background: var(--cta);
+  color: var(--cta-fg);
+  box-shadow: inset 0 -2px 0 rgb(15 23 42 / 0.12);
+  &:hover:not(:disabled) {
+    background: var(--cta-hover);
+  }
+}
+@utility btn-dark {
+  background: var(--navy-900);
+  color: #ffffff;
+  &:hover:not(:disabled) {
+    background: var(--navy-800);
+  }
+}
+@utility btn-ghost {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--fg);
+  &:hover:not(:disabled) {
+    border-color: var(--navy-900);
+  }
+}
+/* A white card with an edge and a soft lift. */
+@utility card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+/* A tinted panel for grouping on white pages. */
+@utility panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--bg-alt);
+}
+/* A navy tile, like the logo's ground. */
+@utility tile {
+  border-radius: var(--radius-card);
+  background: var(--navy-900);
+  color: #ffffff;
+}
+/* A toggle chip around a hidden checkbox or radio. */
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+  &:hover {
+    border-color: var(--navy-900);
+  }
+  &:has(:checked) {
+    border-color: var(--navy-900);
+    background: var(--navy-900);
+    color: #ffffff;
+  }
+  &:has(:focus-visible) {
+    outline: 3px solid var(--teal-600);
+    outline-offset: 2px;
+  }
+}
+/* A short label above a heading: brand teal, sentence case. */
+@utility kicker {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+/* The logo's orange dot, for list bullets and live markers. */
+@utility dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--sun-300);
 }
 
 /*
@@ -321,7 +478,7 @@ label {
 @media (prefers-reduced-transparency: reduce) {
   :root {
     --nav-light: var(--bg);
-    --nav-dark: #161617;
+    --nav-dark: var(--navy-900);
   }
   .material-nav {
     backdrop-filter: none;
@@ -331,17 +488,10 @@ label {
 
 @media (prefers-contrast: more) {
   :root {
-    --fg-2: light-dark(#3a3a3c, #d1d1d6);
-    --line: light-dark(rgb(0 0 0 / 0.4), rgb(255 255 255 / 0.45));
+    --fg-2: #1e293b;
+    --line: rgb(15 23 42 / 0.4);
     --nav-light: var(--bg);
   }
-}
-
-/* Cross-fade between appearances instead of an abrupt brightness jump. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.35s;
-  animation-timing-function: ease;
 }
 
 /* The chat page is a full-height app, so the site footer steps aside there. */

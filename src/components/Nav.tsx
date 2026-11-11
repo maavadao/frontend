@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Wordmark } from "./Logo";
-import { AppearanceControl } from "./AppearanceControl";
-import { subscribeAppearance } from "@/lib/appearance";
 import { hasSessionCookie } from "@/lib/auth";
 import { nav } from "@/lib/site";
 
@@ -17,7 +15,16 @@ function isDark(el: Element | undefined) {
   for (let node = el; node; node = node.parentElement ?? undefined) chain.push(node);
   chain.push(document.body);
   for (const node of chain) {
-    const m = getComputedStyle(node).backgroundColor.match(/[\d.]+/g);
+    const css = getComputedStyle(node).backgroundColor;
+    // Modern colour spaces (oklch, lab) report lightness directly.
+    const lightness = css.match(/^(?:oklch|oklab|lab|lch)\(\s*([\d.]+)(%?)/);
+    if (lightness) {
+      const alpha = css.match(/\/\s*([\d.]+)(%?)\s*\)/);
+      if (alpha && Number(alpha[1]) / (alpha[2] ? 100 : 1) < 0.5) continue;
+      const l = Number(lightness[1]);
+      return css.startsWith("ok") ? l / (lightness[2] ? 100 : 1) < 0.5 : l / 100 < 0.5;
+    }
+    const m = css.match(/[\d.]+/g);
     if (!m || (m.length === 4 && Number(m[3]) < 0.5)) continue;
     const [r, g, b] = m.slice(0, 3).map((v) => Number(v) / 255);
     return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.4;
@@ -27,7 +34,7 @@ function isDark(el: Element | undefined) {
 
 /**
  * Reads what is under the bar each frame it scrolls:
- * - tone: dark glass when the background beneath is dark (in any appearance)
+ * - tone: dark glass when the background beneath is dark
  * - scrolled: show the hairline only once content passes underneath
  * - active: which section the reader is in, for wayfinding
  */
@@ -40,7 +47,8 @@ function useScrollState(enabled: boolean) {
       frame = 0;
       const under = document
         .elementsFromPoint(window.innerWidth / 2, NAV_H / 2)
-        .find((el) => !el.closest("header"));
+        // Skip the bar itself and empty elements (some extensions inject zero-size nodes).
+        .find((el) => !el.closest("header") && el.getBoundingClientRect().height > 0);
       const tone = isDark(under) ? "dark" : "light";
 
       let active = "";
@@ -61,10 +69,7 @@ function useScrollState(enabled: boolean) {
     read();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-    // Re-read after an appearance change has painted.
-    const unsubscribe = subscribeAppearance(() => setTimeout(onScroll, 0));
     return () => {
-      unsubscribe();
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
@@ -137,7 +142,7 @@ export function Nav() {
       <nav aria-label="Main" className={`pointer-events-auto relative ${dark ? "text-white" : "text-fg"}`}>
         <div className="mx-auto flex h-13 max-w-[1148px] items-center justify-between gap-6 px-4 sm:px-6">
           <Link href="/" aria-label="maavaDao home" onClick={() => setOpen(false)} className="press shrink-0">
-            <Wordmark />
+            <Wordmark onDark={dark} />
           </Link>
 
           <ul className="hidden items-center gap-6 whitespace-nowrap text-footnote lg:flex xl:gap-8">
@@ -155,10 +160,6 @@ export function Nav() {
           </ul>
 
           <div className="hidden shrink-0 items-center gap-4 whitespace-nowrap lg:flex">
-            {/* Also in the footer and the phone menu, so it only joins the bar when there's room. */}
-            <div className="hidden xl:block">
-              <AppearanceControl compact className={dark ? "text-white" : "text-fg"} />
-            </div>
             {signedIn ? (
               <SignOut className={`text-footnote transition-colors duration-200 ${linkTone("")}`} />
             ) : (
@@ -172,7 +173,7 @@ export function Nav() {
                 </Link>
                 <Link
                   href="/signup"
-                  className="press rounded-full bg-cta px-3.5 py-1.5 text-footnote font-medium text-white hover:bg-cta-hover"
+                  className="btn btn-primary px-3.5 py-1.5 text-footnote"
                 >
                   Join maavaDao
                 </Link>
@@ -225,24 +226,17 @@ export function Nav() {
           ))}
         </ul>
         <div
-          className={`mt-10 px-8 transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}
-          style={{ transitionDelay: open ? "320ms" : "0ms" }}
-        >
-          <p className="mb-3 text-footnote text-fg-2">Appearance</p>
-          <AppearanceControl />
-        </div>
-        <div
           className={`mt-8 flex gap-3 px-8 transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}
           style={{ transitionDelay: open ? "260ms" : "0ms" }}
         >
           {signedIn ? (
-            <SignOut onClick={() => setOpen(false)} className="press rounded-full border border-line px-5 py-2.5 text-callout font-medium" />
+            <SignOut onClick={() => setOpen(false)} className="btn btn-ghost px-5 py-2.5 text-callout" />
           ) : (
             <>
-              <Link href="/signup" onClick={() => setOpen(false)} className="press rounded-full bg-cta px-5 py-2.5 text-callout font-medium text-white">
+              <Link href="/signup" onClick={() => setOpen(false)} className="btn btn-primary px-5 py-2.5 text-callout">
                 Join maavaDao
               </Link>
-              <Link href="/login" onClick={() => setOpen(false)} className="press rounded-full border border-line px-5 py-2.5 text-callout font-medium">
+              <Link href="/login" onClick={() => setOpen(false)} className="btn btn-ghost px-5 py-2.5 text-callout">
                 Sign in
               </Link>
             </>

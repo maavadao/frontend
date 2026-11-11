@@ -104,7 +104,7 @@ export function MarketplaceCatalog({ listings, categories }: { listings: Registr
 
   if (listings.length === 0) {
     return (
-      <div className="rounded-[28px] bg-surface p-10 text-center sm:p-16">
+      <div className="card p-10 text-center sm:p-16">
         <p className="text-headline">Nothing listed yet.</p>
         <p className="mt-2 text-body text-fg-2">
           Be the first:{" "}
@@ -134,7 +134,7 @@ export function MarketplaceCatalog({ listings, categories }: { listings: Registr
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search agents and tools"
-            className="h-11 w-full rounded-full border border-line bg-field pr-4 pl-10 text-callout outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+            className="h-11 w-full rounded-full border border-line bg-field pr-4 pl-10 text-callout outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
           />
         </label>
 
@@ -144,7 +144,7 @@ export function MarketplaceCatalog({ listings, categories }: { listings: Registr
               type="checkbox"
               checked={freeOnly}
               onChange={(e) => setFreeOnly(e.target.checked)}
-              className="h-4 w-4 rounded accent-cta"
+              className="h-4 w-4 rounded accent-teal"
             />
             Free for education only
           </label>
@@ -170,7 +170,7 @@ export function MarketplaceCatalog({ listings, categories }: { listings: Registr
       </p>
 
       {shown.length === 0 ? (
-        <p className="rounded-[28px] bg-surface p-10 text-center text-body text-fg-2 sm:p-16">
+        <p className="card p-10 text-center text-body text-fg-2 sm:p-16">
           No matches. Try a different search or filter.
         </p>
       ) : (
@@ -181,7 +181,7 @@ export function MarketplaceCatalog({ listings, categories }: { listings: Registr
                 href={listingHref(l)}
                 target="_blank"
                 rel="noreferrer"
-                className="press group flex h-full flex-col rounded-[28px] bg-surface p-6 sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
+                className="press group flex h-full flex-col card p-6 sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className="rounded-full bg-bg-alt px-2.5 py-1 text-caption font-medium text-fg-2">
@@ -194,7 +194,7 @@ export function MarketplaceCatalog({ listings, categories }: { listings: Registr
                     </span>
                   )}
                 </div>
-                <p className="mt-5 text-caption font-medium tracking-[0.06em] text-fg-2 uppercase">
+                <p className="mt-5 text-caption font-semibold text-accent-text">
                   {categories[l.category] ?? l.category}
                 </p>
                 <h3 className="mt-1 text-headline">{l.name}</h3>

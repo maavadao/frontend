@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
-import { LogoMark } from "@/components/Logo";
+import { Hero } from "@/components/hero/Hero";
 import { Icon, type IconName } from "@/components/Icon";
 import { CommunityProjects } from "@/components/CommunityProjects";
 import { CommunityWall } from "@/components/CommunityWall";
@@ -9,15 +9,45 @@ import { ContactForm } from "@/components/ContactForm";
 import { hasEmail, site } from "@/lib/site";
 import { helpWays } from "@/lib/supporters";
 
-function SectionHead({ eyebrow, title, lede }: { eyebrow: string; title: ReactNode; lede?: string }) {
+function SectionHead({
+  eyebrow,
+  title,
+  lede,
+  onDark = false,
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  lede?: string;
+  onDark?: boolean;
+}) {
   return (
     <Reveal className="mx-auto mb-10 max-w-[760px] text-center sm:mb-14">
-      <p className="text-callout font-semibold text-fg-2 sm:text-body">{eyebrow}</p>
-      <h2 className="mt-2 font-display text-display text-balance">{title}</h2>
-      {lede && <p className="mt-5 text-lede text-pretty text-fg-2">{lede}</p>}
+      <p className={`text-callout font-semibold sm:text-body ${onDark ? "text-mint" : "kicker"}`}>{eyebrow}</p>
+      <h2 className={`mt-3 text-display text-balance ${onDark ? "text-white" : ""}`}>{title}</h2>
+      {lede && <p className={`mt-5 text-lede text-pretty ${onDark ? "text-ink-fg-2" : "text-fg-2"}`}>{lede}</p>}
     </Reveal>
   );
 }
+
+/** A rounded square holding a line icon: mint on navy, teal on white. */
+function IconTile({ name, onDark = false }: { name: IconName; onDark?: boolean }) {
+  return (
+    <span
+      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] ${
+        onDark ? "bg-mint/12 text-mint ring-1 ring-mint/25" : "bg-mint-wash text-teal ring-1 ring-mint-soft"
+      }`}
+    >
+      <Icon name={name} className="h-6 w-6" />
+    </span>
+  );
+}
+
+const stats: [string, string, string][] = [
+  ["Free", "to create, list and use", "text-white"],
+  ["60%", "to contributors", "text-mint"],
+  ["40%", "to children's education", "text-sun"],
+  ["0%", "commission, ever", "text-white"],
+];
 
 const steps = [
   ["Create and list, free", "Anyone can build an AI agent and list it on the maava Marketplace. There is no charge to list, create or publish anything, ever."],
@@ -148,118 +178,63 @@ const phases = [
 export default function Home() {
   return (
     <main>
-      {/* Hero */}
-      <section className="relative flex min-h-svh items-center overflow-hidden bg-bg text-fg">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="animate-glow absolute top-[8%] left-1/2 h-[620px] w-[620px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--glow-violet),transparent)] blur-2xl" />
-          <div className="animate-glow absolute right-[-10%] bottom-[-20%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(closest-side,var(--glow-ember),transparent)] blur-2xl [animation-delay:200ms]" />
-          <div className="absolute inset-0 bg-[radial-gradient(var(--grid-dot)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)] [background-size:28px_28px]" />
-        </div>
+      <Hero />
 
-        <div className="relative mx-auto w-full max-w-[1024px] px-4 pt-24 pb-20 text-center sm:px-6 sm:pt-28 sm:pb-24">
-          <Reveal>
-            <LogoMark className="mx-auto h-16 w-16 drop-shadow-[0_20px_50px_var(--glow-violet)] sm:h-24 sm:w-24" />
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="mt-6 text-caption font-medium tracking-[0.16em] whitespace-nowrap text-fg-2 uppercase max-[360px]:text-[0.6875rem] max-[360px]:tracking-[0.08em] sm:mt-8 sm:text-footnote sm:tracking-[0.25em]">
-              Agentic&nbsp;AI&nbsp;&nbsp;·&nbsp;&nbsp;Community-owned&nbsp;&nbsp;·&nbsp;&nbsp;DAO
+      {/* Why this exists: the one full navy band near the top, like the logo's ground. */}
+      <section id="why" className="bg-ink px-4 py-20 text-white sm:px-6 sm:py-28 lg:py-32">
+        <div className="mx-auto max-w-[1100px]">
+          <Reveal className="mx-auto max-w-[900px] text-center">
+            <p className="text-statement text-balance">
+              Open-source developers give their expertise away for nothing, and commercial marketplaces can take up to 30% of what creators earn.{" "}
+              <span className="text-ink-fg-2">Meanwhile, quality education is still out of reach for millions of children.</span>{" "}
+              <span className="text-mint">maavaDao turns this around.</span>
             </p>
           </Reveal>
-          <Reveal delay={200}>
-            <h1 className="mt-5 font-display text-hero text-balance">
-              Agentic AI.
-              <br />
-              <span className="inline-block text-brand text-balance">Owned by all of us.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={300}>
-            <p className="mx-auto mt-5 max-w-[42rem] text-lede text-pretty text-fg-2 sm:mt-7">{site.tagline}</p>
-            <p className="mx-auto mt-3 max-w-[42rem] text-body text-pretty text-fg">{site.subline}</p>
-          </Reveal>
-          <Reveal delay={400} className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:mt-10">
-            <Link href="/signup" className="press rounded-full bg-cta px-7 py-3.5 text-body font-medium text-white hover:bg-cta-hover">
-              Join maavaDao
-            </Link>
-            <Link href="/#how-it-works" className="group text-body text-link hover:underline">
-              See how it works
-              <span className="ml-1 inline-block transition-transform group-hover:translate-x-1">›</span>
-            </Link>
-          </Reveal>
-          <Reveal delay={500} className="mt-8 sm:mt-10">
-            <Link
-              href="/#impact"
-              className="press inline-flex min-h-11 items-center gap-2.5 rounded-full border border-fg/12 bg-surface/70 px-4 text-footnote whitespace-nowrap text-fg-2 backdrop-blur-md hover:text-fg sm:text-callout"
-            >
-              <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-gold to-ember" />
-              <span>
-                Already running 2 schools<span className="hidden sm:inline"> for deserving children</span>
-              </span>
-              <span aria-hidden="true">›</span>
-            </Link>
-          </Reveal>
-        </div>
 
-        <a
-          href="#why"
-          aria-label="Scroll to learn more"
-          className="absolute bottom-8 left-1/2 hidden h-10 w-6 -translate-x-1/2 justify-center rounded-full border border-fg/25 pt-2 [@media(min-height:700px)]:flex"
-        >
-          <span className="h-2 w-1 rounded-full bg-fg/50 motion-safe:animate-bounce" />
-        </a>
+          <dl className="mt-14 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-4 sm:gap-4">
+            {stats.map(([value, label, tone], i) => (
+              <Reveal key={label} delay={i * 80} className="rounded-[var(--radius-card)] bg-ink-2 px-5 py-6 ring-1 ring-white/8 sm:px-7 sm:py-8">
+                <dt className="sr-only">{label}</dt>
+                <dd>
+                  <span className={`block text-figure ${tone}`}>{value}</span>
+                  <span className="mt-2 block text-footnote text-balance text-ink-fg-2 sm:text-callout">{label}</span>
+                </dd>
+              </Reveal>
+            ))}
+          </dl>
+        </div>
       </section>
 
-      {/* Why this exists + mission */}
-      <section id="why" className="bg-bg px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
-        <Reveal className="mx-auto max-w-[900px] text-center">
-          <p className="font-display text-statement text-balance">
-            Open-source developers give their expertise away for nothing, and commercial marketplaces can take up to 30% of what creators earn.{" "}
-            <span className="text-fg-2">
-              Meanwhile, quality education is still out of reach for millions of children. maavaDao turns this around.
-            </span>
-          </p>
-        </Reveal>
+      {/* Mission and impact */}
+      <section className="bg-bg px-4 py-16 sm:px-6 sm:py-24 lg:py-28">
+        <div className="mx-auto max-w-[1100px]">
+          <Reveal className="card relative overflow-hidden px-6 py-10 text-center sm:px-16 sm:py-16">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-mint via-teal to-sun" />
+            <p className="kicker text-callout sm:text-body">Our mission</p>
+            <p className="mx-auto mt-4 max-w-[52rem] text-title text-balance">{site.mission}</p>
+          </Reveal>
 
-        <dl className="mx-auto mt-12 grid max-w-[900px] grid-cols-2 gap-x-4 gap-y-8 text-center sm:mt-20 sm:grid-cols-4 sm:gap-y-10">
-          {[
-            ["Free", "to create, list and use"],
-            ["60%", "to contributors"],
-            ["40%", "to children's education"],
-            ["0%", "commission, ever"],
-          ].map(([value, label], i) => (
-            <Reveal key={label} delay={i * 80}>
-              <dt className="sr-only">{label}</dt>
-              <dd>
-                <span className="block font-display text-figure">{value}</span>
-                <span className="mt-2 block text-footnote text-balance text-fg-2 sm:text-callout">{label}</span>
-              </dd>
+          {/* Rows are shared (subgrid) so the label, headline and body line up across both cards. */}
+          <div id="impact" className="mt-4 grid scroll-mt-20 gap-4 sm:mt-5 sm:grid-cols-2 sm:gap-5">
+            <Reveal className="flex flex-col gap-3 rounded-[var(--radius-card)] border border-sun-soft bg-sun-wash px-7 py-8 sm:row-span-3 sm:grid sm:grid-rows-subgrid sm:p-10">
+              <p className="flex items-center gap-2 text-callout font-semibold text-sun-text">
+                <span aria-hidden="true" className="dot bg-sun-strong" />
+                Already running
+              </p>
+              <p className="text-figure leading-none sm:self-end">2 schools</p>
+              <p className="text-body text-fg-2">
+                maava already runs two schools for deserving children. maavaDao extends that mission into the age of AI.
+              </p>
             </Reveal>
-          ))}
-        </dl>
-
-        <Reveal className="mx-auto mt-14 max-w-[900px] rounded-[28px] bg-gradient-to-br from-[#0f0c29] via-[#24243e] to-[#302b63] px-6 py-10 text-center text-[#f5f5f7] sm:mt-24 sm:px-16 sm:py-16">
-          <p className="text-callout font-semibold text-gold sm:text-body">Our mission</p>
-          <p className="mt-3 font-display text-subhead font-semibold text-balance sm:mt-4 sm:text-title">{site.mission}</p>
-        </Reveal>
-
-        {/* Rows are shared (subgrid) so the eyebrow, headline and body line up across both cards. */}
-        <div id="impact" className="mx-auto mt-4 grid max-w-[900px] scroll-mt-20 gap-4 sm:mt-5 sm:grid-cols-2 sm:gap-5">
-          <Reveal className="flex flex-col gap-3 rounded-[28px] bg-bg-alt px-7 py-8 sm:row-span-3 sm:grid sm:grid-rows-subgrid sm:p-10">
-            <p className="text-footnote font-semibold tracking-[0.06em] text-accent-text uppercase">Already running</p>
-            <p className="font-display text-figure leading-none sm:self-end">
-              <span className="text-brand">2 schools</span>
-            </p>
-            <p className="text-body text-fg-2">
-              maava already runs two schools for deserving children. maavaDao extends that mission into the age of AI.
-            </p>
-          </Reveal>
-          <Reveal delay={90} className="flex flex-col gap-3 rounded-[28px] bg-bg-alt px-7 py-8 sm:row-span-3 sm:grid sm:grid-rows-subgrid sm:p-10">
-            <p className="text-footnote font-semibold tracking-[0.06em] text-fg-2 uppercase">Next</p>
-            <h3 className="font-display text-title sm:self-end">Maava School for AI</h3>
-            <p className="text-body text-fg-2">
-              Teaching deserving children, orphans and street children to learn with, use and build AI. Every product
-              monetised on maavaDao helps fund it.
-            </p>
-          </Reveal>
+            <Reveal delay={90} className="flex flex-col gap-3 rounded-[var(--radius-card)] border border-mint-soft bg-mint-wash px-7 py-8 sm:row-span-3 sm:grid sm:grid-rows-subgrid sm:p-10">
+              <p className="kicker text-callout">Next</p>
+              <h3 className="text-title sm:self-end">Maava School for AI</h3>
+              <p className="text-body text-fg-2">
+                Teaching deserving children, orphans and street children to learn with, use and build AI. Every product
+                monetised on maavaDao helps fund it.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -284,12 +259,12 @@ export default function Home() {
                 as="li"
                 key={title}
                 delay={(i % 3) * 90}
-                className={`rounded-[28px] bg-surface p-7 sm:p-8 ${i < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${
-                  i === steps.length - 1 ? "sm:col-span-2" : ""
-                }`}
+                className={`card p-7 sm:p-8 ${i < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${i === steps.length - 1 ? "sm:col-span-2" : ""}`}
               >
-                <span className="font-display text-figure text-brand">{i + 1}</span>
-                <h3 className="mt-4 text-headline sm:mt-6">{title}</h3>
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ink text-callout font-bold text-mint">
+                  {i + 1}
+                </span>
+                <h3 className="mt-5 text-headline sm:mt-6">{title}</h3>
                 <p className="mt-2 text-body text-fg-2">{body}</p>
               </Reveal>
             ))}
@@ -306,16 +281,12 @@ export default function Home() {
               <Reveal
                 key={f.title}
                 delay={(i % 3) * 90}
-                className={`flex flex-col rounded-[28px] p-7 sm:p-10 ${f.className ?? ""} ${
-                  f.feature ? "bg-gradient-to-br from-[#0f0c29] via-[#24243e] to-[#302b63] text-[#f5f5f7]" : "bg-bg-alt"
-                }`}
+                className={`flex flex-col p-7 sm:p-9 ${f.className ?? ""} ${f.feature ? "tile shadow-lift" : "card"}`}
               >
-                <span className={f.feature ? "text-gold" : "text-ember"}>
-                  <Icon name={f.icon} className="h-8 w-8 sm:h-9 sm:w-9" />
-                </span>
+                <IconTile name={f.icon} onDark={f.feature} />
                 <div className="mt-8 sm:mt-10">
-                  <h3 className="font-display text-title">{f.title}</h3>
-                  <p className={`mt-3 max-w-[40rem] text-body ${f.feature ? "text-[#c7c7cc]" : "text-fg-2"}`}>{f.body}</p>
+                  <h3 className={`text-title ${f.feature ? "text-white" : ""}`}>{f.title}</h3>
+                  <p className={`mt-3 max-w-[40rem] text-body ${f.feature ? "text-ink-fg-2" : "text-fg-2"}`}>{f.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -345,15 +316,17 @@ export default function Home() {
           />
           <div className="gallery sm:grid sm:gap-5 lg:grid-cols-3">
             {levels.map((l, i) => (
-              <Reveal key={l.level} delay={i * 110} className="rounded-[28px] bg-bg-alt p-7 sm:p-8">
-                <p className="text-footnote font-semibold tracking-[0.06em] text-accent-text uppercase">Level {i + 1}</p>
-                <h3 className="mt-2 font-display text-title">{l.level}</h3>
+              <Reveal key={l.level} delay={i * 110} className="card p-7 sm:p-8">
+                <span className="inline-flex rounded-full bg-mint-wash px-3 py-1 text-footnote font-semibold text-accent-text ring-1 ring-mint-soft">
+                  Level {i + 1}
+                </span>
+                <h3 className="mt-4 text-title">{l.level}</h3>
                 <p className="mt-3 text-callout text-fg-2">{l.who}</p>
-                <p className="mt-6 text-footnote font-semibold tracking-[0.06em] text-fg-2 uppercase">Decides</p>
-                <ul className="mt-3 space-y-2">
+                <p className="mt-6 border-t border-line pt-5 text-footnote font-semibold text-fg">Decides</p>
+                <ul className="mt-3 space-y-2.5">
                   {l.decides.map((d) => (
                     <li key={d} className="flex gap-3 text-body">
-                      <span aria-hidden="true" className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-gold to-ember" />
+                      <span aria-hidden="true" className="dot mt-[0.55em]" />
                       {d}
                     </li>
                   ))}
@@ -365,27 +338,27 @@ export default function Home() {
       </section>
 
       {/* Responsible AI and child safety */}
-      <section id="safety" className="bg-bg-alt px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
+      <section id="safety" className="bg-mint-wash px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-[1100px]">
           <SectionHead
             eyebrow="Responsible AI and safeguarding"
             title="Because it serves children and young people, safety comes first."
             lede="Every agent listed on maavaDao must meet these standards."
           />
-          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-6">
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-6">
             {safety.map((s, i) => (
               <Reveal
                 key={s.title}
                 delay={(i % 3) * 90}
-                className={`grid grid-cols-[auto_1fr] gap-x-4 sm:block ${i < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${
+                className={`card flex gap-4 p-6 sm:block sm:p-8 ${i < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${
                   i === safety.length - 1 ? "sm:col-span-2" : ""
                 }`}
               >
-                <span className="row-span-2 flex h-11 w-11 items-center justify-center rounded-[12px] bg-surface text-cta sm:h-12 sm:w-12 sm:rounded-[14px]">
-                  <Icon name={s.icon} className="h-6 w-6" />
-                </span>
-                <h3 className="self-center text-headline sm:mt-5">{s.title}</h3>
-                <p className="mt-1 text-body text-fg-2 sm:mt-2">{s.body}</p>
+                <IconTile name={s.icon} />
+                <div>
+                  <h3 className="text-headline sm:mt-5">{s.title}</h3>
+                  <p className="mt-1 text-body text-fg-2 sm:mt-2">{s.body}</p>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -402,13 +375,11 @@ export default function Home() {
               <Reveal
                 key={a.who}
                 delay={(i % 3) * 90}
-                className={`flex gap-4 rounded-[24px] bg-bg-alt p-6 sm:gap-6 sm:rounded-[28px] sm:p-8 ${
-                  i < 2 ? "lg:col-span-3" : "lg:col-span-2"
-                } ${i === audiences.length - 1 ? "sm:col-span-2" : ""}`}
+                className={`card flex gap-4 p-6 sm:gap-5 sm:p-8 ${i < 2 ? "lg:col-span-3" : "lg:col-span-2"} ${
+                  i === audiences.length - 1 ? "sm:col-span-2" : ""
+                }`}
               >
-                <span className="text-ember">
-                  <Icon name={a.icon} className="h-7 w-7 sm:h-8 sm:w-8" />
-                </span>
+                <IconTile name={a.icon} />
                 <div>
                   <h3 className="text-headline">{a.who}</h3>
                   <p className="mt-2 text-body text-fg-2">{a.body}</p>
@@ -419,10 +390,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Roadmap */}
-      <section id="roadmap" className="bg-bg-alt px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
+      {/* Roadmap: the second navy band. */}
+      <section id="roadmap" className="bg-ink px-4 py-16 text-white sm:px-6 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-[1100px]">
           <SectionHead
+            onDark
             eyebrow="Roadmap"
             title="What we're planning."
             lede="maavaDao is in its early stage. Here is the path from first agents to verifiable impact."
@@ -430,9 +402,8 @@ export default function Home() {
           <ol className="relative grid gap-8 lg:grid-cols-5 lg:gap-6">
             <span
               aria-hidden="true"
-              className="absolute top-7 right-[10%] left-[10%] hidden h-px bg-gradient-to-r from-gold via-ember to-violet lg:block"
+              className="absolute top-7 right-[10%] left-[10%] hidden h-0.5 bg-gradient-to-r from-mint via-teal to-sun lg:block"
             />
-
             {phases.map(([title, body], i) => (
               <Reveal
                 as="li"
@@ -441,29 +412,30 @@ export default function Home() {
                 className="relative lg:row-span-2 lg:grid lg:grid-rows-subgrid lg:gap-y-3 lg:text-center"
               >
                 {i < phases.length - 1 && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute top-12 -bottom-8 left-6 w-px bg-gradient-to-b from-gold to-ember lg:hidden"
-                  />
+                  <span aria-hidden="true" className="absolute top-12 -bottom-8 left-6 w-0.5 bg-gradient-to-b from-mint to-teal lg:hidden" />
                 )}
                 <div className="flex items-center gap-4 lg:block">
-                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line bg-surface font-display text-callout font-semibold text-accent-text lg:mx-auto lg:h-14 lg:w-14">
+                  <span
+                    className={`relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-callout font-bold lg:mx-auto lg:h-14 lg:w-14 ${
+                      i === 0 ? "bg-mint text-cta-fg" : "bg-ink-2 text-mint ring-1 ring-mint/30"
+                    }`}
+                  >
                     {i + 1}
                   </span>
                   <div className="lg:mt-6">
-                    <p className="text-footnote font-semibold tracking-[0.06em] text-fg-2 uppercase">Phase {i + 1}</p>
-                    <h3 className="text-headline text-balance">{title}</h3>
+                    <p className="text-footnote font-semibold text-mint">Phase {i + 1}</p>
+                    <h3 className="text-headline text-balance text-white">{title}</h3>
                   </div>
                 </div>
-                <p className="mt-2 pl-16 text-callout text-fg-2 lg:mx-auto lg:mt-0 lg:max-w-[13rem] lg:pl-0">{body}</p>
+                <p className="mt-2 pl-16 text-callout text-ink-fg-2 lg:mx-auto lg:mt-0 lg:max-w-[13rem] lg:pl-0">{body}</p>
               </Reveal>
             ))}
           </ol>
           <Reveal className="mt-12 flex justify-center sm:mt-16">
-            <p className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-fg/12 bg-surface/70 px-4 text-footnote whitespace-nowrap text-fg-2 backdrop-blur-md sm:text-callout">
-              <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-gold to-ember" />
+            <p className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-ink-2 px-4 text-footnote whitespace-nowrap text-white ring-1 ring-white/10 sm:text-callout">
+              <span aria-hidden="true" className="dot" />
               <span>
-                maava Studio coming soon<span className="hidden sm:inline">: a drag-and-drop workflow editor</span>
+                maava Studio coming soon<span className="hidden text-ink-fg-2 sm:inline">: a drag-and-drop workflow editor</span>
               </span>
             </p>
           </Reveal>
@@ -477,8 +449,8 @@ export default function Home() {
       <section id="contact" className="bg-bg-alt px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
         <div className="mx-auto grid max-w-[1100px] gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal>
-            <p className="text-callout font-semibold text-fg-2 sm:text-body">Get involved</p>
-            <h2 className="mt-2 font-display text-display">
+            <p className="kicker text-callout sm:text-body">Get involved</p>
+            <h2 className="mt-3 text-display">
               Help us reach
               <br />
               <span className="text-brand">every child.</span>
@@ -498,9 +470,9 @@ export default function Home() {
                 ["Email", hasEmail ? `mailto:${site.email}` : null, site.email],
               ].map(([label, href, text]) => (
                 <li key={label} className="flex min-h-11 items-center gap-4">
-                  <span className="w-20 shrink-0 text-fg-2">{label}</span>
+                  <span className="w-20 shrink-0 font-semibold text-fg">{label}</span>
                   {href ? (
-                    <a href={href} className="text-link hover:underline" target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+                    <a href={href} className="font-medium text-link hover:underline" target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
                       {text}
                     </a>
                   ) : (
@@ -510,7 +482,7 @@ export default function Home() {
               ))}
             </ul>
           </Reveal>
-          <Reveal delay={120} className="-mx-4 self-start bg-surface px-4 py-8 sm:mx-0 sm:rounded-[28px] sm:p-10">
+          <Reveal delay={120} className="card -mx-4 self-start rounded-none px-4 py-8 sm:mx-0 sm:rounded-[var(--radius-card)] sm:p-10">
             {/* A plain GET form: the chosen ways arrive pre-ticked on /get-involved, before or after joining. */}
             <form action="/get-involved" method="get">
               <fieldset>
@@ -518,32 +490,26 @@ export default function Home() {
                 <p className="mt-1.5 text-callout text-fg-2">Choose any. You can change them later.</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {helpWays.map((w) => (
-                    <label
-                      key={w.id}
-                      className="press flex min-h-11 cursor-pointer items-center rounded-full border border-line bg-field px-4 text-callout has-checked:border-cta has-checked:bg-cta has-checked:text-white has-focus-visible:ring-4 has-focus-visible:ring-cta/20"
-                    >
+                    <label key={w.id} className="chip min-h-11 px-4 text-callout">
                       <input type="checkbox" name="way" value={w.id} className="sr-only" />
                       {w.label}
                     </label>
                   ))}
                 </div>
               </fieldset>
-              <button
-                type="submit"
-                className="press mt-6 min-h-12 rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover"
-              >
+              <button type="submit" className="btn btn-primary mt-6 min-h-12 px-6 text-body">
                 Open the get-involved form
               </button>
               <p className="mt-4 text-callout text-fg-2">
                 A developer?{" "}
-                <Link href="/agents" className="text-link hover:underline">
+                <Link href="/agents" className="font-medium text-link hover:underline">
                   Build maava Community Agents
                 </Link>
                 .
               </p>
             </form>
             <details className="group mt-8 border-t border-line pt-4">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-callout text-link [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-callout font-medium text-link [&::-webkit-details-marker]:hidden">
                 Have a question, or a business enquiry? Send us a message
                 <span aria-hidden="true" className="text-fg-2 transition-transform group-open:rotate-180">
                   ⌄

@@ -43,7 +43,7 @@ async function community(slug: string) {
 
 function Fact({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-[20px] bg-bg-alt p-4">
+    <div className="panel p-4">
       <dt className="text-footnote text-fg-2">{label}</dt>
       <dd className="mt-1 text-body [overflow-wrap:anywhere]">{children}</dd>
     </div>
@@ -73,14 +73,14 @@ export default async function ToolPage({ params }: PageProps<"/directory/[slug]"
 
         <article className="-mx-4 mt-4 bg-surface px-4 py-6 sm:mx-0 sm:rounded-[28px] sm:p-10">
           {tool.image && (
-            <div className="mb-6 aspect-[16/9] overflow-hidden rounded-[20px] bg-bg-alt sm:mb-8">
+            <div className="mb-6 aspect-[16/9] overflow-hidden panel sm:mb-8">
               {/* The tool's own preview image, from its site: hosts vary, so it isn't run through next/image. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={tool.image} alt={`${tool.name} home page preview`} referrerPolicy="no-referrer" className="h-full w-full object-cover" />
             </div>
           )}
-          <p className="text-caption font-medium tracking-[0.06em] text-fg-2 uppercase">{category?.name ?? tool.category}</p>
-          <h1 className="mt-1.5 font-display text-display text-balance [overflow-wrap:anywhere]">{tool.name}</h1>
+          <p className="text-caption font-semibold text-accent-text">{category?.name ?? tool.category}</p>
+          <h1 className="mt-1.5 text-display text-balance [overflow-wrap:anywhere]">{tool.name}</h1>
           {tool.company && <p className="mt-1 text-body text-fg-2">by {tool.company}</p>}
           <p className="mt-4 text-lede text-pretty [overflow-wrap:anywhere]">{tool.description}</p>
           {tool.tags && tool.tags.length > 0 && (
@@ -99,7 +99,7 @@ export default async function ToolPage({ params }: PageProps<"/directory/[slug]"
               href={tool.website}
               target="_blank"
               rel="noreferrer nofollow"
-              className="press inline-flex min-h-11 items-center rounded-full bg-cta px-5 text-body font-medium text-white hover:bg-cta-hover"
+              className="btn btn-primary min-h-11 px-5 text-body"
             >
               Visit website
             </a>
@@ -139,9 +139,9 @@ export default async function ToolPage({ params }: PageProps<"/directory/[slug]"
             </dl>
           </section>
 
-          <section aria-label="Community rating" className="mt-8 grid gap-4 rounded-[24px] bg-bg-alt p-4 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-8 sm:p-6">
+          <section aria-label="Community rating" className="mt-8 grid gap-4 panel p-4 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-8 sm:p-6">
             <div className="flex items-center gap-4 sm:flex-col sm:items-start sm:gap-1">
-              <p className="font-display text-figure leading-none tabular-nums">{social?.rating != null ? social.rating.toFixed(1) : "–"}</p>
+              <p className="text-figure leading-none tabular-nums">{social?.rating != null ? social.rating.toFixed(1) : "–"}</p>
               <p className="text-footnote text-fg-2">
                 {social?.ratings ? `${number.format(social.ratings)} member rating${social.ratings === 1 ? "" : "s"}` : "No ratings yet"}
               </p>

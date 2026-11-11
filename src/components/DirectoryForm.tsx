@@ -25,7 +25,7 @@ export function DirectoryForm({ initial, listed, profilePath }: { initial: Direc
             maxLength={280}
             rows={4}
             aria-invalid={state.errors.bio ? true : undefined}
-            className="w-full resize-none rounded-xl border border-line bg-field px-4 pt-8 pb-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+            className="w-full resize-none rounded-xl border border-line bg-field px-4 pt-8 pb-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
           />
         </label>
         <p className="mt-1.5 flex justify-between px-1 text-footnote text-fg-2">
@@ -37,12 +37,12 @@ export function DirectoryForm({ initial, listed, profilePath }: { initial: Direc
       <Field label="Website (optional)" name="website" type="url" inputMode="url" defaultValue={values.website} error={state.errors.website} />
 
       <label className="flex min-h-11 cursor-pointer items-center gap-3 px-1 text-body">
-        <input type="checkbox" name="show_country" defaultChecked={values.show_country} className="h-4 w-4 accent-[var(--cta)]" />
+        <input type="checkbox" name="show_country" defaultChecked={values.show_country} className="h-4 w-4 accent-teal" />
         Show my country
       </label>
 
       {state.errors.form && (
-        <p role="alert" className="px-1 text-footnote text-[#e30000] dark:text-[#ff6961]">
+        <p role="alert" className="px-1 text-footnote text-danger">
           {state.errors.form}
         </p>
       )}
@@ -58,7 +58,7 @@ export function DirectoryForm({ initial, listed, profilePath }: { initial: Direc
       <button
         type="submit"
         disabled={pending}
-        className="press mt-2 min-h-12 rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover disabled:opacity-60"
+        className="btn btn-primary mt-2 min-h-12 px-6 text-body disabled:opacity-60"
       >
         {pending ? "Saving…" : isListed ? "Save changes" : "Join the directory"}
       </button>

@@ -39,7 +39,7 @@ export async function CommunityProjects() {
             ))}
           </ul>
         ) : (
-          <p className="mt-6 rounded-[28px] bg-surface p-8 text-center text-body text-fg-2 sm:p-12">
+          <p className="mt-6 card p-8 text-center text-body text-fg-2 sm:p-12">
             Our first maava Community Agents are on their way. Want to help build them?{" "}
             <a className="text-link hover:underline" href="/agents">
               Find out how

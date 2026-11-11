@@ -30,8 +30,8 @@ export async function CommunityWall() {
     <section id="community" className="bg-bg px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <p className="text-callout font-semibold text-fg-2 sm:text-body">Our community</p>
-          <h2 className="mt-2 font-display text-display text-balance">
+          <p className="text-callout kicker sm:text-body">Our community</p>
+          <h2 className="mt-2 text-display text-balance">
             If you want to help, <span className="text-brand">you belong here.</span>
           </h2>
           <p className="mt-5 text-lede text-pretty text-fg-2">
@@ -83,13 +83,13 @@ export async function CommunityWall() {
         <Reveal delay={120} className="mt-10 flex flex-wrap justify-center gap-3">
           <Link
             href="/signup"
-            className="press inline-flex min-h-12 items-center rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover"
+            className="btn btn-primary min-h-12 px-6 text-body"
           >
             {people.length > 0 ? "Join them" : "Be the first"}
           </Link>
           <Link
             href="/get-involved#refer"
-            className="press inline-flex min-h-12 items-center rounded-full border border-line bg-field px-6 text-body font-medium hover:border-cta"
+            className="btn btn-ghost min-h-12 px-6 text-body"
           >
             Refer a school or orphanage
           </Link>

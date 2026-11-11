@@ -7,7 +7,7 @@ export function ListingCard({ listing, label }: { listing: RegistryListing; labe
       href={listingHref(listing)}
       target="_blank"
       rel="noreferrer"
-      className="press group flex h-full flex-col rounded-[28px] bg-surface p-6 sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
+      className="press group flex h-full flex-col card p-6 sm:p-7 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
     >
       <span className="w-fit rounded-full bg-bg-alt px-2.5 py-1 text-caption font-medium text-fg-2">{label}</span>
       <h3 className="mt-5 text-headline">{listing.name}</h3>

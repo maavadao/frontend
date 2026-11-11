@@ -63,9 +63,9 @@ export default async function DeveloperPage({ params }: PageProps<"/developers/[
           <span aria-hidden="true" className="mr-1">‹</span> Developers
         </Link>
 
-        <Reveal className="mt-4 flex flex-col items-center rounded-[28px] bg-surface p-8 text-center sm:p-12">
+        <Reveal className="mt-4 flex flex-col items-center card p-8 text-center sm:p-12">
           <Avatar id={contributor?.id} login={github} name={name} size={112} />
-          <h1 className="mt-5 max-w-full font-display text-display text-balance [overflow-wrap:anywhere]">{name}</h1>
+          <h1 className="mt-5 max-w-full text-display text-balance [overflow-wrap:anywhere]">{name}</h1>
           {github && <p className="mt-1 text-body text-fg-2">@{github}</p>}
           {facts.length > 0 && <p className="mt-3 text-callout text-fg-2">{facts.join(" · ")}</p>}
           {member?.bio && <p className="mt-5 max-w-[560px] text-lede text-pretty">{member.bio}</p>}
@@ -93,11 +93,11 @@ export default async function DeveloperPage({ params }: PageProps<"/developers/[
           </div>
           {contributor && (
             <div className="mt-8 grid w-full max-w-[420px] grid-cols-2 gap-3">
-              <div className="rounded-[20px] bg-bg-alt p-4">
+              <div className="panel p-4">
                 <p className="text-figure tabular-nums">{contributor.repos.length}</p>
                 <p className="text-footnote text-fg-2">{contributor.repos.length === 1 ? "project" : "projects"}</p>
               </div>
-              <div className="rounded-[20px] bg-bg-alt p-4">
+              <div className="panel p-4">
                 <p className="text-figure tabular-nums">{formatCount(contributor.total)}</p>
                 <p className="text-footnote text-fg-2">commits</p>
               </div>
@@ -122,7 +122,7 @@ export default async function DeveloperPage({ params }: PageProps<"/developers/[
                       href={repo?.repository ?? `/repos?q=${encodeURIComponent(slug)}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="press group flex h-full flex-col rounded-[24px] bg-surface p-5 sm:p-6 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
+                      className="press group flex h-full flex-col card p-5 sm:p-6 motion-safe:hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgb(0_0_0/0.25)]"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <h3 className="min-w-0 text-headline [overflow-wrap:anywhere]">{repo?.name ?? slug}</h3>

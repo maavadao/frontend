@@ -34,7 +34,7 @@ export function StarRating({ slug, mine, signedIn }: { slug: string; mine: numbe
             aria-label={`${n} star${n === 1 ? "" : "s"}: ${LABELS[n]}`}
             onPointerEnter={() => setPreview(n)}
             onClick={() => (signedIn ? rate(n) : router.push(`/login?next=${encodeURIComponent(`/repos/${slug}`)}`))}
-            className={`press flex h-11 w-11 items-center justify-center rounded-full ${n <= shown ? "text-[#ff9f0a]" : "text-fg-2/40"} hover:bg-bg-alt`}
+            className={`press flex h-11 w-11 items-center justify-center rounded-full ${n <= shown ? "text-sun-strong" : "text-fg-2/40"} hover:bg-bg-alt`}
           >
             <Icon name="star" className={`h-7 w-7 ${n <= shown ? "[&_path]:fill-current" : ""}`} />
           </button>
@@ -105,7 +105,7 @@ export function CommentForm({ slug }: { slug: string }) {
         maxLength={2000}
         rows={3}
         placeholder="Share how you use it, a tip, or a question…"
-        className="w-full resize-none rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+        className="w-full resize-none rounded-2xl border border-line bg-field px-4 py-3 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
       />
       <div className="flex items-center justify-between gap-3">
         <p className="text-footnote text-fg-2" role={state.error ? "alert" : undefined}>
@@ -114,7 +114,7 @@ export function CommentForm({ slug }: { slug: string }) {
         <button
           type="submit"
           disabled={pending || !body.trim()}
-          className="press min-h-11 shrink-0 rounded-full bg-cta px-5 text-callout font-medium text-white hover:bg-cta-hover disabled:opacity-50"
+          className="btn btn-primary min-h-11 shrink-0 px-5 text-callout disabled:opacity-50"
         >
           {pending ? "Posting…" : "Post"}
         </button>
@@ -136,7 +136,7 @@ export function CommentActions({ slug, id, own, signedIn }: { slug: string; id: 
           type="button"
           disabled={pending}
           onClick={() => start(() => deleteComment(slug, id))}
-          className="min-h-11 px-2 text-footnote text-[#e30000] hover:underline dark:text-[#ff6961]"
+          className="min-h-11 px-2 text-footnote text-danger hover:underline"
         >
           Delete
         </button>

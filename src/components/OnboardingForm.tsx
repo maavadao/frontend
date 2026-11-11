@@ -90,7 +90,7 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
               aria-invalid={errors.country ? true : undefined}
               aria-describedby={errors.country ? "f-country-err" : undefined}
               className={`h-14 w-full appearance-none rounded-xl border bg-field px-4 pt-5 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:ring-4 ${
-                errors.country ? "border-[#e30000] focus:ring-[#e30000]/15" : "border-line focus:border-cta focus:ring-cta/20"
+                errors.country ? "border-danger focus:ring-danger/15" : "border-line focus:border-teal focus:ring-mint/50"
               }`}
             >
               <option value="" disabled>
@@ -107,7 +107,7 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
             </span>
           </label>
           {errors.country && (
-            <p id="f-country-err" role="alert" className="animate-fade mt-1.5 px-1 text-footnote text-[#e30000] dark:text-[#ff6961]">
+            <p id="f-country-err" role="alert" className="animate-fade mt-1.5 px-1 text-footnote text-danger">
               {errors.country}
             </p>
           )}
@@ -119,14 +119,14 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
             {roles.map((r) => (
               <label
                 key={r.id}
-                className="press flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border border-line bg-field px-4 py-2.5 has-checked:border-cta has-checked:ring-4 has-checked:ring-cta/20 has-focus-visible:ring-4 has-focus-visible:ring-cta/20"
+                className="press flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border border-line bg-field px-4 py-2.5 has-checked:border-teal has-checked:ring-4 has-checked:ring-mint/50 has-focus-visible:ring-4 has-focus-visible:ring-mint/50"
               >
                 <input
                   type="radio"
                   name="role"
                   value={r.id}
                   defaultChecked={state.values?.role === r.id}
-                  className="h-4 w-4 shrink-0 accent-[var(--cta)]"
+                  className="h-4 w-4 shrink-0 accent-teal"
                 />
                 <span className="min-w-0">
                   <span className="block text-body">{r.label}</span>
@@ -136,7 +136,7 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
             ))}
           </div>
           {errors.role && (
-            <p id="f-role-err" role="alert" className="animate-fade mt-1.5 px-1 text-footnote text-[#e30000] dark:text-[#ff6961]">
+            <p id="f-role-err" role="alert" className="animate-fade mt-1.5 px-1 text-footnote text-danger">
               {errors.role}
             </p>
           )}
@@ -147,7 +147,7 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
             type="checkbox"
             name="wall"
             defaultChecked={state.values?.wall ?? true}
-            className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--cta)]"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-teal"
           />
           <span>
             Show me on the community wall on maavadao.com (username, country, how I&apos;m joining and my GitHub picture,
@@ -157,23 +157,23 @@ export function OnboardingForm({ next, suggestedUsername, suggestedCountry }: Pr
 
         <div>
           <label className="flex items-start gap-3 px-1 pt-1 text-callout text-fg-2">
-            <input type="checkbox" name="terms" defaultChecked={state.values?.terms} className="mt-0.5 h-4 w-4 accent-[var(--cta)]" />
+            <input type="checkbox" name="terms" defaultChecked={state.values?.terms} className="mt-0.5 h-4 w-4 accent-teal" />
             <span>I agree to take part in good faith, follow the code of conduct and put children&apos;s safety first.</span>
           </label>
-          {errors.terms && <p role="alert" className="mt-1.5 px-1 text-footnote text-[#e30000] dark:text-[#ff6961]">{errors.terms}</p>}
+          {errors.terms && <p role="alert" className="mt-1.5 px-1 text-footnote text-danger">{errors.terms}</p>}
         </div>
 
         <button
           type="submit"
           disabled={pending}
-          className="press mt-2 h-12 rounded-xl bg-cta text-body font-medium text-white hover:bg-cta-hover disabled:opacity-60"
+          className="btn btn-primary mt-2 h-12 text-body disabled:opacity-60"
         >
           {pending ? "Saving…" : "Continue"}
         </button>
       </form>
 
       <div aria-live="polite">
-        {errors.form && <p className="animate-fade mt-5 rounded-xl bg-[#f7b733]/15 px-4 py-3 text-callout text-fg">{errors.form}</p>}
+        {errors.form && <p className="animate-fade mt-5 rounded-xl border border-mint-soft bg-mint-wash px-4 py-3 text-callout text-fg">{errors.form}</p>}
       </div>
 
       <form action="/auth/signout" method="post" className="mt-8 text-center">

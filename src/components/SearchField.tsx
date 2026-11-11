@@ -75,7 +75,7 @@ export function SearchField({
           placeholder={label}
           autoComplete="off"
           enterKeyHint="search"
-          className="h-11 w-full rounded-full border border-line bg-field pr-4 pl-10 text-callout outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+          className="h-11 w-full rounded-full border border-line bg-field pr-4 pl-10 text-callout outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
         />
       </label>
       {Object.entries(keep).map(([k, v]) => v && <input key={k} type="hidden" name={k} value={v} />)}

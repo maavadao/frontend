@@ -35,7 +35,7 @@ export function ContactForm() {
         <select
           name="topic"
           defaultValue={topics[0]}
-          className="h-14 w-full appearance-none rounded-xl border border-line bg-field px-4 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+          className="h-14 w-full appearance-none rounded-xl border border-line bg-field px-4 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
         >
           {topics.map((t) => (
             <option key={t}>{t}</option>
@@ -52,13 +52,13 @@ export function ContactForm() {
           required
           rows={4}
           placeholder="Tell us how you'd like to help, or what your school or community needs."
-          className="w-full resize-none rounded-xl border border-line bg-field px-4 py-3.5 text-body outline-none transition-[box-shadow,border-color] duration-200 placeholder:text-fg-2 focus:border-cta focus:ring-4 focus:ring-cta/20"
+          className="w-full resize-none rounded-xl border border-line bg-field px-4 py-3.5 text-body outline-none transition-[box-shadow,border-color] duration-200 placeholder:text-fg-2 focus:border-teal focus:ring-4 focus:ring-mint/50"
         />
       </label>
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
         <button
           type="submit"
-          className="press rounded-full bg-cta px-6 py-3 text-body font-medium text-white hover:bg-cta-hover"
+          className="btn btn-primary px-6 py-3 text-body"
         >
           Send message
         </button>

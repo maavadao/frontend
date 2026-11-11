@@ -6,11 +6,11 @@ import { saveSupporter, sendReferral, withdrawReferral } from "@/app/get-involve
 import { countries } from "@/lib/countries";
 import { availabilities, helpWays, referralKinds } from "@/lib/supporters";
 
-const errorText = "animate-fade mt-1.5 px-1 text-footnote text-[#e30000] dark:text-[#ff6961]";
+const errorText = "animate-fade mt-1.5 px-1 text-footnote text-danger";
 const area =
-  "w-full resize-none rounded-xl border border-line bg-field px-4 py-3.5 text-body outline-none transition-[box-shadow,border-color] duration-200 placeholder:text-fg-2 focus:border-cta focus:ring-4 focus:ring-cta/20";
+  "w-full resize-none rounded-xl border border-line bg-field px-4 py-3.5 text-body outline-none transition-[box-shadow,border-color] duration-200 placeholder:text-fg-2 focus:border-teal focus:ring-4 focus:ring-mint/50";
 const choice =
-  "press flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border border-line bg-field px-4 py-2.5 has-checked:border-cta has-checked:ring-4 has-checked:ring-cta/20 has-focus-visible:ring-4 has-focus-visible:ring-cta/20";
+  "press flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border border-line bg-field px-4 py-2.5 has-checked:border-teal has-checked:ring-4 has-checked:ring-mint/50 has-focus-visible:ring-4 has-focus-visible:ring-mint/50";
 
 /**
  * Submit without React's automatic form reset, which would blank these controlled fields
@@ -53,7 +53,7 @@ export function SupporterForm({ initial, isNew }: { initial: Supporter; isNew: b
                 value={w.id}
                 checked={ways.has(w.id)}
                 onChange={() => toggle(w.id)}
-                className="h-4 w-4 shrink-0 accent-[var(--cta)]"
+                className="h-4 w-4 shrink-0 accent-teal"
               />
               <span className="min-w-0">
                 <span className="block text-body">{w.label}</span>
@@ -77,7 +77,7 @@ export function SupporterForm({ initial, isNew }: { initial: Supporter; isNew: b
           {availabilities.map((a) => (
             <label
               key={a.id}
-              className="press flex min-h-11 cursor-pointer items-center rounded-full border border-line bg-field px-4 text-callout has-checked:border-cta has-checked:bg-cta has-checked:text-white has-focus-visible:ring-4 has-focus-visible:ring-cta/20"
+              className="chip min-h-11 px-4 text-callout"
             >
               <input
                 type="radio"
@@ -122,7 +122,7 @@ export function SupporterForm({ initial, isNew }: { initial: Supporter; isNew: b
           name="wall"
           checked={showOnWall}
           onChange={(e) => setShowOnWall(e.target.checked)}
-          className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--cta)]"
+          className="mt-0.5 h-4 w-4 shrink-0 accent-teal"
         />
         <span>
           Show me on the community wall on maavadao.com: your username, country, how you&apos;re joining and your GitHub
@@ -134,7 +134,7 @@ export function SupporterForm({ initial, isNew }: { initial: Supporter; isNew: b
         <button
           type="submit"
           disabled={pending || ways.size === 0}
-          className="press min-h-12 rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover disabled:opacity-50"
+          className="btn btn-primary min-h-12 px-6 text-body disabled:opacity-50"
         >
           {pending ? "Saving…" : isNew ? "Count me in" : "Save changes"}
         </button>
@@ -168,7 +168,7 @@ export function ReferralForm({ defaultCountry }: { defaultCountry: string }) {
           {referralKinds.map((k) => (
             <label
               key={k.id}
-              className="press flex min-h-11 cursor-pointer items-center rounded-full border border-line bg-field px-4 text-callout has-checked:border-cta has-checked:bg-cta has-checked:text-white has-focus-visible:ring-4 has-focus-visible:ring-cta/20"
+              className="chip min-h-11 px-4 text-callout"
             >
               <input
                 type="radio"
@@ -193,7 +193,7 @@ export function ReferralForm({ defaultCountry }: { defaultCountry: string }) {
               name="country"
               value={v.country}
               onChange={(ev) => set("country", ev.target.value)}
-              className="h-14 w-full appearance-none rounded-xl border border-line bg-field px-4 pt-5 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-cta focus:ring-4 focus:ring-cta/20"
+              className="h-14 w-full appearance-none rounded-xl border border-line bg-field px-4 pt-5 text-body outline-none transition-[box-shadow,border-color] duration-200 focus:border-teal focus:ring-4 focus:ring-mint/50"
             >
               <option value="" disabled>
                 Choose…
@@ -227,7 +227,7 @@ export function ReferralForm({ defaultCountry }: { defaultCountry: string }) {
               name="consent"
               checked={v.consent}
               onChange={(ev) => set("consent", ev.target.checked)}
-              className="mt-0.5 h-4 w-4 accent-[var(--cta)]"
+              className="mt-0.5 h-4 w-4 accent-teal"
             />
             <span>They&apos;ve agreed to me sharing these contact details with maavaDao.</span>
           </label>
@@ -250,7 +250,7 @@ export function ReferralForm({ defaultCountry }: { defaultCountry: string }) {
         <button
           type="submit"
           disabled={pending || v.name.trim().length < 2 || v.place.trim().length < 2}
-          className="press min-h-12 rounded-full bg-cta px-6 text-body font-medium text-white hover:bg-cta-hover disabled:opacity-50"
+          className="btn btn-primary min-h-12 px-6 text-body disabled:opacity-50"
         >
           {pending ? "Sending…" : "Send referral"}
         </button>
@@ -271,7 +271,7 @@ export function WithdrawReferral({ id }: { id: number }) {
         type="button"
         disabled={pending}
         onClick={() => start(() => withdrawReferral(id))}
-        className="min-h-11 px-2 text-footnote text-[#e30000] hover:underline dark:text-[#ff6961]"
+        className="min-h-11 px-2 text-footnote text-danger hover:underline"
       >
         Withdraw
       </button>
