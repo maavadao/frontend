@@ -23,10 +23,14 @@ export function Hero() {
 
       <div className="relative mx-auto grid max-w-[1148px] items-center gap-12 px-4 pt-24 pb-16 sm:px-6 sm:pt-32 sm:pb-24 lg:min-h-[86svh] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16 lg:pt-28">
         <div className="min-w-0">
-          <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-3 py-1.5 text-footnote font-medium text-fg-2 shadow-card backdrop-blur">
+          <Link
+            href={`/signup?next=${encodeURIComponent("/chat")}`}
+            className="press inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-surface/80 px-4 text-footnote font-medium text-fg-2 shadow-card backdrop-blur hover:border-teal hover:text-fg"
+          >
             <span aria-hidden="true" className="dot" />
-            Community-owned, free for education
-          </p>
+            Try our free maava AI
+            <span aria-hidden="true">›</span>
+          </Link>
           <h1 id="hero-title" className="mt-6 text-hero text-balance lg:text-[clamp(3rem,5.2vw,4.75rem)]">
             AI for education, <span className="text-brand">built by the community.</span>
           </h1>

@@ -14,24 +14,18 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   if (claims) redirect(`/onboarding?next=${encodeURIComponent(to)}`);
 
   const err = error === "callback" || error === "signin" || error === "expired" ? error : undefined;
-  // Coming from maava AI or Community Agents: sign-in on the left, a looping chat demo on the right.
-  if (to.startsWith("/chat"))
-    return (
-      <main className="bg-bg-alt px-4 pt-24 pb-16 sm:px-6 lg:flex lg:min-h-svh lg:items-center">
-        <div className="mx-auto grid w-full max-w-[1100px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="flex justify-center">
-            <AuthForm mode="login" next={to} error={err} />
-          </div>
-          <div className="mx-auto w-full max-w-[520px]">
-            <ChatDemo />
-          </div>
-        </div>
-      </main>
-    );
 
+  // The form on the left and a looping maava AI demo on the right.
   return (
-    <main className="flex min-h-svh items-center justify-center bg-bg-alt px-4 pt-24 pb-16">
-      <AuthForm mode="login" next={to} error={err} />
+    <main className="bg-bg-alt px-4 pt-24 pb-16 sm:px-6 lg:flex lg:min-h-svh lg:items-center">
+      <div className="mx-auto grid w-full max-w-[1100px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="flex justify-center">
+          <AuthForm mode="login" next={to} error={err} />
+        </div>
+        <div className="mx-auto w-full max-w-[520px]">
+          <ChatDemo />
+        </div>
+      </div>
     </main>
   );
 }

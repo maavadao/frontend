@@ -51,6 +51,14 @@ export default async function AgentsPage() {
     <main className="bg-bg-alt px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:pb-36">
       <div className="mx-auto max-w-[1100px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
+          <Link
+            href={tryAgentsHref}
+            className="press mb-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-mint-soft bg-mint-wash px-4 text-callout font-semibold text-accent-text hover:border-teal"
+          >
+            <span className="dot" aria-hidden="true" />
+            Use our free maava AI
+            <span aria-hidden="true">›</span>
+          </Link>
           <p className="text-callout kicker sm:text-body">maava Community Agents</p>
           <h1 className="mt-2 text-display text-balance">Open-source agents for sales, marketing and growth.</h1>
           <p className="mt-5 text-lede text-pretty text-fg-2">
