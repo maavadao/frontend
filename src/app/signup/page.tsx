@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AuthForm } from "@/components/AuthForm";
+import { ChatDemo } from "@/components/ChatDemo";
 import { getClaims } from "@/lib/supabase/server";
 import { safeNext } from "@/lib/urls";
 
@@ -12,9 +13,25 @@ export default async function SignupPage({ searchParams }: PageProps<"/signup">)
   const { claims } = await getClaims();
   if (claims) redirect(`/onboarding?next=${encodeURIComponent(to)}`);
 
+  const err = error === "callback" || error === "signin" || error === "expired" ? error : undefined;
+  // Coming from maava AI or Community Agents: sign-in on the left, a looping chat demo on the right.
+  if (to.startsWith("/chat"))
+    return (
+      <main className="bg-bg-alt px-4 pt-24 pb-16 sm:px-6 lg:flex lg:min-h-svh lg:items-center">
+        <div className="mx-auto grid w-full max-w-[1100px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="flex justify-center">
+            <AuthForm mode="signup" next={to} error={err} />
+          </div>
+          <div className="mx-auto w-full max-w-[520px]">
+            <ChatDemo />
+          </div>
+        </div>
+      </main>
+    );
+
   return (
     <main className="flex min-h-svh items-center justify-center bg-bg-alt px-4 pt-24 pb-16">
-      <AuthForm mode="signup" next={to} error={error === "callback" || error === "signin" || error === "expired" ? error : undefined} />
+      <AuthForm mode="signup" next={to} error={err} />
     </main>
   );
 }

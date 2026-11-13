@@ -42,6 +42,8 @@ const steps: { icon: IconName; title: string; body: string }[] = [
   },
 ];
 
+const tryAgentsHref = `/signup?next=${encodeURIComponent("/chat")}`;
+
 export default async function AgentsPage() {
   const agents = await getMaavaAgents();
 
@@ -58,9 +60,12 @@ export default async function AgentsPage() {
         </Reveal>
 
         <Reveal delay={100} className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link href={tryAgentsHref} className="btn btn-primary px-6 py-3 text-body">
+            Join and try maava AI
+          </Link>
           <a
             href={`${MAAVA_AGENTS_REPO}/blob/main/docs/getting-started.md`}
-            className="btn btn-primary px-6 py-3 text-body"
+            className="btn btn-dark px-6 py-3 text-body"
           >
             Start building
           </a>
@@ -172,6 +177,16 @@ export default async function AgentsPage() {
         </section>
 
         <Reveal className="mt-16 card p-8 text-center sm:mt-24 sm:p-12">
+          <h2 className="text-title">Try it free.</h2>
+          <p className="mx-auto mt-2 max-w-[560px] text-body text-pretty text-fg-2">
+            Tell us who you are and your email, then chat with maava AI straight away. It&apos;s free for everyone.
+          </p>
+          <Link href={tryAgentsHref} className="btn btn-primary mt-6 min-h-12 px-6 text-body">
+            Join and try maava AI
+          </Link>
+        </Reveal>
+
+        <Reveal className="mt-5 card p-8 text-center sm:p-12">
           <h2 className="text-title">Find people to build with.</h2>
           <p className="mx-auto mt-2 max-w-[560px] text-body text-pretty text-fg-2">
             Meet the developers behind open-source AI, and join the directory so others can find you.
